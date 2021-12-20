@@ -1,4 +1,16 @@
+import { useEffect, useState } from 'react';
+import postService from '../../services/postService';
+import PostCard from '../PostCard/PostCard';
+
 function Home() {
+  const [topPosts, setTopPosts] = useState([]);
+
+  useEffect(() => {
+    postService
+      .getTopThree()
+      .then((posts) => setTopPosts((oldPosts) => [...oldPosts, ...posts]));
+  }, []);
+
   return (
     <div className='page-section'>
       <div className='container'>
@@ -9,59 +21,9 @@ function Home() {
         </div>
 
         <div className='row mt-5'>
-          <div className='col-lg-4 py-3 wow fadeInUp'>
-            <div className='card-blog'>
-              <div className='header'>
-                <div className='post-thumb'>
-                  <img src='../assets/img/blog/blog-1.jpg' alt='' />
-                </div>
-              </div>
-              <div className='body'>
-                <h5 className='post-title'>
-                  <a href='#'>Source of Content Inspiration</a>
-                </h5>
-                <div className='post-date'>
-                  Posted on <a href='#'>27 Jan 2020</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className='col-lg-4 py-3 wow fadeInUp'>
-            <div className='card-blog'>
-              <div className='header'>
-                <div className='post-thumb'>
-                  <img src='../assets/img/blog/blog-2.jpg' alt='' />
-                </div>
-              </div>
-              <div className='body'>
-                <h5 className='post-title'>
-                  <a href='#'>Source of Content Inspiration</a>
-                </h5>
-                <div className='post-date'>
-                  Posted on <a href='#'>27 Jan 2020</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className='col-lg-4 py-3 wow fadeInUp'>
-            <div className='card-blog'>
-              <div className='header'>
-                <div className='post-thumb'>
-                  <img src='../assets/img/blog/blog-3.jpg' alt='' />
-                </div>
-              </div>
-              <div className='body'>
-                <h5 className='post-title'>
-                  <a href='#'>Source of Content Inspiration</a>
-                </h5>
-                <div className='post-date'>
-                  Posted on <a href='#'>27 Jan 2020</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          {topPosts.map((post) => (
+            <PostCard key={post._id} post={post} />
+          ))}
 
           <div className='col-12 mt-4 text-center wow fadeInUp'>
             <a href='blog.html' className='btn btn-primary'>
