@@ -5,7 +5,7 @@ function Header() {
   const location = useLocation();
 
   const isHome = () => {
-    return location.pathname === '/';
+    return location.pathname;
   };
 
   console.log(location.pathname);

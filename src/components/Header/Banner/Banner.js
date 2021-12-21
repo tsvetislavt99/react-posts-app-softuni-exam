@@ -1,5 +1,5 @@
 function Banner({ isHome }) {
-  if (isHome) {
+  if (isHome === '/') {
     return (
       <div className='container'>
         <div className='page-banner home-banner'>
@@ -29,6 +29,8 @@ function Banner({ isHome }) {
         </div>
       </div>
     );
+  } else if (isHome.startsWith('/blog/')) {
+    return null;
   } else {
     return (
       <div className='container'>

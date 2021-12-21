@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import Home from './components/Home/Home';
 import Catalog from './components/Catalog/Catalog';
 import Contact from './components/Contact/Contact';
+import PostDetails from './components/PostDetails/PostDetails';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='/about-us' element={<About />} />
         <Route path='/blog' element={<Catalog />} />
         <Route path='/contact-us' element={<Contact />} />
+        <Route path='/blog/:postId' element={<PostDetails />} />
       </Routes>
 
       <Footer />
