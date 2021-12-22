@@ -1,8 +1,21 @@
 import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import postService from '../../services/postService';
 import CommentSection from '../CommentSection/CommentSection';
 
 function PostDetails() {
   const { postId } = useParams();
+
+  const [post, setPost] = useState({ isLoading: true });
+
+  useEffect(() => {
+    postService
+      .getPostById(postId)
+      .then((receivedPost) => setPost({ ...receivedPost, isLoading: false }));
+  }, []);
+
+  console.log(post);
+
   return (
     <div className='page-section pt-5'>
       <div className='container'>
@@ -32,7 +45,7 @@ function PostDetails() {
                     <div className='avatar'>
                       <img src='../assets/img/person/person_1.jpg' alt='' />
                     </div>
-                    by <a href='#'>Stephen Doe</a>
+                    by <a href='#'></a>
                   </div>
 
                   <div className='post-sharer'>
