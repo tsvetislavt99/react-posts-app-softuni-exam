@@ -1,3 +1,5 @@
+import './Banner.css';
+
 function Banner({ isHome }) {
   if (isHome === '/') {
     return (

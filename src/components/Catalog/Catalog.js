@@ -1,3 +1,5 @@
+import './Catalog.css';
+
 function Catalog() {
   return (
     <div class='page-section'>

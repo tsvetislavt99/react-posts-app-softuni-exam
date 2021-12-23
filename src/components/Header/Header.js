@@ -1,4 +1,5 @@
 import { useLocation, Link } from 'react-router-dom';
+import './Header.css';
 import Banner from './Banner/Banner';
 
 function Header() {
