@@ -54,13 +54,18 @@ function Header() {
                 </Link>
               </li>
               <li className='nav-item'>
-                <Link className='nav-link' to='contact.html'>
-                  Contact
+                <Link className='nav-link' to='/register'>
+                  Sign up
                 </Link>
               </li>
               <li className='nav-item'>
-                <Link className='btn btn-primary ml-lg-2' to='#'>
-                  Free Analytics
+                <Link className='nav-link' to='/profile'>
+                  Profile
+                </Link>
+              </li>
+              <li className='nav-item'>
+                <Link className='btn btn-primary ml-lg-2' to='/login'>
+                  Sign in
                 </Link>
               </li>
             </ul>

@@ -114,35 +114,6 @@ function AsideSection(postId) {
             </div>
           </div>
         </div>
-
-        <div className='widget-box'>
-          <h4 className='widget-title'>Tag Cloud</h4>
-          <div className='divider'></div>
-
-          <div className='tag-clouds'>
-            <a href='#' className='tag-cloud-link'>
-              Projects
-            </a>
-            <a href='#' className='tag-cloud-link'>
-              Design
-            </a>
-            <a href='#' className='tag-cloud-link'>
-              Travel
-            </a>
-            <a href='#' className='tag-cloud-link'>
-              Brand
-            </a>
-            <a href='#' className='tag-cloud-link'>
-              Trending
-            </a>
-            <a href='#' className='tag-cloud-link'>
-              Knowledge
-            </a>
-            <a href='#' className='tag-cloud-link'>
-              Food
-            </a>
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -7,18 +7,23 @@ import Home from './components/Home/Home';
 import Catalog from './components/Catalog/Catalog';
 import Contact from './components/Contact/Contact';
 import PostDetails from './components/PostDetails/PostDetails';
+import Register from './components/Register/Register';
+import Login from './components/Login/Login';
+import UserProfile from './components/UserProfile/UserProfile';
 
 function App() {
   return (
     <div className='App'>
       <Header />
-
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about-us' element={<About />} />
         <Route path='/blog' element={<Catalog />} />
         <Route path='/contact-us' element={<Contact />} />
         <Route path='/blog/:postId' element={<PostDetails />} />
+        <Route path='/register/' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/profile' element={<UserProfile />} />
       </Routes>
 
       <Footer />

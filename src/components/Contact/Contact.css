@@ -1,0 +1,10 @@
+.hr-form-pins {
+  width: 70%;
+  border: 1px solid;
+  margin: 30px auto 30px auto;
+}
+
+.map {
+  max-height: 400px;
+  margin-top: 150px;
+}

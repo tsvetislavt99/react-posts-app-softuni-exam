@@ -1,9 +1,10 @@
 import GoogleMapComponent from '../GoogleMap/GoogleMapComponent';
+import './Contact.css';
 
 function Contact() {
   return (
     <div className='page-section contact-us'>
-      <div className='container'>
+      <div className='container wow fadeInUp'>
         <div className='row text-center align-items-center'>
           <div className='col-lg-4 py-3'>
             <div className='display-4 text-center text-primary'>
@@ -48,8 +49,8 @@ function Contact() {
           </div>
         </div>
       </div>
-
-      <div className='container-fluid mt-4'>
+      <hr className='hr-form-pins' />
+      <div className='container mt-4 wow fadeInUp'>
         <div className='row'>
           <div className='col-lg-6 mb-5 mb-lg-0'>
             <form action='#' className='contact-form py-5 px-lg-5'>
@@ -115,7 +116,7 @@ function Contact() {
               </div>
             </form>
           </div>
-          <div className='col-lg-6 mb-5 mb-lg-0'>
+          <div className='col-lg-6 mb-5 mb-lg-0 map'>
             <div className='maps-container'>
               <GoogleMapComponent />
             </div>
