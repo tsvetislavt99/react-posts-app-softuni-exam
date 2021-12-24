@@ -1,4 +1,4 @@
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, NavLink } from 'react-router-dom';
 import './Header.css';
 import Banner from './Banner/Banner';
 
@@ -17,9 +17,9 @@ function Header() {
         className='navbar navbar-expand-lg navbar-light bg-white sticky'
         data-offset='500'>
         <div className='container'>
-          <Link to='/' className='navbar-brand'>
+          <NavLink to='/' className='navbar-brand'>
             <span className='text-primary'>React</span>ive Blog
-          </Link>
+          </NavLink>
 
           <button
             className='navbar-toggler'
@@ -33,40 +33,45 @@ function Header() {
 
           <div className='navbar-collapse collapse' id='navbarContent'>
             <ul className='navbar-nav ml-auto'>
-              <li className='nav-item active'>
-                <Link className='nav-link' to='/'>
+              <li className='nav-item'>
+                <NavLink className='nav-link' to='/'>
                   Home
-                </Link>
+                </NavLink>
               </li>
               <li className='nav-item'>
-                <Link className='nav-link' to='/blog'>
+                <NavLink className='nav-link' to='/blog'>
                   Blog
-                </Link>
+                </NavLink>
               </li>
               <li className='nav-item'>
-                <Link className='nav-link' to='/about-us'>
+                <NavLink className='nav-link' to='/about-us'>
                   About
-                </Link>
+                </NavLink>
               </li>
               <li className='nav-item'>
-                <Link className='nav-link' to='/contact-us'>
+                <NavLink className='nav-link' to='/contact-us'>
                   Contact
-                </Link>
+                </NavLink>
               </li>
               <li className='nav-item'>
-                <Link className='nav-link' to='/register'>
+                <NavLink className='nav-link' to='/register'>
                   Sign up
-                </Link>
+                </NavLink>
               </li>
               <li className='nav-item'>
-                <Link className='nav-link' to='/profile'>
+                <NavLink className='nav-link' to='/profile'>
                   Profile
-                </Link>
+                </NavLink>
               </li>
               <li className='nav-item'>
-                <Link className='btn btn-primary ml-lg-2' to='/login'>
+                <NavLink className='nav-link' to='/public-profile'>
+                  Public Profile
+                </NavLink>
+              </li>
+              <li className='nav-item'>
+                <NavLink className='btn btn-primary ml-lg-2' to='/login'>
                   Sign in
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </div>

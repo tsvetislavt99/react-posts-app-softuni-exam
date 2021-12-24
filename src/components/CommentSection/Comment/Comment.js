@@ -1,6 +1,6 @@
 function Comment() {
   return (
-    <div className='mt-2'>
+    <div className='m-3'>
       <div className='d-flex flex-row p-3'>
         <img
           alt='user_avatar'

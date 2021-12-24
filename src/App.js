@@ -10,6 +10,7 @@ import PostDetails from './components/PostDetails/PostDetails';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import UserProfile from './components/UserProfile/UserProfile';
+import PublicUserProfile from './components/PublicUserProfile/PublicUserProfile';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/blog/:postId' element={<PostDetails />} />
         <Route path='/register/' element={<Register />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/public-profile' element={<PublicUserProfile />} />
         <Route path='/profile' element={<UserProfile />} />
       </Routes>
 

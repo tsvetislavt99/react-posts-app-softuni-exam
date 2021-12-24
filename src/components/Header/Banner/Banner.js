@@ -29,9 +29,6 @@ function Banner({ isHome }) {
               </div>
             </div>
           </div>
-          <a href='#about' className='btn-scroll' data-role='smoothscroll'>
-            <span className='mai-arrow-down'></span>
-          </a>
         </div>
       </div>
     );

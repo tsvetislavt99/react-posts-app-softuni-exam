@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import postService from '../../services/postService';
-import TopPostCard from './TopPostCard/TopPostCard';
+import PostCard from '../PostCard/PostCard';
 
 function UserProfile() {
   const [topPosts, setTopPosts] = useState([]);
@@ -117,7 +117,7 @@ function UserProfile() {
           </div>
           <div className='row'>
             {topPosts.map((post) => (
-              <TopPostCard post={post} />
+              <PostCard post={post} />
             ))}
           </div>
         </div>
