@@ -1525,12 +1525,12 @@ a.text-dark:focus {
 }
 
 .page-footer p a {
-  color: #35bb78;
+  color: #84d9f8;
   transition: color 0.2s ease;
 }
 
 .page-footer p a:hover {
-  color: #40d48a;
+  color: #84d9f8;
 }
 
 .page-footer h3,
@@ -1568,6 +1568,10 @@ a.text-dark:focus {
 .footer-link:hover {
   color: #fff;
   text-decoration: none;
+}
+
+.footer-button {
+  border-radius: 20px;
 }
 
 .social-media-button a {

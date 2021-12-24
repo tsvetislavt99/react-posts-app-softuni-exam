@@ -21,7 +21,11 @@ function Banner({ isHome }) {
             </div>
             <div className='col-md-6 py-5 wow zoomIn'>
               <div className='img-fluid text-center banner-spin'>
-                <img src='../assets/img/react.svg' alt='' />
+                <img
+                  className='spinning-react-logo'
+                  src='../assets/img/react.svg'
+                  alt=''
+                />
               </div>
             </div>
           </div>

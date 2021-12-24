@@ -69,7 +69,9 @@ function Footer() {
                 className='form-control'
                 placeholder='Enter your email..'
               />
-              <button type='submit' className='btn btn-success btn-block mt-2'>
+              <button
+                type='submit'
+                className='footer-button btn btn-info btn-block mt-2'>
                 Subscribe
               </button>
             </form>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import postService from '../../services/postService';
 import PostCard from '../PostCard/PostCard';
 
@@ -26,9 +27,9 @@ function Home() {
           ))}
 
           <div className='col-12 mt-4 text-center wow fadeInUp'>
-            <a href='blog.html' className='btn btn-primary'>
+            <Link to='/blog' className='btn btn-primary'>
               View More
-            </a>
+            </Link>
           </div>
         </div>
       </div>
