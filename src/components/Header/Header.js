@@ -69,6 +69,11 @@ function Header() {
                 </NavLink>
               </li>
               <li className='nav-item'>
+                <NavLink className='nav-link' to='/create'>
+                  Create a post
+                </NavLink>
+              </li>
+              <li className='nav-item'>
                 <NavLink className='btn btn-primary ml-lg-2' to='/login'>
                   Sign in
                 </NavLink>

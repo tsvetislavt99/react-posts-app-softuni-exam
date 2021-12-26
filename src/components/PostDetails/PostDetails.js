@@ -16,28 +16,12 @@ function PostDetails() {
         .getPostById(postId)
         .then((receivedPost) => setPost({ ...receivedPost, isLoading: false }));
     }, 5000);
-  }, []);
-
-  console.log(post);
-
-  const { author } = post;
+  }, [postId]);
 
   if (post.isLoading) {
     return (
       <div className='page-section pt-5'>
         <div className='container'>
-          <nav aria-label='Breadcrumb'>
-            <ul className='breadcrumb p-0 mb-0 bg-transparent'>
-              <li className='breadcrumb-item'>
-                <a href='index.html'>Home</a>
-              </li>
-              <li className='breadcrumb-item'>
-                <a href='blog.html'>Blog</a>
-              </li>
-              <li className='breadcrumb-item active'></li>
-            </ul>
-          </nav>
-
           <div className='row'>
             <div className='col-lg-8'>
               <div className='blog-single-wrap'>
@@ -74,7 +58,7 @@ function PostDetails() {
                     <span className='icon'>
                       <span className='mai-time-outline'></span>
                     </span>
-                    <a href='#'>dd/mm/yyyy</a>
+                    <a href='#'>yyyy-mm-dd</a>
                   </div>
                   <div className='post-comment-count ml-2'>
                     <span className='icon'>
@@ -156,7 +140,7 @@ function PostDetails() {
                     <span className='icon'>
                       <span className='mai-time-outline'></span>
                     </span>{' '}
-                    <a href='#'>{post.dataOfCreation}</a>
+                    <a href='#'>{post.dateOfCreation.substring(0, 10)}</a>
                   </div>
                   <div className='post-comment-count ml-2'>
                     <span className='icon'>

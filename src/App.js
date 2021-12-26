@@ -11,6 +11,7 @@ import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import UserProfile from './components/UserProfile/UserProfile';
 import PublicUserProfile from './components/PublicUserProfile/PublicUserProfile';
+import CreatePost from './components/CreatePost/CreatePost';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/public-profile' element={<PublicUserProfile />} />
         <Route path='/profile' element={<UserProfile />} />
+        <Route path='/create' element={<CreatePost />} />
       </Routes>
 
       <Footer />

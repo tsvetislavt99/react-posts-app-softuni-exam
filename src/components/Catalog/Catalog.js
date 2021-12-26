@@ -1,7 +1,21 @@
 import './Catalog.css';
+import { useState, useEffect } from 'react';
 import PostCard from '../PostCard/PostCard';
+import postService from '../../services/postService';
 
 function Catalog() {
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    postService.getAllPosts().then((newPosts) => {
+      setPosts((oldPosts) => [...oldPosts, ...newPosts]);
+      setIsLoading(false);
+    });
+  }, []);
+
+  console.log(posts);
+
   return (
     <div className='page-section'>
       <div className='container'>
@@ -34,44 +48,10 @@ function Catalog() {
         </div>
 
         <div className='row my-5'>
-          {
-            //<PostCard />
-          }
+          {posts.map((post) => (
+            <PostCard key={post._id} post={post} />
+          ))}
         </div>
-
-        <nav aria-label='Page Navigation'>
-          <ul className='pagination justify-content-center'>
-            <li className='page-item disabled'>
-              <a
-                className='page-link'
-                href='#'
-                tabIndex='-1'
-                aria-disabled='true'>
-                Previous
-              </a>
-            </li>
-            <li className='page-item'>
-              <a className='page-link' href='#'>
-                1
-              </a>
-            </li>
-            <li className='page-item active' aria-current='page'>
-              <a className='page-link' href='#'>
-                2 <span className='sr-only'>(current)</span>
-              </a>
-            </li>
-            <li className='page-item'>
-              <a className='page-link' href='#'>
-                3
-              </a>
-            </li>
-            <li className='page-item'>
-              <a className='page-link' href='#'>
-                Next
-              </a>
-            </li>
-          </ul>
-        </nav>
       </div>
     </div>
   );

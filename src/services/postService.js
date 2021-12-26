@@ -16,10 +16,15 @@ const getPostById = async (postId) => {
   );
 };
 
+const getAllPosts = async () => {
+  return fetch(`http://localhost:3001/posts/all`).then((res) => res.json());
+};
+
 const postService = {
   getTopThree,
   getPostById,
   getTopThreeWithout,
+  getAllPosts,
 };
 
 export default postService;
