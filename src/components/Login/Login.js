@@ -25,7 +25,7 @@ function Login({ onLogin }) {
           setShowError(true);
           setTimeout(() => {
             setShowError(false);
-          }, 2000);
+          }, 1000);
         });
     } else {
       setShowError(true);
