@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
 import './App.css';
-import { AuthContext } from './components/contexts/AuthContext';
+import useLocalStorage from './hooks/useLocalStorage';
+import { AuthContext } from './contexts/AuthContext';
 import About from './components/About/About';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
@@ -14,21 +14,28 @@ import Login from './components/Login/Login';
 import UserProfile from './components/UserProfile/UserProfile';
 import PublicUserProfile from './components/PublicUserProfile/PublicUserProfile';
 import CreatePost from './components/CreatePost/CreatePost';
+import Logout from './components/Logout/Logout';
+
+const initialAuthState = {
+  userId: '',
+  userEmail: '',
+};
 
 function App() {
-  const [auth, setAuth] = useState({
-    token: '',
-    userEmail: '',
-    userId: '',
-  });
-  const onLogin = (authData) => {
-    setAuth(authData);
+  const [user, setUser] = useLocalStorage('user', initialAuthState);
+
+  const login = (authData) => {
+    setUser(authData);
+  };
+
+  const logout = () => {
+    setUser('user', initialAuthState);
   };
 
   return (
-    <AuthContext.Provider value={''}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       <div className='App'>
-        <Header userEmail={auth.userEmail} />
+        <Header />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about-us' element={<About />} />
@@ -36,7 +43,8 @@ function App() {
           <Route path='/contact-us' element={<Contact />} />
           <Route path='/blog/:postId' element={<PostDetails />} />
           <Route path='/register/' element={<Register />} />
-          <Route path='/login' element={<Login onLogin={onLogin} />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/logout' element={<Logout />} />
           <Route path='/public-profile' element={<PublicUserProfile />} />
           <Route path='/profile' element={<UserProfile />} />
           <Route path='/create' element={<CreatePost />} />

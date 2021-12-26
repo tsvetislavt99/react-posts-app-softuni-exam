@@ -20,11 +20,20 @@ const getAllPosts = async () => {
   return fetch(`http://localhost:3001/posts/all`).then((res) => res.json());
 };
 
+const createPost = async (postData) => {
+  return fetch(`http://localhost:3001/posts/create`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(postData),
+  });
+};
+
 const postService = {
   getTopThree,
   getPostById,
   getTopThreeWithout,
   getAllPosts,
+  createPost,
 };
 
 export default postService;

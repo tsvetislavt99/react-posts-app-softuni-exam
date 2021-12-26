@@ -1,13 +1,18 @@
 import './Login.css';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Notification from '../Notification/Notification';
 import { useNavigate } from 'react-router-dom';
-import * as authService from '../../services/authService';
+import authService from '../../services/authService';
+import { AuthContext } from '../../contexts/AuthContext';
 
-function Login({ onLogin }) {
-  const navigate = useNavigate();
+function Login() {
+  const { login } = useContext(AuthContext);
   const [isValid, setIsValid] = useState({ fields: {}, errors: {} });
-  const [showError, setShowError] = useState(false);
+  const [showError, setShowError] = useState({
+    state: false,
+    errorMessage: '',
+  });
+  const navigate = useNavigate();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -16,21 +21,24 @@ function Login({ onLogin }) {
     if (handleValidation()) {
       authService
         .login(email, password)
-        .then((data) => {
-          console.log(data);
-          onLogin(data);
+        .then((authData) => {
+          login(authData);
           navigate('/');
         })
         .catch((error) => {
-          setShowError(true);
+          console.log(error);
+          setShowError({ state: true, errorMessage: error.message });
           setTimeout(() => {
-            setShowError(false);
+            setShowError({ state: false, errorMessage: '' });
           }, 1000);
         });
     } else {
-      setShowError(true);
+      setShowError({
+        state: true,
+        errorMessage: 'Invalid e-mail or password!',
+      });
       setTimeout(() => {
-        setShowError(false);
+        setShowError({ state: false, errorMessage: '' });
       }, 2000);
     }
   };
@@ -86,10 +94,8 @@ function Login({ onLogin }) {
 
   return (
     <>
-      {showError ? (
-        <Notification variant={'danger'}>
-          Invalid e-mail or password!
-        </Notification>
+      {showError.state ? (
+        <Notification variant={'danger'}>{showError.errorMessage}</Notification>
       ) : (
         ''
       )}

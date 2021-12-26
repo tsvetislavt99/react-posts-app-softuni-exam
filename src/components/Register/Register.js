@@ -1,12 +1,16 @@
 import './Register.css';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import authService from '../../services/authService';
 import Notification from '../Notification/Notification';
-import { Navigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 
 function Register() {
+  const { login } = useContext(AuthContext);
   const [isValid, setIsValid] = useState({ fields: {}, errors: {} });
   const [showError, setShowError] = useState(false);
-  const [success, setSuccess] = useState(false);
+
+  const navigate = useNavigate();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -14,10 +18,25 @@ function Register() {
     const { firstName, lastName, email, password, rePassword } =
       Object.fromEntries(formData);
     if (handleValidation(password, rePassword)) {
-      setSuccess(true);
-      setTimeout(() => {
-        setSuccess(false);
-      }, 2000);
+      authService
+        .register({
+          firstName,
+          lastName,
+          email,
+          password,
+          rePassword,
+        })
+        .then((authData) => {
+          login(authData);
+          navigate('/');
+        })
+        .catch((error) => {
+          console.log(error);
+          setShowError(true);
+          setTimeout(() => {
+            setShowError(false);
+          }, 1000);
+        });
     } else {
       setShowError(true);
       setTimeout(() => {
@@ -179,16 +198,6 @@ function Register() {
           <Notification variant={'danger'}>
             Sign up failed! Please check your input!
           </Notification>
-        </>
-      ) : (
-        ''
-      )}
-      {success ? (
-        <>
-          <Notification variant={'success'}>
-            Account created successfully!
-          </Notification>
-          <Navigate to='/login' />
         </>
       ) : (
         ''

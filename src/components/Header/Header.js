@@ -1,10 +1,14 @@
+import { useContext } from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
 import './Header.css';
 import Banner from './Banner/Banner';
 import GuestOptions from './GuestOptions';
 import UserOptions from './UserOptions';
 
-function Header({ userEmail }) {
+import { AuthContext } from '../../contexts/AuthContext';
+
+function Header() {
+  const { user } = useContext(AuthContext);
   const location = useLocation();
 
   const isHome = () => {
@@ -32,7 +36,7 @@ function Header({ userEmail }) {
           </button>
 
           <div className='navbar-collapse collapse' id='navbarContent'>
-            {userEmail ? <UserOptions /> : <GuestOptions />}
+            {user.userEmail ? <UserOptions /> : <GuestOptions />}
           </div>
         </div>
       </nav>

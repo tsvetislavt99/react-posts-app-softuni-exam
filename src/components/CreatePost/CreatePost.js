@@ -1,10 +1,12 @@
 import './CreatePost.css';
 import { Editor } from '@tinymce/tinymce-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Notification from '../Notification/Notification';
-import { Navigate } from 'react-router-dom';
+import postService from '../../services/postService';
 
 function CreatePost() {
+  const navigate = useNavigate();
   const [isValid, setIsValid] = useState({ fields: {}, errors: {} });
   const [showError, setShowError] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -16,6 +18,11 @@ function CreatePost() {
       const { postTitle, postImage, postBody, categories } =
         Object.fromEntries(formData);
       setSuccess(true);
+      postService
+        .createPost({ postTitle, postImage, postBody, categories })
+        .then((result) => {
+          navigate('/blog');
+        });
       setTimeout(() => {
         setSuccess(false);
       }, 2000);
@@ -146,7 +153,6 @@ function CreatePost() {
           <Notification variant={'success'}>
             Post created successfully!
           </Notification>
-          <Navigate to='' />
         </>
       ) : (
         ''
