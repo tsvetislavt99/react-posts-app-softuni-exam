@@ -14,6 +14,8 @@ import PublicUserProfile from './components/PublicUserProfile/PublicUserProfile'
 import CreatePost from './components/CreatePost/CreatePost';
 
 function App() {
+  const onLogin = () => {};
+
   return (
     <div className='App'>
       <Header />
@@ -24,7 +26,7 @@ function App() {
         <Route path='/contact-us' element={<Contact />} />
         <Route path='/blog/:postId' element={<PostDetails />} />
         <Route path='/register/' element={<Register />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/login' element={<Login onLogin={onLogin} />} />
         <Route path='/public-profile' element={<PublicUserProfile />} />
         <Route path='/profile' element={<UserProfile />} />
         <Route path='/create' element={<CreatePost />} />

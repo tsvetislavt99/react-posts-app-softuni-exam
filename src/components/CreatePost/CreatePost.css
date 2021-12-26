@@ -6,15 +6,3 @@
   border-radius: 20px;
   padding: 5px;
 }
-
-.notValid {
-  border-color: red;
-}
-
-.notValid:focus {
-  border-color: red;
-}
-
-.error-message {
-  margin-bottom: 0;
-}

@@ -14,8 +14,6 @@ function Catalog() {
     });
   }, []);
 
-  console.log(posts);
-
   return (
     <div className='page-section'>
       <div className='container'>

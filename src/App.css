@@ -1971,3 +1971,24 @@ body {
   padding-left: 14px !important;
   border-radius: 40px 0 0 40px;
 }
+
+.notification {
+  margin: 0 25% 0;
+  width: 50%;
+  max-width: 50%;
+  position: fixed;
+  z-index: 999;
+  top: 100px;
+}
+
+.notValid {
+  border-color: red;
+}
+
+.notValid:focus {
+  border-color: red;
+}
+
+.error-message {
+  margin-bottom: 0;
+}
