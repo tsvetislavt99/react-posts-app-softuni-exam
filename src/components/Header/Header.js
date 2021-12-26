@@ -1,15 +1,15 @@
 import { useLocation, NavLink } from 'react-router-dom';
 import './Header.css';
 import Banner from './Banner/Banner';
+import GuestOptions from './GuestOptions';
+import UserOptions from './UserOptions';
 
-function Header() {
+function Header({ userEmail }) {
   const location = useLocation();
 
   const isHome = () => {
     return location.pathname;
   };
-
-  console.log(location.pathname);
 
   return (
     <header>
@@ -32,53 +32,7 @@ function Header() {
           </button>
 
           <div className='navbar-collapse collapse' id='navbarContent'>
-            <ul className='navbar-nav ml-auto'>
-              <li className='nav-item'>
-                <NavLink className='nav-link' to='/'>
-                  Home
-                </NavLink>
-              </li>
-              <li className='nav-item'>
-                <NavLink className='nav-link' to='/blog'>
-                  Blog
-                </NavLink>
-              </li>
-              <li className='nav-item'>
-                <NavLink className='nav-link' to='/about-us'>
-                  About
-                </NavLink>
-              </li>
-              <li className='nav-item'>
-                <NavLink className='nav-link' to='/contact-us'>
-                  Contact
-                </NavLink>
-              </li>
-              <li className='nav-item'>
-                <NavLink className='nav-link' to='/register'>
-                  Sign up
-                </NavLink>
-              </li>
-              <li className='nav-item'>
-                <NavLink className='nav-link' to='/profile'>
-                  Profile
-                </NavLink>
-              </li>
-              <li className='nav-item'>
-                <NavLink className='nav-link' to='/public-profile'>
-                  Public Profile
-                </NavLink>
-              </li>
-              <li className='nav-item'>
-                <NavLink className='nav-link' to='/create'>
-                  Create a post
-                </NavLink>
-              </li>
-              <li className='nav-item'>
-                <NavLink className='btn btn-primary ml-lg-2' to='/login'>
-                  Sign in
-                </NavLink>
-              </li>
-            </ul>
+            {userEmail ? <UserOptions /> : <GuestOptions />}
           </div>
         </div>
       </nav>
