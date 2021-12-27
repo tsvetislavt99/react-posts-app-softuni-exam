@@ -28,9 +28,14 @@ const cookies = new Cookies();
 function App() {
   const [user, setUser] = useLocalStorage('user', initialAuthState);
 
+  console.log(cookies.getAll());
+
   const login = (authData) => {
     console.log(authData);
-    cookies.set('auth_token', authData.token);
+    cookies.set('auth_token', authData.token, {
+      secure: true,
+      sameSite: 'none',
+    });
     setUser({
       userId: authData.userId,
       userEmail: authData.userEmail,
