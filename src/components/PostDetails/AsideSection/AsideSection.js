@@ -1,4 +1,17 @@
-function AsideSection({ categories }) {
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import postService from '../../../services/postService';
+import BlogItem from './BlogItem/BlogItem';
+
+function AsideSection({ categories, postId }) {
+  const [topPosts, setTopPosts] = useState();
+
+  useEffect(() => {
+    postService
+      .getTopThreeWithout(postId)
+      .then((receivedPosts) => setTopPosts(receivedPosts));
+  }, [postId]);
+
   return (
     <div className='col-lg-4'>
       <div className='widget'>
@@ -13,74 +26,12 @@ function AsideSection({ categories }) {
         </div>
 
         <div className='widget-box'>
-          <h4 className='widget-title'>Recent Posts By Author</h4>
+          <h4 className='widget-title'>Hot Posts</h4>
           <div className='divider'></div>
 
-          <div className='blog-item'>
-            <a className='post-thumb' href=''>
-              <img src='../assets/img/blog/blog-1.jpg' alt='' />
-            </a>
-            <div className='content'>
-              <h6 className='post-title'>
-                <a href='#'>Even the all-powerful Pointing has no control</a>
-              </h6>
-              <div className='meta'>
-                <a href='#'>
-                  <span className='mai-calendar'></span> July 12, 2018
-                </a>
-                <a href='#'>
-                  <span className='mai-person'></span> Admin
-                </a>
-                <a href='#'>
-                  <span className='mai-chatbubbles'></span> 19
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className='blog-item'>
-            <a className='post-thumb' href=''>
-              <img src='../assets/img/blog/blog-2.jpg' alt='' />
-            </a>
-            <div className='content'>
-              <h6 className='post-title'>
-                <a href='#'>Even the all-powerful Pointing has no control</a>
-              </h6>
-              <div className='meta'>
-                <a href='#'>
-                  <span className='mai-calendar'></span> July 12, 2018
-                </a>
-                <a href='#'>
-                  <span className='mai-person'></span> Admin
-                </a>
-                <a href='#'>
-                  <span className='mai-chatbubbles'></span> 19
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className='blog-item'>
-            <a className='post-thumb' href=''>
-              <img src='../assets/img/blog/blog-3.jpg' alt='' />
-            </a>
-            <div className='content'>
-              <h6 className='post-title'>
-                <a href='#'>Even the all-powerful Pointing has no control</a>
-              </h6>
-              <div className='meta'>
-                <a href='#'>
-                  <span className='mai-calendar'></span> July 12, 2018
-                </a>
-                <a href='#'>
-                  <span className='mai-person'></span> Admin
-                </a>
-                <a href='#'>
-                  <span className='mai-chatbubbles'></span> 19
-                </a>
-              </div>
-            </div>
-          </div>
+          {topPosts
+            ? topPosts.map((post) => <BlogItem key={post._id} post={post} />)
+            : ''}
         </div>
       </div>
     </div>

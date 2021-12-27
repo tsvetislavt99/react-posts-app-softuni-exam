@@ -21,6 +21,7 @@ function CreatePost() {
       postService
         .createPost({ postTitle, postImage, postBody, categories })
         .then((result) => {
+          //TODO: Add notifications
           navigate('/blog');
         });
       setTimeout(() => {

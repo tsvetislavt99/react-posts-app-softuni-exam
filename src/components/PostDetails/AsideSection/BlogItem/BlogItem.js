@@ -1,23 +1,24 @@
-function BlogItem(post) {
+import { Link } from 'react-router-dom';
+
+function BlogItem({ post }) {
   return (
     <div className='blog-item'>
-      <a className='post-thumb' href=''>
-        <img src='../assets/img/blog/blog-1.jpg' alt='' />
-      </a>
+      <Link className='post-thumb' to={`/blog/${post._id}`}>
+        <img src={post.imageUrl} alt='' />
+      </Link>
       <div className='content'>
         <h6 className='post-title'>
-          <a href='#'>Even the all-powerful Pointing has no control</a>
+          <Link to={`/blog/${post._id}`}>{post.title}</Link>
         </h6>
         <div className='meta'>
-          <a href='#'>
-            <span className='mai-calendar'></span> July 12, 2018
-          </a>
-          <a href='#'>
-            <span className='mai-person'></span> Admin
-          </a>
-          <a href='#'>
-            <span className='mai-chatbubbles'></span> 19
-          </a>
+          <p style={{ margin: 0 }}>
+            <span className='mai-calendar'></span>{' '}
+            {post.dateOfCreation.substring(0, 10)}
+          </p>
+          <Link to='#'>
+            <span className='mai-person'></span> {post.author.firstName}
+          </Link>
+          <span className='mai-chatbubbles'></span> {post.comments.length}
         </div>
       </div>
     </div>

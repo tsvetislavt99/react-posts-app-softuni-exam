@@ -8,15 +8,20 @@ import AsideSection from './AsideSection/AsideSection';
 
 function PostDetails() {
   const { postId } = useParams();
-
-  const [post, setPost] = useState({ isLoading: true });
+  const [post, setPost] = useState({
+    isLoading: true,
+  });
 
   useEffect(() => {
-    setTimeout(() => {
-      postService
-        .getPostById(postId)
-        .then((receivedPost) => setPost({ ...receivedPost, isLoading: false }));
-    }, 1000);
+    postService
+      .getPostById(postId)
+      .then((receivedPost) => setPost({ ...receivedPost, isLoading: false }));
+
+    return () => {
+      setPost({
+        isLoading: true,
+      });
+    };
   }, [postId]);
 
   if (post.isLoading) {
@@ -64,7 +69,7 @@ function PostDetails() {
                 </div>
               </div>
             </div>
-            <AsideSection categories={null} />
+            <AsideSection postId={postId} categories={null} />
           </div>
         </div>
       </div>
@@ -73,18 +78,6 @@ function PostDetails() {
     return (
       <div className='page-section pt-5'>
         <div className='container'>
-          <nav aria-label='Breadcrumb'>
-            <ul className='breadcrumb p-0 mb-0 bg-transparent'>
-              <li className='breadcrumb-item'>
-                <a href='index.html'>Home</a>
-              </li>
-              <li className='breadcrumb-item'>
-                <a href='blog.html'>Blog</a>
-              </li>
-              <li className='breadcrumb-item active'>{post.title}</li>
-            </ul>
-          </nav>
-
           <div className='row'>
             <div className='col-lg-8'>
               <div className='blog-single-wrap'>
@@ -123,9 +116,9 @@ function PostDetails() {
                 </div>
               </div>
 
-              <CommentSection comments={post.comments} />
+              <CommentSection postId={postId} comments={post.comments} />
             </div>
-            <AsideSection categories={post.categories} />
+            <AsideSection postId={postId} categories={post.categories} />
           </div>
         </div>
       </div>

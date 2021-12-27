@@ -1,4 +1,24 @@
+import { useState } from 'react';
+import postService from '../../../services/postService';
+
 function Comment({ commentData }) {
+  const [rating, setRating] = useState(commentData.rating);
+  const onLikeHandler = () => {
+    postService
+      .likeComment(commentData._id)
+      .then((res) => setRating(res.newRating))
+      //TODO: Add notification
+      .catch((error) => console.log(error));
+  };
+
+  const onDislikeHandler = () => {
+    postService
+      .dislikeComment(commentData._id)
+      .then((res) => setRating(res.newRating))
+      //TODO: Add notification
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className='col-md-12  m-3'>
       <div style={{ display: 'flex' }} className='p-3'>
@@ -24,12 +44,14 @@ function Comment({ commentData }) {
           <div className='d-flex flex-row user-feed'>
             <span className='wish'>
               <button
+                onClick={onLikeHandler}
                 style={{ color: '#84d9f8' }}
                 className='mai-heart mr-2 like-button'></button>
-              {commentData.rating}
+              {rating}
             </span>
             <span className='ml-3'>
               <button
+                onClick={onDislikeHandler}
                 style={{ color: '#ff4943' }}
                 className='mai-thumbs-down mr-2 like-button'></button>
             </span>
