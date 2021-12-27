@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3001/auth';
+const BASE_URL = 'http://www.tsvetislav-blog-backend.tech/auth';
 
 const login = async (email, password) => {
   const res = await fetch(`${BASE_URL}/login`, {
