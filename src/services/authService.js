@@ -1,4 +1,4 @@
-const BASE_URL = 'https://softuni-react-exam-backend.herokuapp.com/auth';
+const BASE_URL = 'http://localhost:3001/auth';
 
 const login = async (email, password) => {
   const res = await fetch(`${BASE_URL}/login`, {
@@ -20,9 +20,9 @@ const login = async (email, password) => {
 };
 
 const logout = async () => {
-  return await fetch(`${BASE_URL}/logout`, { credentials: 'include' })
-    .then((res) => res.json())
-    .then((res) => console.log(res));
+  return await fetch(`${BASE_URL}/logout`, { credentials: 'include' }).then(
+    (res) => res.json()
+  );
 };
 
 const register = async ({
