@@ -1336,7 +1336,7 @@ a.text-dark:focus {
 .divider {
   display: block;
   margin-top: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
   width: 32px;
   height: 3px;
   border-radius: 40px;
@@ -1991,4 +1991,13 @@ body {
 
 .error-message {
   margin-bottom: 0;
+}
+
+.like-button {
+  border: 0;
+  background: none;
+}
+
+.like-button:focus {
+  outline: none;
 }

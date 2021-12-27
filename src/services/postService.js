@@ -21,10 +21,18 @@ const getAllPosts = async () => {
 };
 
 const createPost = async (postData) => {
+  console.log(postData);
+  const post = {
+    title: postData.postTitle,
+    categories: Array.from(postData.categories.replaceAll(' ', '').split(',')),
+    imageUrl: postData.postImage,
+    description: postData.postBody,
+  };
   return fetch(`http://localhost:3001/posts/create`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(postData),
+    credentials: 'include',
+    body: JSON.stringify(post),
   });
 };
 

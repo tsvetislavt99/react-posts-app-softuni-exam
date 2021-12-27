@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 import './PostDetails.css';
 import postService from '../../services/postService';
 import CommentSection from '../CommentSection/CommentSection';
@@ -15,7 +16,7 @@ function PostDetails() {
       postService
         .getPostById(postId)
         .then((receivedPost) => setPost({ ...receivedPost, isLoading: false }));
-    }, 5000);
+    }, 1000);
   }, [postId]);
 
   if (post.isLoading) {
@@ -35,21 +36,6 @@ function PostDetails() {
                         <img className='skeleton' src={post.imageUrl} alt='' />
                       </div>
                     </div>
-
-                    <div className='post-sharer'>
-                      <a href='#' className='btn social-facebook'>
-                        <span className='mai-logo-facebook-f'></span>
-                      </a>
-                      <a href='#' className='btn social-twitter'>
-                        <span className='mai-logo-twitter'></span>
-                      </a>
-                      <a href='#' className='btn social-linkedin'>
-                        <span className='mai-logo-linkedin'></span>
-                      </a>
-                      <a href='#' className='btn'>
-                        <span className='mai-mail'></span>
-                      </a>
-                    </div>
                   </div>
                 </div>
                 <div className='post-title skeleton skeleton-heading'></div>
@@ -58,13 +44,13 @@ function PostDetails() {
                     <span className='icon'>
                       <span className='mai-time-outline'></span>
                     </span>
-                    <a href='#'>yyyy-mm-dd</a>
+                    yyyy-mm-dd
                   </div>
                   <div className='post-comment-count ml-2'>
                     <span className='icon'>
                       <span className='mai-chatbubbles-outline'></span>
                     </span>{' '}
-                    <a href='#'>Comments</a>
+                    Comments
                   </div>
                 </div>
                 <div className='post-content'>
@@ -77,10 +63,8 @@ function PostDetails() {
                   <div className='skeleton skeleton-text'></div>
                 </div>
               </div>
-
-              <CommentSection />
             </div>
-            <AsideSection postId={null} />
+            <AsideSection categories={null} />
           </div>
         </div>
       </div>
@@ -111,25 +95,10 @@ function PostDetails() {
                   <div className='meta-header'>
                     <div className='post-author'>
                       <div className='avatar'>
-                        <img src='../assets/img/person/person_1.jpg' alt='' />
+                        <img src={post.author?.avatar} alt='' />
                       </div>
                       <a href='/'>
                         {post.author?.firstName} {post.author?.lastName}
-                      </a>
-                    </div>
-
-                    <div className='post-sharer'>
-                      <a href='#' className='btn social-facebook'>
-                        <span className='mai-logo-facebook-f'></span>
-                      </a>
-                      <a href='#' className='btn social-twitter'>
-                        <span className='mai-logo-twitter'></span>
-                      </a>
-                      <a href='#' className='btn social-linkedin'>
-                        <span className='mai-logo-linkedin'></span>
-                      </a>
-                      <a href='#' className='btn'>
-                        <span className='mai-mail'></span>
                       </a>
                     </div>
                   </div>
@@ -140,30 +109,23 @@ function PostDetails() {
                     <span className='icon'>
                       <span className='mai-time-outline'></span>
                     </span>{' '}
-                    <a href='#'>{post.dateOfCreation.substring(0, 10)}</a>
+                    {post.dateOfCreation.substring(0, 10)}
                   </div>
                   <div className='post-comment-count ml-2'>
                     <span className='icon'>
                       <span className='mai-chatbubbles-outline'></span>
                     </span>{' '}
-                    <a href='#'>4 Comments</a>
+                    {post.comments.length} Comments
                   </div>
                 </div>
                 <div className='post-content'>
-                  <p>{post.description}</p>
-                  <blockquote className='quote'>
-                    “I'm selfish, impatient and a little insecure. I make
-                    mistakes, I am out of control and at times hard to handle.
-                    But if you can't handle me at my worst, then you sure as
-                    hell don't deserve me at my best.”
-                    <span className='author'>― Marilyn Monroe</span>
-                  </blockquote>
+                  <p>{parse(post.description)}</p>
                 </div>
               </div>
 
-              <CommentSection />
+              <CommentSection comments={post.comments} />
             </div>
-            <AsideSection postId={post._id} />
+            <AsideSection categories={post.categories} />
           </div>
         </div>
       </div>

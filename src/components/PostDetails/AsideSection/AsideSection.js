@@ -1,51 +1,19 @@
-import { useEffect, useState } from 'react';
-import postService from '../../../services/postService';
-
-function AsideSection(postId) {
-  const [post, setPosts] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-
+function AsideSection({ categories }) {
   return (
     <div className='col-lg-4'>
       <div className='widget'>
         <div className='widget-box'>
-          <form action='#' className='search-widget'>
-            <input
-              type='text'
-              className='form-control'
-              placeholder='Enter keyword..'
-            />
-            <button type='submit' className='btn btn-primary btn-block'>
-              Search
-            </button>
-          </form>
-        </div>
-
-        <div className='widget-box'>
-          <h4 className='widget-title'>Category</h4>
+          <h4 className='widget-title'>Categories</h4>
           <div className='divider'></div>
-
           <ul className='categories'>
-            <li>
-              <a href='#'>LifeStyle</a>
-            </li>
-            <li>
-              <a href='#'>Food</a>
-            </li>
-            <li>
-              <a href='#'>Healthy</a>
-            </li>
-            <li>
-              <a href='#'>Sports</a>
-            </li>
-            <li>
-              <a href='#'>Entertainment</a>
-            </li>
+            {categories
+              ? categories.map((category, i) => <li key={i}>{category}</li>)
+              : ''}
           </ul>
         </div>
 
         <div className='widget-box'>
-          <h4 className='widget-title'>Recent Post</h4>
+          <h4 className='widget-title'>Recent Posts By Author</h4>
           <div className='divider'></div>
 
           <div className='blog-item'>

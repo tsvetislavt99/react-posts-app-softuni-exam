@@ -19,12 +19,14 @@ import Logout from './components/Logout/Logout';
 const initialAuthState = {
   userId: '',
   userEmail: '',
+  userAvatar: '',
 };
 
 function App() {
   const [user, setUser] = useLocalStorage('user', initialAuthState);
 
   const login = (authData) => {
+    console.log(authData);
     setUser(authData);
   };
 

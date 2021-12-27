@@ -1,10 +1,10 @@
-function Comment() {
+function Comment({ commentData }) {
   return (
-    <div className='m-3'>
-      <div className='d-flex flex-row p-3'>
+    <div className='col-md-12  m-3'>
+      <div style={{ display: 'flex' }} className='p-3'>
         <img
           alt='user_avatar'
-          src='https://i.imgur.com/zQZSWrt.jpg'
+          src={commentData.author?.avatar}
           width='40'
           height='40'
           className='rounded-circle mr-3'
@@ -12,24 +12,26 @@ function Comment() {
         <div className='w-100'>
           <div className='d-flex justify-content-between align-items-center'>
             <div className='d-flex flex-row align-items-center'>
-              <span className='mr-2'>Brian selter</span>
-              <small className='c-badge'>Top Comment</small>
+              <span className='mr-2'>
+                {commentData.author?.firstName} {commentData.author?.lastName}
+              </span>
             </div>
-            <small>12h ago</small>
+            <small>{commentData.dateOfCreation.substring(0, 10)}</small>
           </div>
           <p className='text-justify comment-text mb-0'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam
+            {commentData.comment}
           </p>
           <div className='d-flex flex-row user-feed'>
             <span className='wish'>
-              <span className='mai-heart mr-2'></span>24
+              <button
+                style={{ color: '#84d9f8' }}
+                className='mai-heart mr-2 like-button'></button>
+              {commentData.rating}
             </span>
             <span className='ml-3'>
-              <span
-                style={{ color: 'red' }}
-                className='mai-thumbs-down mr-2'></span>
+              <button
+                style={{ color: '#ff4943' }}
+                className='mai-thumbs-down mr-2 like-button'></button>
             </span>
           </div>
         </div>

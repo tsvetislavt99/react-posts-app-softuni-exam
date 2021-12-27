@@ -29,13 +29,13 @@ function UserOptions() {
         </NavLink>
       </li>
       <li className='nav-item'>
-        <NavLink className='btn btn-primary ml-lg-2' to='/create'>
-          Create a post!
+        <NavLink className='nav-link' to='/logout'>
+          Logout
         </NavLink>
       </li>
       <li className='nav-item'>
-        <NavLink className='nav-link' to='/logout'>
-          Logout
+        <NavLink className='btn btn-primary ml-lg-2' to='/create'>
+          Create a post!
         </NavLink>
       </li>
     </ul>
