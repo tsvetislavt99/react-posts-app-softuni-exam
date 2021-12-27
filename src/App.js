@@ -44,7 +44,10 @@ function App() {
   };
 
   const logout = () => {
-    cookies.remove('auth_token');
+    cookies.remove('auth_token', {
+      secure: true,
+      sameSite: 'none',
+    });
     setUser('user', initialAuthState);
   };
 
