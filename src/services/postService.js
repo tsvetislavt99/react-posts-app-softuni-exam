@@ -1,21 +1,33 @@
 const BASE_URL = 'http://localhost:3001';
 
-const getTopThree = async () => {
-  return fetch(`${BASE_URL}/posts/topPosts`).then((res) => res.json());
-};
-
-const getTopThreeWithout = async (postId) => {
-  return await fetch(`${BASE_URL}/posts/${postId}/topPosts`).then((res) =>
-    res.json()
+const getMyPosts = async () => {
+  return fetch(`${BASE_URL}/posts/byMe`, { credentials: 'include' }).then(
+    (res) => res.json()
   );
 };
 
+const getTopThree = async () => {
+  return fetch(`${BASE_URL}/posts/topPosts`, { credentials: 'include' }).then(
+    (res) => res.json()
+  );
+};
+
+const getTopThreeWithout = async (postId) => {
+  return await fetch(`${BASE_URL}/posts/${postId}/topPosts`, {
+    credentials: 'include',
+  }).then((res) => res.json());
+};
+
 const getPostById = async (postId) => {
-  return fetch(`${BASE_URL}/posts/${postId}/details`).then((res) => res.json());
+  return fetch(`${BASE_URL}/posts/${postId}/details`, {
+    credentials: 'include',
+  }).then((res) => res.json());
 };
 
 const getAllPosts = async () => {
-  return fetch(`${BASE_URL}/posts/all`).then((res) => res.json());
+  return fetch(`${BASE_URL}/posts/all`, { credentials: 'include' }).then(
+    (res) => res.json()
+  );
 };
 
 const createPost = async (postData) => {
@@ -52,7 +64,9 @@ const addComment = async (postId, commentText) => {
 };
 
 const getComments = async (postId) => {
-  const res = await fetch(`${BASE_URL}/posts/${postId}/getComments`);
+  const res = await fetch(`${BASE_URL}/posts/${postId}/getComments`, {
+    credentials: 'include',
+  });
 
   const resJson = await res.json();
 
@@ -92,6 +106,7 @@ const dislikeComment = async (commentId) => {
 };
 
 const postService = {
+  getMyPosts,
   getTopThree,
   getPostById,
   getTopThreeWithout,

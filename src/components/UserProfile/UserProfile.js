@@ -8,7 +8,7 @@ function UserProfile() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    postService.getTopThree().then((posts) => {
+    postService.getMyPosts().then((posts) => {
       setTopPosts((oldPosts) => [...oldPosts, ...posts]);
       setIsLoading((isLoading) => !isLoading);
     });
