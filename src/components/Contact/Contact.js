@@ -38,12 +38,12 @@ function Contact() {
             <p className='mb-3 font-weight-medium text-lg'>Email Address</p>
             <p className='mb-0'>
               <a href='#' className='text-secondary'>
-                support@seogram.com
+                support@react-blog.com
               </a>
             </p>
             <p className='mb-0'>
               <a href='#' className='text-secondary'>
-                hello@seogram.com
+                hello@react-blog.com
               </a>
             </p>
           </div>

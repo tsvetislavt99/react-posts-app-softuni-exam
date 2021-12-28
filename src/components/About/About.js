@@ -5,9 +5,7 @@ function About() {
         <div className='container'>
           <div className='row align-items-center wow fadeInUp'>
             <div className='col-lg-6 py-3'>
-              <h2 className='title-section'>
-                The number #1 SEO Service Company
-              </h2>
+              <h2 className='title-section'>A good React blog</h2>
               <div className='divider'></div>
 
               <p>
@@ -28,7 +26,11 @@ function About() {
             </div>
             <div className='col-lg-6 py-3'>
               <div className='img-fluid py-3 text-center'>
-                <img src='../assets/img/about_frame.png' alt='' />
+                <img
+                  style={{ maxWidth: '100%' }}
+                  src='/assets/img/about_frame.png'
+                  alt=''
+                />
               </div>
             </div>
           </div>
