@@ -28,7 +28,7 @@ function Register() {
         })
         .then((authData) => {
           login(authData);
-          navigate('/');
+          navigate('/login');
         })
         .catch((error) => {
           console.log(error);
