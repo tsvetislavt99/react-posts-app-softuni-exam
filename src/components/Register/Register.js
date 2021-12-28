@@ -27,7 +27,6 @@ function Register() {
           rePassword,
         })
         .then((authData) => {
-          login(authData);
           navigate('/login');
         })
         .catch((error) => {
