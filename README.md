@@ -91,9 +91,9 @@ Reactive Blog is a web blog application.
 
 - Dynamic Form Validation
 - Demonstrates use of programming concepts - React Hooks, Context API
-
-## Additional improvements attempt
-
-- Good UI and UX
-- The application is deployed in Heroku and its Back-end is also deployed in Heroku on a separate dyno.
-- The application does not use local storage to hold the JWT Token
+- Integration of the following APIs:
+  - Goole Maps
+  - Tiny MCE (For better experience when creating the blog body)
+- Good UI and UX (Fully responsive)
+- The application is deployed in Heroku and its Back-end is also deployed in Heroku on a separate dyno
+- Good authentication, the application does not use local storage to hold the JWT Token
