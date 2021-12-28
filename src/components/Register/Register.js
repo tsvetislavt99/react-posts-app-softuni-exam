@@ -112,8 +112,6 @@ function Register() {
     const nameRegExp = new RegExp(/^[a-z ,.'-]+$/i);
     let errors = {};
 
-    console.log(!nameRegExp.test(e.target.value) && e.target.value.length < 1);
-
     if (nameRegExp.test(e.target.value)) {
       const fields = isValid.fields;
       fields[e.target.name] = e.target.name;

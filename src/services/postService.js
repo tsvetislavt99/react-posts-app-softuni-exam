@@ -6,6 +6,12 @@ const getMyPosts = async () => {
   );
 };
 
+const getMyTopPost = async () => {
+  return fetch(`${BASE_URL}/posts/myTopPost`, { credentials: 'include' }).then(
+    (res) => res.json()
+  );
+};
+
 const getTopThree = async () => {
   return fetch(`${BASE_URL}/posts/topPosts`, { credentials: 'include' }).then(
     (res) => res.json()
@@ -107,6 +113,7 @@ const dislikeComment = async (commentId) => {
 
 const postService = {
   getMyPosts,
+  getMyTopPost,
   getTopThree,
   getPostById,
   getTopThreeWithout,

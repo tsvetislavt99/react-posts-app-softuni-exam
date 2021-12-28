@@ -50,7 +50,14 @@ const register = async ({
   }
 };
 
+const getUser = async (userId) => {
+  return await fetch(`${BASE_URL}/users/${userId}`, {
+    credentials: 'include',
+  }).then((res) => res.json());
+};
+
 const authService = {
+  getUser,
   login,
   logout,
   register,

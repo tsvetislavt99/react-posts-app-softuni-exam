@@ -1,22 +1,37 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import postService from '../../services/postService';
 import PostCard from '../PostCard/PostCard';
 
+import { AuthContext } from '../../contexts/AuthContext';
+import authService from '../../services/authService';
+
 function UserProfile() {
-  const [topPosts, setTopPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user } = useContext(AuthContext);
+  const [myPosts, setMyPosts] = useState({
+    isLoading: true,
+  });
+  const [topPost, setTopPost] = useState({
+    isLoading: true,
+  });
+  const [userInfo, setUserInfo] = useState({
+    isLoading: true,
+  });
 
   useEffect(() => {
     postService.getMyPosts().then((posts) => {
-      setTopPosts((oldPosts) => [...oldPosts, ...posts]);
-      setIsLoading((isLoading) => !isLoading);
+      setMyPosts(posts);
     });
-  }, []);
+    postService.getMyTopPost().then((post) => {
+      setTopPost(...post);
+    });
+    authService.getUser(user.userId).then((user) => {
+      setUserInfo(user);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.userId]);
 
-  console.log(topPosts);
-
-  if (isLoading) {
+  if (myPosts.isLoading || topPost.isLoading || userInfo.isLoading) {
     return <h1>Loading......</h1>;
   } else {
     return (
@@ -32,9 +47,15 @@ function UserProfile() {
                     className='rounded-circle img-fluid'
                     style={{ width: '150px' }}
                   />
-                  <h5 className='my-3'>John Smith</h5>
-                  <p className='text-muted mb-1'>Full Stack Developer</p>
-                  <p className='text-muted mb-4'>Bay Area, San Francisco, CA</p>
+                  <h5 className='my-3'>
+                    {userInfo.firstName} {userInfo.lastName}
+                  </h5>
+                  <p className='text-muted mb-1'>
+                    {userInfo.jobTitle ? userInfo.jobTitle : '-'}
+                  </p>
+                  <p className='text-muted mb-4'>
+                    {userInfo.address ? userInfo.address : '-'}
+                  </p>
                   <div className='d-flex justify-content-center mb-2'>
                     <button
                       type='button'
@@ -53,7 +74,7 @@ function UserProfile() {
                       <p className='mb-0'>First Name</p>
                     </div>
                     <div className='col-sm-9'>
-                      <p className='text-muted mb-0'>Johnatan</p>
+                      <p className='text-muted mb-0'>{userInfo.firstName}</p>
                     </div>
                   </div>
                   <hr />
@@ -63,7 +84,7 @@ function UserProfile() {
                       <p className='mb-0'>Last Name</p>
                     </div>
                     <div className='col-sm-9'>
-                      <p className='text-muted mb-0'>Smith</p>
+                      <p className='text-muted mb-0'>{userInfo.lastName}</p>
                     </div>
                   </div>
                   <hr />
@@ -72,7 +93,7 @@ function UserProfile() {
                       <p className='mb-0'>Email</p>
                     </div>
                     <div className='col-sm-9'>
-                      <p className='text-muted mb-0'>example@example.com</p>
+                      <p className='text-muted mb-0'>{userInfo.email}</p>
                     </div>
                   </div>
                   <hr />
@@ -81,7 +102,9 @@ function UserProfile() {
                       <p className='mb-0'>Aritcles posted</p>
                     </div>
                     <div className='col-sm-9'>
-                      <p className='text-muted mb-0'>14</p>
+                      <p className='text-muted mb-0'>
+                        {userInfo.posts?.length}
+                      </p>
                     </div>
                   </div>
                   <hr />
@@ -91,7 +114,7 @@ function UserProfile() {
                     </div>
                     <div className='col-sm-9'>
                       <p className='text-muted mb-0'>
-                        <Link to='/'>Why do monkeys pee? </Link>
+                        <Link to={`/blog/${topPost._id}`}>{topPost.title}</Link>
                       </p>
                     </div>
                   </div>
@@ -102,7 +125,7 @@ function UserProfile() {
                     </div>
                     <div className='col-sm-9'>
                       <p className='text-muted mb-0'>
-                        Bay Area, San Francisco, CA
+                        {userInfo.address ? userInfo.address : '-'}
                       </p>
                     </div>
                   </div>
@@ -112,12 +135,12 @@ function UserProfile() {
           </div>
           <div className='row'>
             <h5 className='col-md-12 my-3' style={{ textAlign: 'center' }}>
-              Top Posts
+              My Posts
             </h5>
           </div>
           <div className='row'>
-            {topPosts.map((post) => (
-              <PostCard post={post} />
+            {myPosts.map((post) => (
+              <PostCard key={post._id} post={post} />
             ))}
           </div>
         </div>

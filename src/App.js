@@ -26,8 +26,6 @@ function App() {
   const [user, setUser] = useLocalStorage('user', initialAuthState);
 
   const login = (authData) => {
-    console.log(authData);
-
     setUser({
       userId: authData.userId,
       userEmail: authData.userEmail,
