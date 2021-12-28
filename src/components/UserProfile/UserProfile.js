@@ -20,10 +20,18 @@ function UserProfile() {
 
   useEffect(() => {
     postService.getMyPosts().then((posts) => {
-      setMyPosts(posts);
+      if (!posts) {
+        setMyPosts(null);
+      } else {
+        setMyPosts(posts);
+      }
     });
     postService.getMyTopPost().then((post) => {
-      setTopPost(...post);
+      if (!post) {
+        setTopPost(null);
+      } else {
+        setTopPost(...post);
+      }
     });
     authService.getUser(user.userId).then((user) => {
       setUserInfo(user);
@@ -31,7 +39,7 @@ function UserProfile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.userId]);
 
-  if (myPosts.isLoading || topPost.isLoading || userInfo.isLoading) {
+  if (myPosts.isLoading || topPost?.isLoading || userInfo?.isLoading) {
     return <h1>Loading......</h1>;
   } else {
     return (
@@ -114,7 +122,13 @@ function UserProfile() {
                     </div>
                     <div className='col-sm-9'>
                       <p className='text-muted mb-0'>
-                        <Link to={`/blog/${topPost._id}`}>{topPost.title}</Link>
+                        {topPost ? (
+                          <Link to={`/blog/${topPost._id}`}>
+                            {topPost.title}
+                          </Link>
+                        ) : (
+                          <span>You have no posts yet :(</span>
+                        )}
                       </p>
                     </div>
                   </div>
@@ -135,13 +149,13 @@ function UserProfile() {
           </div>
           <div className='row'>
             <h5 className='col-md-12 my-3' style={{ textAlign: 'center' }}>
-              My Posts
+              {myPosts.length === 0 ? '' : 'My Posts'}
             </h5>
           </div>
           <div className='row'>
-            {myPosts.map((post) => (
-              <PostCard key={post._id} post={post} />
-            ))}
+            {myPosts
+              ? myPosts.map((post) => <PostCard key={post._id} post={post} />)
+              : ''}
           </div>
         </div>
       </section>
