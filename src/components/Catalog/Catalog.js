@@ -16,7 +16,7 @@ function Catalog() {
 
   return (
     <div className='page-section'>
-      <div className='container'>
+      <div className='container wow fadeInLeft'>
         <div className='row'>
           <div className='col-sm-10'>
             <form action='#' className='form-search-blog'>

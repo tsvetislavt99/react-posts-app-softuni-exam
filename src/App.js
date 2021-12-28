@@ -15,6 +15,7 @@ import UserProfile from './components/UserProfile/UserProfile';
 import PublicUserProfile from './components/PublicUserProfile/PublicUserProfile';
 import CreatePost from './components/CreatePost/CreatePost';
 import Logout from './components/Logout/Logout';
+import NotFound from './components/NotFound/NotFound';
 
 const initialAuthState = {
   userId: '',
@@ -53,6 +54,7 @@ function App() {
           <Route path='/public-profile' element={<PublicUserProfile />} />
           <Route path='/profile' element={<UserProfile />} />
           <Route path='/create' element={<CreatePost />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
 
         <Footer />
