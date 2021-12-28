@@ -15,7 +15,6 @@ import UserProfile from './components/UserProfile/UserProfile';
 import PublicUserProfile from './components/PublicUserProfile/PublicUserProfile';
 import CreatePost from './components/CreatePost/CreatePost';
 import Logout from './components/Logout/Logout';
-import Cookies from 'universal-cookie';
 
 const initialAuthState = {
   userId: '',
@@ -23,19 +22,12 @@ const initialAuthState = {
   userAvatar: '',
 };
 
-const cookies = new Cookies();
-
 function App() {
   const [user, setUser] = useLocalStorage('user', initialAuthState);
 
-  console.log(cookies.getAll());
-
   const login = (authData) => {
     console.log(authData);
-    cookies.set('auth_token', authData.token, {
-      secure: true,
-      sameSite: 'none',
-    });
+
     setUser({
       userId: authData.userId,
       userEmail: authData.userEmail,
@@ -44,10 +36,6 @@ function App() {
   };
 
   const logout = () => {
-    cookies.remove('auth_token', {
-      secure: true,
-      sameSite: 'none',
-    });
     setUser('user', initialAuthState);
   };
 
