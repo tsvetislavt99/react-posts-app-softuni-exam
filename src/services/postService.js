@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3001';
+const BASE_URL = 'https://softuni-react-exam-backend.herokuapp.com';
 
 const getMyPosts = async () => {
   return fetch(`${BASE_URL}/posts/byMe`, { credentials: 'include' }).then(
