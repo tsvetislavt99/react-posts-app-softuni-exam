@@ -1,12 +1,15 @@
 import { Link, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import parse from 'html-react-parser';
 import './PostDetails.css';
 import postService from '../../services/postService';
 import CommentSection from '../CommentSection/CommentSection';
 import AsideSection from './AsideSection/AsideSection';
 
+import { AuthContext } from '../../contexts/AuthContext';
+
 function PostDetails() {
+  const { user } = useContext(AuthContext);
   const { postId } = useParams();
   const [rating, setRating] = useState(0);
   const [post, setPost] = useState({
@@ -119,21 +122,27 @@ function PostDetails() {
                         {post.author?.firstName} {post.author?.lastName}
                       </Link>
                     </div>
-                    <div className='d-flex flex-row user-feed'>
-                      <span className='wish'>
-                        <button
-                          style={{ color: '#84d9f8' }}
-                          onClick={onLikeHandler}
-                          className='mai-heart mr-2 like-button'></button>
-                      </span>
-                      {rating}
-                      <span className='ml-3'>
-                        <button
-                          style={{ color: '#ff4943' }}
-                          onClick={onDislikeHandler}
-                          className='mai-thumbs-down mr-2 like-button'></button>
-                      </span>
-                    </div>
+                    {user.userId ? (
+                      <div className='d-flex flex-row user-feed'>
+                        <span className='wish'>
+                          <button
+                            style={{ color: '#84d9f8' }}
+                            onClick={onLikeHandler}
+                            className='mai-heart mr-2 like-button'></button>
+                        </span>
+                        {rating}
+                        <span className='ml-3'>
+                          <button
+                            style={{ color: '#ff4943' }}
+                            onClick={onDislikeHandler}
+                            className='mai-thumbs-down mr-2 like-button'></button>
+                        </span>
+                      </div>
+                    ) : (
+                      <div className='d-flex flex-row user-feed'>
+                        Post Rating: {rating}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <h1 className='post-title'>{post.title}</h1>
