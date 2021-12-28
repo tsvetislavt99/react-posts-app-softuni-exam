@@ -1,70 +1,99 @@
-# Getting Started with Create React App
+# Reactive Blog
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Try the website here: [https://react-posts.herokuapp.com/](https://react-posts.herokuapp.com/)
 
-## Available Scripts
+Reactive Blog is a web blog application.
 
-In the project directory, you can run:
+## Public Part (Accessible without authentication) - access control
 
-### `npm start`
+- The public part of the project is visible without authentication
+- Home page
+- Navigation menu: Giving access only to the pages, intended for users with free access - home page, blog, user login and registration
+- Blog: Showing all blog posts and their content
+- Access to detailed information about each listing - image, author name, description, category, prise and comments.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Private Part (Available for Registered Users) - access control
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Registered users have personal areas in the web application accessible after their successful login:
 
-### `npm test`
+1. Home page giving access to their profile page.
+2. Profile page containing information about the current user:
+   - Personal data, email, etc.
+   - Posts created by this user
+3. Access to listing details page
+4. Create new listing - which add it to the personal collection of listings and to the main library.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies
 
-### `npm run build`
+- React.JS, NodeJS, ExpressJS, MongoDB, JavaScript, CSS, HTML
+- Heroku
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Screens (Pages)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Home Page** (home page) - home page for unregistered users
+- **Login / Register** - registration with first and last name, e-mail and password
+- **Blog** - list of all available blog posts
+- **Profile Page** - information about the current user
+- **Details Page** - a page giving information about a specific blog post
+- **Create Page** - page for creating new blog post
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Implementation
 
-### `npm run eject`
+### Data structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### Collections
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Users
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```javascript
+{
+    firstName: String,
+    lastName: String,
+    email: String,
+    password: String,
+    avatar: String, //(Set to a default one by the server for now)
+    posts: Array, //(Array of the posts the user has created)
+}
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Blog Post
 
-## Learn More
+```javascript
+{
+    title: String,
+    categories: Array,
+    imageUrl: String,
+    dateOfCreation: Date,
+    description: String, //(This keeps the blog body as a String of HTML that is parsed to HTML on the Client Side)
+    author: Pointer<User>,
+    upvotes: Array, //(Array of user IDs that upvoted the post. Can be populated if needed with user infos without the password!)
+    downvotes: Array, //(Array of user IDs that downvotes the post. Can be populated if needed with user infos without the password!)
+    rating: Number,
+    comments: Array, //Comment structure can be found below
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+}
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Comment
 
-### Code Splitting
+```javascript
+{
+    author: Pointer<User>,
+    comment: String, //(The comment body)
+    dateOfCreation: Date,
+    upvotes: Array, //(Array of user IDs that upvoted the comment. Can be populated if needed with user infos without the password!)
+    downvotes: Array, //(Array of user IDs that downvotes the comment. Can be populated if needed with user infos without the password!)
+    rating: Number,
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Additional functionality
 
-### Analyzing the Bundle Size
+- Dynamic Form Validation
+- Demonstrates use of programming concepts - React Hooks, Context API
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Additional improvements attempt
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Good UI and UX
+- The application is deployed in Heroku and its Back-end is also deployed in Heroku on a separate dyno.
+- The application does not use local storage to hold the JWT Token
