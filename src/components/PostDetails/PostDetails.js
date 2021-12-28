@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import parse from 'html-react-parser';
 import './PostDetails.css';
@@ -8,6 +8,7 @@ import AsideSection from './AsideSection/AsideSection';
 
 function PostDetails() {
   const { postId } = useParams();
+  const [rating, setRating] = useState(0);
   const [post, setPost] = useState({
     isLoading: true,
   });
@@ -15,7 +16,13 @@ function PostDetails() {
   useEffect(() => {
     postService
       .getPostById(postId)
-      .then((receivedPost) => setPost({ ...receivedPost, isLoading: false }));
+      .then((receivedPost) => {
+        setPost({ ...receivedPost, isLoading: false });
+        return receivedPost;
+      })
+      .then((res) => {
+        setRating(res.rating);
+      });
 
     return () => {
       setPost({
@@ -23,6 +30,24 @@ function PostDetails() {
       });
     };
   }, [postId]);
+
+  const onLikeHandler = () => {
+    postService
+      .likePost(post._id)
+      .then((res) => setRating((oldRating) => res.newRating))
+      //TODO: Add notification
+      .catch((error) => console.log(error));
+  };
+
+  const onDislikeHandler = () => {
+    postService
+      .dislikePost(post._id)
+      .then((res) => {
+        setRating((oldRating) => res.newRating);
+      })
+      //TODO: Add notification
+      .catch((error) => console.log(error));
+  };
 
   if (post.isLoading) {
     return (
@@ -90,9 +115,24 @@ function PostDetails() {
                       <div className='avatar'>
                         <img src={post.author?.avatar} alt='' />
                       </div>
-                      <a href='/'>
+                      <Link to='/404'>
                         {post.author?.firstName} {post.author?.lastName}
-                      </a>
+                      </Link>
+                    </div>
+                    <div className='d-flex flex-row user-feed'>
+                      <span className='wish'>
+                        <button
+                          style={{ color: '#84d9f8' }}
+                          onClick={onLikeHandler}
+                          className='mai-heart mr-2 like-button'></button>
+                      </span>
+                      {rating}
+                      <span className='ml-3'>
+                        <button
+                          style={{ color: '#ff4943' }}
+                          onClick={onDislikeHandler}
+                          className='mai-thumbs-down mr-2 like-button'></button>
+                      </span>
                     </div>
                   </div>
                 </div>

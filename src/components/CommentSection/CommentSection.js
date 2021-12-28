@@ -51,27 +51,31 @@ function CommentSection({ comments, postId }) {
               <h6>Comments</h6>
             </div>
             <div className='mt-3 d-flex flex-row align-items-center p-3 form-color'>
-              <form
-                onSubmit={onCommentSubmitHandler}
-                style={{ display: 'flex', width: '100%' }}>
-                <img
-                  alt='user_avatar'
-                  src={user.userAvatar}
-                  width='50'
-                  className='rounded-circle mr-2'
-                />
-                <input
-                  type='text'
-                  className={
-                    isValid.errors['comment']
-                      ? 'form-control notValid'
-                      : 'form-control'
-                  }
-                  name='comment'
-                  onChange={onCommentChangeHandler}
-                  placeholder='Enter your comment...'
-                />
-              </form>
+              {user.userId ? (
+                <form
+                  onSubmit={onCommentSubmitHandler}
+                  style={{ display: 'flex', width: '100%' }}>
+                  <img
+                    alt='user_avatar'
+                    src={user.userAvatar}
+                    width='50'
+                    className='rounded-circle mr-2'
+                  />
+                  <input
+                    type='text'
+                    className={
+                      isValid.errors['comment']
+                        ? 'form-control notValid'
+                        : 'form-control'
+                    }
+                    name='comment'
+                    onChange={onCommentChangeHandler}
+                    placeholder='Enter your comment...'
+                  />
+                </form>
+              ) : (
+                ''
+              )}
             </div>
           </div>
         </div>

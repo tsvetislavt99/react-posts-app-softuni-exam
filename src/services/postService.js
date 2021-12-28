@@ -51,6 +51,34 @@ const createPost = async (postData) => {
   });
 };
 
+const likePost = async (postId) => {
+  const res = await fetch(`${BASE_URL}/posts/${postId}/upvote`, {
+    credentials: 'include',
+  });
+
+  const resJson = await res.json();
+
+  if (res.ok) {
+    return resJson;
+  } else {
+    throw resJson;
+  }
+};
+
+const dislikePost = async (postId) => {
+  const res = await fetch(`${BASE_URL}/posts/${postId}/downvote`, {
+    credentials: 'include',
+  });
+
+  const resJson = await res.json();
+
+  if (res.ok) {
+    return resJson;
+  } else {
+    throw resJson;
+  }
+};
+
 const addComment = async (postId, commentText) => {
   const comment = { comment: commentText };
   const res = await fetch(`${BASE_URL}/posts/${postId}/comment`, {
@@ -118,6 +146,8 @@ const postService = {
   getPostById,
   getTopThreeWithout,
   getAllPosts,
+  likePost,
+  dislikePost,
   createPost,
   addComment,
   getComments,
