@@ -1,27 +1,30 @@
 import { createContext, useContext } from 'react';
-
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useCookies } from 'react-cookie';
 
 const initialAuthState = {
   userId: '',
   userEmail: '',
+  userAvatar: '',
 };
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useLocalStorage('user', initialAuthState);
+  const [cookies, setCookie, removeCookie] = useCookies(['userInfo']);
 
   const login = (authData) => {
-    setUser(authData);
+    setCookie('userInfo', {
+      ...authData,
+    });
   };
 
   const logout = () => {
-    setUser(initialAuthState);
+    removeCookie('userInfo');
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{ user: cookies.userInfo || initialAuthState, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

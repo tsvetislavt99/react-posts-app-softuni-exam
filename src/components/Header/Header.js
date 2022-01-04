@@ -10,7 +10,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 function Header() {
   const { user } = useContext(AuthContext);
   const location = useLocation();
-
+  
   const isHome = () => {
     return location.pathname;
   };
