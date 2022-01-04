@@ -10,7 +10,7 @@ Reactive Blog is a web blog application.
 - Home page
 - Navigation menu: Giving access only to the pages, intended for users with free access - home page, blog, user login and registration
 - Blog: Showing all blog posts and their content
-- Access to detailed information about each listing - image, author name, description, category, prise and comments.
+- Access to detailed information about each listing - image, author name, description, category and comments.
 
 ## Private Part (Available for Registered Users) - access control
 
@@ -20,8 +20,8 @@ Reactive Blog is a web blog application.
 2. Profile page containing information about the current user:
    - Personal data, email, etc.
    - Posts created by this user
-3. Access to listing details page
-4. Create new listing - which add it to the personal collection of listings and to the main library.
+3. Access to post details page
+4. Create new post.
 
 ## Technologies
 
@@ -96,4 +96,4 @@ Reactive Blog is a web blog application.
   - Tiny MCE (For better experience when creating the blog body)
 - Good UI and UX (Fully responsive)
 - The application is deployed in Heroku and its Back-end is also deployed in Heroku on a separate dyno
-- Good authentication, the application does not use local storage to hold the JWT Token
+- Good authentication, the application uses a Server-side cookie to check the requests and a client-side cookie to keep userName and userId
