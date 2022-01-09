@@ -1,3 +1,4 @@
+//CSS
 import styles from './NotFound.module.css';
 
 function NotFound() {

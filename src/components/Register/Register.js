@@ -1,9 +1,14 @@
+//CSS
 import './Register.css';
+
+//Other
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from '../../services/authService';
-import Notification from '../Notification/Notification';
 import { AuthContext } from '../../contexts/AuthContext';
+
+//Components
+import Notification from '../Notification/Notification';
 
 function Register() {
   const { login } = useContext(AuthContext);

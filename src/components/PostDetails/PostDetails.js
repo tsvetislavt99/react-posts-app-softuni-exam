@@ -1,12 +1,16 @@
+//CSS
+import './PostDetails.css';
+
+//Other
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import parse from 'html-react-parser';
-import './PostDetails.css';
 import postService from '../../services/postService';
+import { AuthContext } from '../../contexts/AuthContext';
+
+//Components
 import CommentSection from '../CommentSection/CommentSection';
 import AsideSection from './AsideSection/AsideSection';
-
-import { AuthContext } from '../../contexts/AuthContext';
 
 function PostDetails() {
   const { user } = useContext(AuthContext);

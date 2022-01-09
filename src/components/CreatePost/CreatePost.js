@@ -1,9 +1,14 @@
+//CSS
 import './CreatePost.css';
+
+//Other
 import { Editor } from '@tinymce/tinymce-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Notification from '../Notification/Notification';
 import postService from '../../services/postService';
+
+//Components
+import Notification from '../Notification/Notification';
 
 function CreatePost() {
   const navigate = useNavigate();

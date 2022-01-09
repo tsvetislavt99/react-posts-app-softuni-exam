@@ -1,9 +1,14 @@
+//CSS
 import './Login.css';
+
+//Other
 import { useState, useContext } from 'react';
-import Notification from '../Notification/Notification';
 import { useNavigate } from 'react-router-dom';
 import authService from '../../services/authService';
 import { AuthContext } from '../../contexts/AuthContext';
+
+//Components
+import Notification from '../Notification/Notification';
 
 function Login() {
   const { login } = useContext(AuthContext);

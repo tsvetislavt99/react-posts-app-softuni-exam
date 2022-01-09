@@ -1,6 +1,6 @@
+//Other
 import { useState, useContext } from 'react';
 import postService from '../../../services/postService';
-
 import { AuthContext } from '../../../contexts/AuthContext';
 
 function Comment({ commentData }) {

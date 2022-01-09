@@ -1,16 +1,20 @@
+//CSS
+import './Header.css';
+
+//Other
 import { useContext } from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
-import './Header.css';
+import { AuthContext } from '../../contexts/AuthContext';
+
+//Components
 import Banner from './Banner/Banner';
 import GuestOptions from './GuestOptions';
 import UserOptions from './UserOptions';
 
-import { AuthContext } from '../../contexts/AuthContext';
-
 function Header() {
   const { user } = useContext(AuthContext);
   const location = useLocation();
-  
+
   const isHome = () => {
     return location.pathname;
   };

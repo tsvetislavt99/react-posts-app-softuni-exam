@@ -1,6 +1,9 @@
+//Other
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import postService from '../../services/postService';
+
+//Components
 import PostCard from '../PostCard/PostCard';
 
 function Home() {

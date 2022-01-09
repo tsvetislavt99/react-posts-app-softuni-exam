@@ -1,3 +1,4 @@
+//Other
 import { Link } from 'react-router-dom';
 
 function BlogItem({ post }) {

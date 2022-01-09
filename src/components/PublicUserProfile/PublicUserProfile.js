@@ -1,5 +1,8 @@
+//Other
 import { useState, useEffect } from 'react';
 import postService from '../../services/postService';
+
+//Components
 import PostListItem from './PostListItem/PostListItem';
 
 function PublicUserProfile() {

@@ -1,5 +1,8 @@
+//Other
 import { useEffect, useState } from 'react';
 import postService from '../../../services/postService';
+
+//Components
 import BlogItem from './BlogItem/BlogItem';
 
 function AsideSection({ categories, postId }) {

@@ -1,7 +1,12 @@
+//CSS
 import './Catalog.css';
+
+//Others
 import { useState, useEffect } from 'react';
-import PostCard from '../PostCard/PostCard';
 import postService from '../../services/postService';
+
+//Components
+import PostCard from '../PostCard/PostCard';
 
 function Catalog() {
   const [posts, setPosts] = useState([]);

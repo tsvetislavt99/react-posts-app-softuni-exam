@@ -1,6 +1,12 @@
-import { Routes, Route } from 'react-router-dom';
+//CSS
 import './App.css';
+
+//Other
+import { Routes, Route } from 'react-router-dom';
 import { AuthContext } from './contexts/AuthContext';
+import { CookiesProvider, useCookies } from 'react-cookie';
+
+//Components
 import About from './components/About/About';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
@@ -15,7 +21,6 @@ import PublicUserProfile from './components/PublicUserProfile/PublicUserProfile'
 import CreatePost from './components/CreatePost/CreatePost';
 import Logout from './components/Logout/Logout';
 import NotFound from './components/NotFound/NotFound';
-import { CookiesProvider, useCookies } from 'react-cookie';
 
 const initialAuthState = {
   userId: '',

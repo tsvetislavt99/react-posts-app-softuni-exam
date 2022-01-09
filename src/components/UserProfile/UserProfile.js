@@ -1,10 +1,12 @@
+//Other
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import postService from '../../services/postService';
-import PostCard from '../PostCard/PostCard';
-
 import { AuthContext } from '../../contexts/AuthContext';
 import authService from '../../services/authService';
+
+//Components
+import PostCard from '../PostCard/PostCard';
 
 function UserProfile() {
   const { user } = useContext(AuthContext);

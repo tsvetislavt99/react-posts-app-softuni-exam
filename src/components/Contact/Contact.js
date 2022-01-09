@@ -1,5 +1,8 @@
-import GoogleMapComponent from '../GoogleMap/GoogleMapComponent';
+//CSS
 import './Contact.css';
+
+//Other
+import GoogleMapComponent from '../GoogleMap/GoogleMapComponent';
 
 function Contact() {
   return (

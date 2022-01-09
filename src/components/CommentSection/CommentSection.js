@@ -1,8 +1,10 @@
+//Other
 import { useContext, useState } from 'react';
-import Comment from './Comment/Comment';
 import postService from '../../services/postService';
-
 import { AuthContext } from '../../contexts/AuthContext';
+
+//Components
+import Comment from './Comment/Comment';
 
 function CommentSection({ comments, postId }) {
   const [newComments, setNewComments] = useState(comments);

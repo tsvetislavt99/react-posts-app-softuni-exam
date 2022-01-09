@@ -1,3 +1,4 @@
+//Other
 import { useState, useEffect } from 'react';
 
 function Notification({ variant, children }) {

@@ -1,7 +1,9 @@
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+//CSS
 import './Banner.css';
 
+//Other
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 
 function Banner({ isHome }) {
