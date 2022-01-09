@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+import { CookiesProvider } from 'react-cookie';
 import { useCookies } from 'react-cookie';
 
 const initialAuthState = {
@@ -23,15 +24,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        user: cookies.userInfo || initialAuthState,
-        isAuthenticated: Boolean(cookies?.userInfo),
-        login,
-        logout,
-      }}>
-      {children}
-    </AuthContext.Provider>
+    <CookiesProvider>
+      <AuthContext.Provider
+        value={{
+          user: cookies.userInfo || initialAuthState,
+          isAuthenticated: Boolean(cookies?.userInfo),
+          login,
+          logout,
+        }}>
+        {children}
+      </AuthContext.Provider>
+    </CookiesProvider>
   );
 };
 
