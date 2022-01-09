@@ -2,19 +2,16 @@
 import './CreatePost.css';
 
 //Other
+import { useState, useContext } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import postService from '../../services/postService';
-
-//Components
-import Notification from '../Notification/Notification';
+import { types, NotificationContext } from '../../contexts/NotificationContext';
 
 function CreatePost() {
+  const { showNotification } = useContext(NotificationContext);
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState({ fields: {}, errors: {} });
-  const [showError, setShowError] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -22,21 +19,18 @@ function CreatePost() {
       const formData = new FormData(e.currentTarget);
       const { postTitle, postImage, postBody, categories } =
         Object.fromEntries(formData);
-      setSuccess(true);
+
       postService
         .createPost({ postTitle, postImage, postBody, categories })
         .then((result) => {
-          //TODO: Add notifications
+          showNotification(
+            `Successfully created post: ${postTitle} !`,
+            types.success
+          );
           navigate('/blog');
         });
-      setTimeout(() => {
-        setSuccess(false);
-      }, 2000);
     } else {
-      setShowError(true);
-      setTimeout(() => {
-        setShowError(false);
-      }, 2000);
+      showNotification(`Post could not be created!`, types.error);
     }
   };
 
@@ -146,170 +140,144 @@ function CreatePost() {
   };
 
   return (
-    <>
-      {showError ? (
-        <Notification variant={'danger'}>
-          Post not created! Please review your input!
-        </Notification>
-      ) : (
-        ''
-      )}
-      {success ? (
-        <>
-          <Notification variant={'success'}>
-            Post created successfully!
-          </Notification>
-        </>
-      ) : (
-        ''
-      )}
-      <div className='container register-container wow fadeInLeft'>
-        <div className='row d-flex justify-content-center align-items-center h-100'>
-          <div className='col-lg-12 col-xl-11'>
-            <div className='text-black'>
-              <div className='card-body p-md-8'>
-                <div className='row justify-content-center'>
-                  <div className='col-md-10 col-lg-6 col-xl-12 order-2 order-lg-1'>
-                    <p className='text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4'>
-                      Create a post
-                    </p>
-                    <form
-                      method='POST'
-                      onSubmit={submitHandler}
-                      className='mx-1 mx-md-4'>
-                      <div className='d-flex flex-row align-items-center mb-4'>
-                        <div className='flex-fill mb-0'>
-                          <label
-                            className='form-label ml-3'
-                            htmlFor='postTitle'>
-                            Post Title
-                          </label>
-                          <input
-                            name='postTitle'
-                            className={
-                              isValid.errors['postTitle']
+    <div className='container register-container wow fadeInLeft'>
+      <div className='row d-flex justify-content-center align-items-center h-100'>
+        <div className='col-lg-12 col-xl-11'>
+          <div className='text-black'>
+            <div className='card-body p-md-8'>
+              <div className='row justify-content-center'>
+                <div className='col-md-10 col-lg-6 col-xl-12 order-2 order-lg-1'>
+                  <p className='text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4'>
+                    Create a post
+                  </p>
+                  <form
+                    method='POST'
+                    onSubmit={submitHandler}
+                    className='mx-1 mx-md-4'>
+                    <div className='d-flex flex-row align-items-center mb-4'>
+                      <div className='flex-fill mb-0'>
+                        <label className='form-label ml-3' htmlFor='postTitle'>
+                          Post Title
+                        </label>
+                        <input
+                          name='postTitle'
+                          className={
+                            isValid.errors['postTitle']
+                              ? 'form-control notValid'
+                              : 'form-control'
+                          }
+                          placeholder='Why do we love functional components?'
+                          onChange={onTitleChangeHandler}
+                        />
+                        {isValid.errors['postTitle'] && (
+                          <p
+                            className='ml-3 error-message'
+                            style={{ color: 'red' }}>
+                            {isValid.errors['postTitle']}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    <div className='d-flex flex-row align-items-center mb-4'>
+                      <div className='flex-fill mb-0'>
+                        <label className='form-label ml-3' htmlFor='postImage'>
+                          Post Image (URL)
+                        </label>
+                        <input
+                          name='postImage'
+                          className={
+                            isValid.errors
+                              ? isValid.errors['postImage']
                                 ? 'form-control notValid'
                                 : 'form-control'
-                            }
-                            placeholder='Why do we love functional components?'
-                            onChange={onTitleChangeHandler}
-                          />
-                          {isValid.errors['postTitle'] && (
-                            <p
-                              className='ml-3 error-message'
-                              style={{ color: 'red' }}>
-                              {isValid.errors['postTitle']}
-                            </p>
-                          )}
-                        </div>
+                              : 'form-control'
+                          }
+                          placeholder='https://i.imgur.com/.....'
+                          onChange={onImageChangeHandler}
+                        />
+                        {isValid.errors['postImage'] && (
+                          <p
+                            className='ml-3 error-message'
+                            style={{ color: 'red' }}>
+                            {isValid.errors['postImage']}
+                          </p>
+                        )}
                       </div>
-                      <div className='d-flex flex-row align-items-center mb-4'>
-                        <div className='flex-fill mb-0'>
-                          <label
-                            className='form-label ml-3'
-                            htmlFor='postImage'>
-                            Post Image (URL)
-                          </label>
-                          <input
-                            name='postImage'
-                            className={
-                              isValid.errors
-                                ? isValid.errors['postImage']
-                                  ? 'form-control notValid'
-                                  : 'form-control'
-                                : 'form-control'
-                            }
-                            placeholder='https://i.imgur.com/.....'
-                            onChange={onImageChangeHandler}
-                          />
-                          {isValid.errors['postImage'] && (
-                            <p
-                              className='ml-3 error-message'
-                              style={{ color: 'red' }}>
-                              {isValid.errors['postImage']}
-                            </p>
-                          )}
-                        </div>
+                    </div>
+                    <div className='d-flex flex-row align-items-center mb-4'>
+                      <div className='form-outline flex-fill mb-0'>
+                        <label className='form-label ml-3' htmlFor='categories'>
+                          Categories
+                        </label>
+                        <input
+                          name='categories'
+                          className={
+                            isValid.errors['categories']
+                              ? 'form-control notValid'
+                              : 'form-control'
+                          }
+                          placeholder='React, Redux, JavaScript, TypeScript, Hook'
+                          onChange={onCategoriesChangeHandler}
+                        />
+                        {isValid.errors['categories'] && (
+                          <p
+                            className='ml-3 error-message'
+                            style={{ color: 'red' }}>
+                            {isValid.errors['categories']}
+                          </p>
+                        )}
                       </div>
-                      <div className='d-flex flex-row align-items-center mb-4'>
-                        <div className='form-outline flex-fill mb-0'>
-                          <label
-                            className='form-label ml-3'
-                            htmlFor='categories'>
-                            Categories
-                          </label>
-                          <input
-                            name='categories'
-                            className={
-                              isValid.errors['categories']
-                                ? 'form-control notValid'
-                                : 'form-control'
-                            }
-                            placeholder='React, Redux, JavaScript, TypeScript, Hook'
-                            onChange={onCategoriesChangeHandler}
-                          />
-                          {isValid.errors['categories'] && (
-                            <p
-                              className='ml-3 error-message'
-                              style={{ color: 'red' }}>
-                              {isValid.errors['categories']}
-                            </p>
-                          )}
-                        </div>
+                    </div>
+                    <div className='d-flex flex-row align-items-center mb-4'>
+                      <div
+                        style={{ maxWidth: '100%' }}
+                        className='form-outline flex-fill mb-0'>
+                        <label className='form-label ml-3' htmlFor='postBody'>
+                          Post Body
+                        </label>
+                        <Editor
+                          outputFormat='text'
+                          initialValue={`<p>What Marilyn Monroe said about React Class Components...</p><br><q>I'm selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But I would never use a Class Component where a Functional Component would work too</q>`}
+                          apiKey='k4ykrzndxxwzl8895maze4u62ivkz83x3a01o0fti6ih5vip'
+                          textareaName='postBody'
+                          onChange={onBlogBodyChangeHandler}
+                          init={{
+                            height: 500,
+                            menubar: false,
+                            plugins: [
+                              'advlist autolink lists link image',
+                              'charmap print preview anchor help',
+                              'searchreplace visualblocks code',
+                              'insertdatetime media table paste wordcount',
+                            ],
+                            toolbar:
+                              'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | help',
+                            body_class: 'postBody',
+                          }}
+                        />
+                        {isValid.errors['postBody'] && (
+                          <p
+                            className='ml-3 error-message'
+                            style={{ color: 'red' }}>
+                            {isValid.errors['postBody']}
+                          </p>
+                        )}
                       </div>
-                      <div className='d-flex flex-row align-items-center mb-4'>
-                        <div
-                          style={{ maxWidth: '100%' }}
-                          className='form-outline flex-fill mb-0'>
-                          <label className='form-label ml-3' htmlFor='postBody'>
-                            Post Body
-                          </label>
-                          <Editor
-                            outputFormat='text'
-                            initialValue={`<p>What Marilyn Monroe said about React Class Components...</p><br><q>I'm selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But I would never use a Class Component where a Functional Component would work too</q>`}
-                            apiKey='k4ykrzndxxwzl8895maze4u62ivkz83x3a01o0fti6ih5vip'
-                            textareaName='postBody'
-                            onChange={onBlogBodyChangeHandler}
-                            init={{
-                              height: 500,
-                              menubar: false,
-                              plugins: [
-                                'advlist autolink lists link image',
-                                'charmap print preview anchor help',
-                                'searchreplace visualblocks code',
-                                'insertdatetime media table paste wordcount',
-                              ],
-                              toolbar:
-                                'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | help',
-                              body_class: 'postBody',
-                            }}
-                          />
-                          {isValid.errors['postBody'] && (
-                            <p
-                              className='ml-3 error-message'
-                              style={{ color: 'red' }}>
-                              {isValid.errors['postBody']}
-                            </p>
-                          )}
-                        </div>
-                      </div>
+                    </div>
 
-                      <div className='d-flex justify-content-center mx-4 mb-3 mb-lg-4'>
-                        <button
-                          type='submit'
-                          className='btn btn-primary btn-lg'>
-                          Create Post
-                        </button>
-                      </div>
-                    </form>
-                  </div>
+                    <div className='d-flex justify-content-center mx-4 mb-3 mb-lg-4'>
+                      <button type='submit' className='btn btn-primary btn-lg'>
+                        Create Post
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

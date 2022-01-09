@@ -1,0 +1,44 @@
+.notification {
+  position: fixed;
+  top: calc(10% + 3rem);
+  right: 3.5rem;
+  color: #fff;
+  padding: 0.5rem 3.5rem 0.5rem 2rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.notification.error {
+  background-color: rgba(255, 0, 0, 0.6);
+}
+
+.notification.warning {
+  background-color: rgba(255, 165, 0, 0.7);
+}
+
+.notification.success {
+  background-color: rgba(0, 255, 0, 0.5);
+}
+
+.notification.info {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.notification-message {
+  margin-bottom: 0;
+  font-size: clamp(0.45rem, 1vw + 0.5rem, 1rem);
+}
+
+.notification-close {
+  position: absolute;
+  top: 1px;
+  right: 20px;
+  font-size: 1.3rem;
+}
+
+@media (max-width: 600px) {
+  .notification {
+    right: 1rem;
+  }
+}

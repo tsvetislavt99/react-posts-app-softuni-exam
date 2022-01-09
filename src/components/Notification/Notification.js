@@ -1,30 +1,25 @@
-//Other
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 
-function Notification({ variant, children }) {
-  const [show, setShow] = useState(true);
+import './Notification.css';
+import { NotificationContext } from '../../contexts/NotificationContext';
 
-  useEffect(() => {
-    const timeId = setTimeout(() => {
-      setShow(false);
-    }, 3000);
-
-    return () => {
-      clearTimeout(timeId);
-    };
-  }, []);
-
-  if (!show) {
-    return null;
-  }
+const Notification = () => {
+  const { notification, hideNotification } = useContext(NotificationContext);
 
   return (
-    <div className={`alert notification alert-${variant}`}>{children}</div>
+    <div
+      className={`notification ${notification.type}`}
+      onClick={hideNotification}>
+      <p className='notification-message'>
+        {notification.message}
+        {notification.message !== '' ? (
+          <span className='notification-close'>&#10799;</span>
+        ) : (
+          ''
+        )}
+      </p>
+    </div>
   );
-}
-
-Notification.defaultPros = {
-  variant: 'info',
 };
 
 export default Notification;

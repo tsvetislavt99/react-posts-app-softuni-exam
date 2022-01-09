@@ -2,17 +2,17 @@
 import './Register.css';
 
 //Other
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from '../../services/authService';
+import { types, NotificationContext } from '../../contexts/NotificationContext';
 import isGuest from '../../hoc/isGuest';
 
 //Components
-import Notification from '../Notification/Notification';
 
 function Register() {
   const [isValid, setIsValid] = useState({ fields: {}, errors: {} });
-  const [showError, setShowError] = useState(false);
+  const { showNotification } = useContext(NotificationContext);
 
   const navigate = useNavigate();
 
@@ -30,21 +30,14 @@ function Register() {
           password,
           rePassword,
         })
-        .then((authData) => {
+        .then((res) => {
+          showNotification('Account created succeffully!', types.success);
           navigate('/login');
         })
         .catch((error) => {
-          console.log(error);
-          setShowError(true);
-          setTimeout(() => {
-            setShowError(false);
-          }, 1000);
+          return showNotification(error.message, types.error);
         });
     } else {
-      setShowError(true);
-      setTimeout(() => {
-        setShowError(false);
-      }, 2000);
     }
   };
 
@@ -193,214 +186,197 @@ function Register() {
   };
 
   return (
-    <>
-      {showError ? (
-        <>
-          <Notification variant={'danger'}>
-            Sign up failed! Please check your input!
-          </Notification>
-        </>
-      ) : (
-        ''
-      )}
-      <div className='container register-container wow fadeInLeft'>
-        <div className='row d-flex justify-content-center align-items-center h-100'>
-          <div className='col-lg-12 col-xl-11'>
-            <div className='text-black'>
-              <div className='card-body p-md-5'>
-                <div className='row justify-content-center'>
-                  <div className='col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1'>
-                    <p className='text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4'>
-                      Sign up
-                    </p>
+    <div className='container register-container wow fadeInLeft'>
+      <div className='row d-flex justify-content-center align-items-center h-100'>
+        <div className='col-lg-12 col-xl-11'>
+          <div className='text-black'>
+            <div className='card-body p-md-5'>
+              <div className='row justify-content-center'>
+                <div className='col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1'>
+                  <p className='text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4'>
+                    Sign up
+                  </p>
 
-                    <form
-                      method='POST'
-                      onSubmit={submitHandler}
-                      className='mx-1 mx-md-4'>
-                      <div className='d-flex flex-row align-items-center mb-4'>
-                        <i className='fas fa-user fa-lg me-3 fa-fw'></i>
-                        <div className='form-outline flex-fill mb-0'>
-                          <label
-                            className='form-label ml-3'
-                            htmlFor='firstName'>
-                            First Name
-                          </label>
-                          <input
-                            onChange={onFirstNameChangeHandler}
-                            type='text'
-                            id='firstName'
-                            name='firstName'
-                            className={
-                              isValid.errors['firstName']
-                                ? 'form-control notValid'
-                                : 'form-control'
-                            }
-                          />
-                          {isValid.errors['firstName'] && (
-                            <p
-                              className='ml-3 error-message'
-                              style={{ color: 'red' }}>
-                              {isValid.errors['firstName']}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <div className='d-flex flex-row align-items-center mb-4'>
-                        <i className='fas fa-user fa-lg me-3 fa-fw'></i>
-                        <div className='form-outline flex-fill mb-0'>
-                          <label className='form-label ml-3' htmlFor='lastName'>
-                            Last Name
-                          </label>
-                          <input
-                            onChange={onLastNameChangeHandler}
-                            type='text'
-                            id='lastName'
-                            name='lastName'
-                            className={
-                              isValid.errors['lastName']
-                                ? 'form-control notValid'
-                                : 'form-control'
-                            }
-                          />
-                          {isValid.errors['lastName'] && (
-                            <p
-                              className='ml-3 error-message'
-                              style={{ color: 'red' }}>
-                              {isValid.errors['lastName']}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className='d-flex flex-row align-items-center mb-4'>
-                        <i className='fas fa-envelope fa-lg me-3 fa-fw'></i>
-                        <div className='form-outline flex-fill mb-0'>
-                          <label className='form-label ml-3' htmlFor='email'>
-                            Your Email
-                          </label>
-                          <input
-                            type='email'
-                            id='email'
-                            name='email'
-                            onChange={onEmailChangeHandler}
-                            className={
-                              isValid.errors['email']
-                                ? 'form-control notValid'
-                                : 'form-control'
-                            }
-                          />
-                          {isValid.errors['email'] && (
-                            <p
-                              className='ml-3 error-message'
-                              style={{ color: 'red' }}>
-                              {isValid.errors['email']}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className='d-flex flex-row align-items-center mb-4'>
-                        <i className='fas fa-lock fa-lg me-3 fa-fw'></i>
-                        <div className='form-outline flex-fill mb-0'>
-                          <label className='form-label ml-3' htmlFor='password'>
-                            Password
-                          </label>
-                          <input
-                            type='password'
-                            id='password'
-                            name='password'
-                            onChange={onChangeHandler}
-                            className={
-                              isValid.errors['password']
-                                ? 'form-control notValid'
-                                : 'form-control'
-                            }
-                          />
-                          {isValid.errors['password'] && (
-                            <p
-                              className='ml-3 error-message'
-                              style={{ color: 'red' }}>
-                              {isValid.errors['password']}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className='d-flex flex-row align-items-center mb-4'>
-                        <i className='fas fa-key fa-lg me-3 fa-fw'></i>
-                        <div className='form-outline flex-fill mb-0'>
-                          <label
-                            className='form-label ml-3'
-                            htmlFor='rePassword'>
-                            Repeat your password
-                          </label>
-                          <input
-                            type='password'
-                            id='rePassword'
-                            name='rePassword'
-                            onChange={onChangeHandler}
-                            className={
-                              isValid.errors['rePassword']
-                                ? 'form-control notValid'
-                                : 'form-control'
-                            }
-                          />
-                          {isValid.errors['rePassword'] && (
-                            <p
-                              className='ml-3 error-message'
-                              style={{ color: 'red' }}>
-                              {isValid.errors['rePassword']}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className='form-check d-flex justify-content-left mb-5'>
-                        <input
-                          className='form-check-input me-2'
-                          type='checkbox'
-                          value={true}
-                          id='terms'
-                          name='terms'
-                          onChange={onChangeHandler}
-                        />
-                        <label className='form-check-label' htmlFor='terms'>
-                          I agree all statements in{' '}
-                          <a href='/about-us'>Terms of service</a>
+                  <form
+                    method='POST'
+                    onSubmit={submitHandler}
+                    className='mx-1 mx-md-4'>
+                    <div className='d-flex flex-row align-items-center mb-4'>
+                      <i className='fas fa-user fa-lg me-3 fa-fw'></i>
+                      <div className='form-outline flex-fill mb-0'>
+                        <label className='form-label ml-3' htmlFor='firstName'>
+                          First Name
                         </label>
-                        {isValid.errors['terms'] && (
+                        <input
+                          onChange={onFirstNameChangeHandler}
+                          type='text'
+                          id='firstName'
+                          name='firstName'
+                          className={
+                            isValid.errors['firstName']
+                              ? 'form-control notValid'
+                              : 'form-control'
+                          }
+                        />
+                        {isValid.errors['firstName'] && (
                           <p
                             className='ml-3 error-message'
                             style={{ color: 'red' }}>
-                            {isValid.errors['terms']}
+                            {isValid.errors['firstName']}
                           </p>
                         )}
                       </div>
-
-                      <div className='d-flex justify-content-center mx-4 mb-3 mb-lg-4'>
-                        <button
-                          type='submit'
-                          className='btn btn-primary btn-lg'>
-                          Register
-                        </button>
+                    </div>
+                    <div className='d-flex flex-row align-items-center mb-4'>
+                      <i className='fas fa-user fa-lg me-3 fa-fw'></i>
+                      <div className='form-outline flex-fill mb-0'>
+                        <label className='form-label ml-3' htmlFor='lastName'>
+                          Last Name
+                        </label>
+                        <input
+                          onChange={onLastNameChangeHandler}
+                          type='text'
+                          id='lastName'
+                          name='lastName'
+                          className={
+                            isValid.errors['lastName']
+                              ? 'form-control notValid'
+                              : 'form-control'
+                          }
+                        />
+                        {isValid.errors['lastName'] && (
+                          <p
+                            className='ml-3 error-message'
+                            style={{ color: 'red' }}>
+                            {isValid.errors['lastName']}
+                          </p>
+                        )}
                       </div>
-                    </form>
-                  </div>
-                  <div className='col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2'>
-                    <img
-                      src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp'
-                      className='img-fluid'
-                      alt='register_img'
-                    />
-                  </div>
+                    </div>
+
+                    <div className='d-flex flex-row align-items-center mb-4'>
+                      <i className='fas fa-envelope fa-lg me-3 fa-fw'></i>
+                      <div className='form-outline flex-fill mb-0'>
+                        <label className='form-label ml-3' htmlFor='email'>
+                          Your Email
+                        </label>
+                        <input
+                          type='email'
+                          id='email'
+                          name='email'
+                          onChange={onEmailChangeHandler}
+                          className={
+                            isValid.errors['email']
+                              ? 'form-control notValid'
+                              : 'form-control'
+                          }
+                        />
+                        {isValid.errors['email'] && (
+                          <p
+                            className='ml-3 error-message'
+                            style={{ color: 'red' }}>
+                            {isValid.errors['email']}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className='d-flex flex-row align-items-center mb-4'>
+                      <i className='fas fa-lock fa-lg me-3 fa-fw'></i>
+                      <div className='form-outline flex-fill mb-0'>
+                        <label className='form-label ml-3' htmlFor='password'>
+                          Password
+                        </label>
+                        <input
+                          type='password'
+                          id='password'
+                          name='password'
+                          onChange={onChangeHandler}
+                          className={
+                            isValid.errors['password']
+                              ? 'form-control notValid'
+                              : 'form-control'
+                          }
+                        />
+                        {isValid.errors['password'] && (
+                          <p
+                            className='ml-3 error-message'
+                            style={{ color: 'red' }}>
+                            {isValid.errors['password']}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className='d-flex flex-row align-items-center mb-4'>
+                      <i className='fas fa-key fa-lg me-3 fa-fw'></i>
+                      <div className='form-outline flex-fill mb-0'>
+                        <label className='form-label ml-3' htmlFor='rePassword'>
+                          Repeat your password
+                        </label>
+                        <input
+                          type='password'
+                          id='rePassword'
+                          name='rePassword'
+                          onChange={onChangeHandler}
+                          className={
+                            isValid.errors['rePassword']
+                              ? 'form-control notValid'
+                              : 'form-control'
+                          }
+                        />
+                        {isValid.errors['rePassword'] && (
+                          <p
+                            className='ml-3 error-message'
+                            style={{ color: 'red' }}>
+                            {isValid.errors['rePassword']}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className='form-check d-flex justify-content-left mb-5'>
+                      <input
+                        className='form-check-input me-2'
+                        type='checkbox'
+                        value={true}
+                        id='terms'
+                        name='terms'
+                        onChange={onChangeHandler}
+                      />
+                      <label className='form-check-label' htmlFor='terms'>
+                        I agree all statements in{' '}
+                        <a href='/about-us'>Terms of service</a>
+                      </label>
+                      {isValid.errors['terms'] && (
+                        <p
+                          className='ml-3 error-message'
+                          style={{ color: 'red' }}>
+                          {isValid.errors['terms']}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className='d-flex justify-content-center mx-4 mb-3 mb-lg-4'>
+                      <button type='submit' className='btn btn-primary btn-lg'>
+                        Register
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div className='col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2'>
+                  <img
+                    src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp'
+                    className='img-fluid'
+                    alt='register_img'
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
