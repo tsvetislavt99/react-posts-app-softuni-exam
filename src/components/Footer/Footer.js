@@ -33,7 +33,8 @@ function Footer() {
         </div>
 
         <p className='text-center' id='copyright'>
-          Copyright &copy; 2020. All rights reserved{' '}
+          &copy; This site is made with educational purpose only! No rights
+          reserved!{' '}
           <a
             href='https://github.com/tsvetislavt99'
             target='_blank'

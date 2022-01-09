@@ -21,6 +21,7 @@ import PublicUserProfile from './components/PublicUserProfile/PublicUserProfile'
 import CreatePost from './components/CreatePost/CreatePost';
 import Logout from './components/Logout/Logout';
 import NotFound from './components/NotFound/NotFound';
+import Loading from './components/Loading/Loading';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
             <Route path='/public-profile' element={<PublicUserProfile />} />
             <Route path='/profile' element={<UserProfile />} />
             <Route path='/create' element={<CreatePost />} />
+            <Route path='/loading' element={<Loading />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
 
