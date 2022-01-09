@@ -3,8 +3,8 @@ import './App.css';
 
 //Other
 import { Routes, Route } from 'react-router-dom';
-import { AuthContext } from './contexts/AuthContext';
 import { CookiesProvider, useCookies } from 'react-cookie';
+import { AuthProvider } from './contexts/AuthContext';
 
 //Components
 import About from './components/About/About';
@@ -22,29 +22,10 @@ import CreatePost from './components/CreatePost/CreatePost';
 import Logout from './components/Logout/Logout';
 import NotFound from './components/NotFound/NotFound';
 
-const initialAuthState = {
-  userId: '',
-  userEmail: '',
-  userAvatar: '',
-};
-
 function App() {
-  const [cookies, setCookie, removeCookie] = useCookies(['userInfo']);
-
-  const login = (authData) => {
-    setCookie('userInfo', {
-      ...authData,
-    });
-  };
-
-  const logout = () => {
-    removeCookie('userInfo');
-  };
-
   return (
     <CookiesProvider>
-      <AuthContext.Provider
-        value={{ user: cookies.userInfo || initialAuthState, login, logout }}>
+      <AuthProvider>
         <div className='App'>
           <Header />
           <Routes>
@@ -64,7 +45,7 @@ function App() {
 
           <Footer />
         </div>
-      </AuthContext.Provider>
+      </AuthProvider>
     </CookiesProvider>
   );
 }
