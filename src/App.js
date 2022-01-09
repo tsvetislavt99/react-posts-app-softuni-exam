@@ -2,31 +2,33 @@
 import './App.css';
 
 //Other
+import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { CookiesProvider } from 'react-cookie';
 import { AuthProvider } from './contexts/AuthContext';
 
 //Components
-import About from './components/About/About';
-import Footer from './components/Footer/Footer';
-import Header from './components/Header/Header';
-import Home from './components/Home/Home';
-import Catalog from './components/Catalog/Catalog';
-import Contact from './components/Contact/Contact';
-import PostDetails from './components/PostDetails/PostDetails';
-import Register from './components/Register/Register';
-import Login from './components/Login/Login';
-import UserProfile from './components/UserProfile/UserProfile';
-import PublicUserProfile from './components/PublicUserProfile/PublicUserProfile';
-import CreatePost from './components/CreatePost/CreatePost';
-import Logout from './components/Logout/Logout';
-import NotFound from './components/NotFound/NotFound';
 import Loading from './components/Loading/Loading';
+const About = lazy(() => import('./components/About/About'));
+const Footer = lazy(() => import('./components/Footer/Footer'));
+const Header = lazy(() => import('./components/Header/Header'));
+const Home = lazy(() => import('./components/Home/Home'));
+const Catalog = lazy(() => import('./components/Catalog/Catalog'));
+const Contact = lazy(() => import('./components/Contact/Contact'));
+const PostDetails = lazy(() => import('./components/PostDetails/PostDetails'));
+const Register = lazy(() => import('./components/Register/Register'));
+const Login = lazy(() => import('./components/Login/Login'));
+const UserProfile = lazy(() => import('./components/UserProfile/UserProfile'));
+const PublicUserProfile = lazy(() =>
+  import('./components/PublicUserProfile/PublicUserProfile')
+);
+const CreatePost = lazy(() => import('./components/CreatePost/CreatePost'));
+const Logout = lazy(() => import('./components/Logout/Logout'));
+const NotFound = lazy(() => import('./components/NotFound/NotFound'));
 
 function App() {
   return (
-    <CookiesProvider>
-      <AuthProvider>
+    <AuthProvider>
+      <Suspense fallback={<Loading />}>
         <div className='App'>
           <Header />
           <Routes>
@@ -47,8 +49,8 @@ function App() {
 
           <Footer />
         </div>
-      </AuthProvider>
-    </CookiesProvider>
+      </Suspense>
+    </AuthProvider>
   );
 }
 
