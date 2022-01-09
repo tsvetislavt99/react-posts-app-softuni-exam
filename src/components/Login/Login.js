@@ -2,16 +2,17 @@
 import './Login.css';
 
 //Other
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from '../../services/authService';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useAuthContext } from '../../contexts/AuthContext';
+import isGuest from '../../hoc/isGuest';
 
 //Components
 import Notification from '../Notification/Notification';
 
 function Login() {
-  const { login } = useContext(AuthContext);
+  const { login } = useAuthContext();
   const [isValid, setIsValid] = useState({ fields: {}, errors: {} });
   const [showError, setShowError] = useState({
     state: false,
@@ -201,4 +202,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default isGuest(Login);

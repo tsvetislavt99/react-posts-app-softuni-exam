@@ -3,7 +3,7 @@ import './App.css';
 
 //Other
 import { Routes, Route } from 'react-router-dom';
-import { CookiesProvider, useCookies } from 'react-cookie';
+import { CookiesProvider } from 'react-cookie';
 import { AuthProvider } from './contexts/AuthContext';
 
 //Components

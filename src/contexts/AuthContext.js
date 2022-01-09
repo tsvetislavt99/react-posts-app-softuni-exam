@@ -24,7 +24,12 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user: cookies.userInfo || initialAuthState, login, logout }}>
+      value={{
+        user: cookies.userInfo || initialAuthState,
+        isAuthenticated: Boolean(cookies?.userInfo),
+        login,
+        logout,
+      }}>
       {children}
     </AuthContext.Provider>
   );

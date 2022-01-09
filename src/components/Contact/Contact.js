@@ -56,7 +56,7 @@ function Contact() {
       <div className='container mt-4 wow fadeInUp'>
         <div className='row'>
           <div className='col-lg-6 mb-5 mb-lg-0'>
-            <form action='#' className='contact-form py-5 px-lg-5'>
+            <form action='#' className='contact-form py-5 pl-2'>
               <h2 className='mb-4 font-weight-medium text-secondary'>
                 Get in touch
               </h2>

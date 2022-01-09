@@ -2,16 +2,15 @@
 import './Register.css';
 
 //Other
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from '../../services/authService';
-import { AuthContext } from '../../contexts/AuthContext';
+import isGuest from '../../hoc/isGuest';
 
 //Components
 import Notification from '../Notification/Notification';
 
 function Register() {
-  const { login } = useContext(AuthContext);
   const [isValid, setIsValid] = useState({ fields: {}, errors: {} });
   const [showError, setShowError] = useState(false);
 
@@ -405,4 +404,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default isGuest(Register);

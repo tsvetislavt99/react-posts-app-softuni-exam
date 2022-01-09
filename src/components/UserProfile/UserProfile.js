@@ -1,15 +1,16 @@
 //Other
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import postService from '../../services/postService';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useAuthContext } from '../../contexts/AuthContext';
 import authService from '../../services/authService';
+import isAuth from '../../hoc/isAuth';
 
 //Components
 import PostCard from '../PostCard/PostCard';
 
 function UserProfile() {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuthContext();
   const [myPosts, setMyPosts] = useState({
     isLoading: true,
   });
@@ -165,4 +166,4 @@ function UserProfile() {
   }
 }
 
-export default UserProfile;
+export default isAuth(UserProfile);

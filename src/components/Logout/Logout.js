@@ -1,12 +1,13 @@
 //Other
 import { useNavigate } from 'react-router-dom';
 import authService from '../../services/authService';
-import { AuthContext } from '../../contexts/AuthContext';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useAuthContext } from '../../contexts/AuthContext';
+import isAuth from '../../hoc/isAuth';
 
 function Logout() {
   const navigate = useNavigate();
-  const { logout } = useContext(AuthContext);
+  const { logout } = useAuthContext();
   useEffect(() => {
     authService.logout().then(() => {
       logout();
@@ -17,4 +18,4 @@ function Logout() {
   return null;
 }
 
-export default Logout;
+export default isAuth(Logout);
