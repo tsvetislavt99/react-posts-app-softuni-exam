@@ -3,7 +3,7 @@ import './Header.css';
 
 //Other
 import { useContext } from 'react';
-import { useLocation, NavLink } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 
 //Components
@@ -25,9 +25,10 @@ function Header() {
         className='navbar navbar-expand-lg navbar-light bg-white sticky'
         data-offset='500'>
         <div className='container'>
-          <NavLink to='/' className='navbar-brand'>
-            <span className='text-primary'>React</span>ive Blog
-          </NavLink>
+          <Link to='/' className='navbar-brand'>
+            <span className='text-primary'>React</span>
+            <span style={{ color: '#8C89A7' }}>ive Blog</span>
+          </Link>
 
           <button
             className='navbar-toggler'
