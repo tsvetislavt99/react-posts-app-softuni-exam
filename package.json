@@ -17,7 +17,8 @@
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "universal-cookie": "^4.0.4",
-    "web-vitals": "^2.1.2"
+    "web-vitals": "^2.1.2",
+    "node-forge": ">=1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
