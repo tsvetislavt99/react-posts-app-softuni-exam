@@ -8,7 +8,9 @@ const Notification = () => {
 
   return (
     <div
-      className={`notification ${notification.type}`}
+      className={
+        notification.message ? `notification ${notification.type}` : `isHidden`
+      }
       onClick={hideNotification}>
       <p className='notification-message'>
         {notification.message}

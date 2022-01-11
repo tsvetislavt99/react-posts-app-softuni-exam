@@ -12,6 +12,7 @@ const PostCard = lazy(() => import('../PostCard/PostCard'));
 
 function UserProfile() {
   const { user } = useAuthContext();
+  const [isBeingEdited, setIsBeingEdited] = useState(false);
   const [myPosts, setMyPosts] = useState({
     isLoading: true,
   });
@@ -21,6 +22,14 @@ function UserProfile() {
   const [userInfo, setUserInfo] = useState({
     isLoading: true,
   });
+
+  const editHandler = () => {
+    setIsBeingEdited(true);
+  };
+
+  const saveHandler = () => {
+    setIsBeingEdited(false);
+  };
 
   useEffect(() => {
     postService.getMyPosts().then((posts) => {
@@ -40,7 +49,192 @@ function UserProfile() {
     authService.getUser(user.userId).then((user) => {
       setUserInfo(user);
     });
-  }, [user.userId]);
+  }, [user.userId, isBeingEdited]);
+
+  const ProfileBox = () => {
+    if (!isBeingEdited) {
+      return (
+        <div className='col-lg-8'>
+          <div className='card mb-4'>
+            <div className='card-body'>
+              <div className='row'>
+                <div className='col-sm-3'>
+                  <p className='mb-0'>First Name</p>
+                </div>
+                <div className='col-sm-9'>
+                  <p className='text-muted mb-0'>{userInfo.firstName}</p>
+                </div>
+              </div>
+              <hr />
+
+              <div className='row'>
+                <div className='col-sm-3'>
+                  <p className='mb-0'>Last Name</p>
+                </div>
+                <div className='col-sm-9'>
+                  <p className='text-muted mb-0'>{userInfo.lastName}</p>
+                </div>
+              </div>
+              <hr />
+              <div className='row'>
+                <div className='col-sm-3'>
+                  <p className='mb-0'>Job Title</p>
+                </div>
+                <div className='col-sm-9'>
+                  <p className='text-muted mb-0'>
+                    {userInfo.jobTitle ? userInfo.jobTitle : '-'}
+                  </p>
+                </div>
+              </div>
+              <hr />
+              <div className='row'>
+                <div className='col-sm-3'>
+                  <p className='mb-0'>Address</p>
+                </div>
+                <div className='col-sm-9'>
+                  <p className='text-muted mb-0'>
+                    {userInfo.address ? userInfo.address : '-'}
+                  </p>
+                </div>
+              </div>
+              <hr />
+              <div className='row'>
+                <div className='col-sm-3'>
+                  <p className='mb-0'>Aritcles posted</p>
+                </div>
+                <div className='col-sm-9'>
+                  <p className='text-muted mb-0'>{userInfo.posts?.length}</p>
+                </div>
+              </div>
+              <hr />
+              <div className='row'>
+                <div className='col-sm-3'>
+                  <p className='mb-0'>Top Post</p>
+                </div>
+                <div className='col-sm-9'>
+                  <p className='text-muted mb-0'>
+                    {topPost ? (
+                      <Link to={`/blog/${topPost._id}`}>{topPost.title}</Link>
+                    ) : (
+                      <span>You have no posts yet :(</span>
+                    )}
+                  </p>
+                </div>
+              </div>
+              <hr />
+
+              <div className='row justify-content-md-center'>
+                <div className='col-sm-3'>
+                  <button
+                    type='button'
+                    onClick={editHandler}
+                    className='btn btn-outline-primary ms-1'>
+                    Edit Profile
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className='col-lg-8'>
+          <div className='card mb-4'>
+            <div className='card-body'>
+              <form>
+                <div className='row'>
+                  <div className='col-sm-3'>
+                    <p className='mb-0'>First Name</p>
+                  </div>
+                  <div className='col-sm-9'>
+                    <input
+                      className='text-muted mb-0'
+                      defaultValue={userInfo.firstName}
+                    />
+                  </div>
+                </div>
+                <hr />
+
+                <div className='row'>
+                  <div className='col-sm-3'>
+                    <p className='mb-0'>Last Name</p>
+                  </div>
+                  <div className='col-sm-9'>
+                    <input
+                      className='text-muted mb-0'
+                      defaultValue={userInfo.lastName}
+                    />
+                  </div>
+                </div>
+                <hr />
+                <div className='row'>
+                  <div className='col-sm-3'>
+                    <p className='mb-0'>Job Title</p>
+                  </div>
+                  <div className='col-sm-9'>
+                    <input
+                      className='text-muted mb-0'
+                      defaultValue={userInfo.jobTitle ? userInfo.jobTitle : '-'}
+                    />
+                  </div>
+                </div>
+                <hr />
+                <div className='row'>
+                  <div className='col-sm-3'>
+                    <p className='mb-0'>Address</p>
+                  </div>
+                  <div className='col-sm-9'>
+                    <input
+                      className='text-muted mb-0'
+                      defaultValue={userInfo.address ? userInfo.address : '-'}
+                    />
+                  </div>
+                </div>
+                <hr />
+                <div className='row'>
+                  <div className='col-sm-3'>
+                    <p className='mb-0'>Aritcles posted</p>
+                  </div>
+                  <div className='col-sm-9'>
+                    <p className='text-muted mb-0'>{userInfo.posts?.length}</p>
+                  </div>
+                </div>
+                <hr />
+                <div className='row'>
+                  <div className='col-sm-3'>
+                    <p className='mb-0'>Top Post</p>
+                  </div>
+                  <div className='col-sm-9'>
+                    <p className='text-muted mb-0'>
+                      {topPost ? (
+                        <Link to={`/blog/${topPost._id}`}>{topPost.title}</Link>
+                      ) : (
+                        <span>You have no posts yet :(</span>
+                      )}
+                    </p>
+                  </div>
+                </div>
+                <hr />
+
+                <div className='row justify-content-md-center'>
+                  <div className='col-sm-3'>
+                    <button
+                      type='button'
+                      onClick={saveHandler}
+                      style={{ padding: '8px 20px' }}
+                      className='btn btn-outline-primary ms-1'>
+                      Save Changes
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  };
 
   if (myPosts.isLoading || topPost?.isLoading || userInfo?.isLoading) {
     return <Loading />;
@@ -52,6 +246,7 @@ function UserProfile() {
             <div className='row'>
               <div className='col-lg-4'>
                 <div className='card mb-4'>
+                  {' '}
                   <div className='card-body text-center'>
                     <img
                       src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'
@@ -62,94 +257,11 @@ function UserProfile() {
                     <h5 className='my-3'>
                       {userInfo.firstName} {userInfo.lastName}
                     </h5>
-                    <p className='text-muted mb-1'>
-                      {userInfo.jobTitle ? userInfo.jobTitle : '-'}
-                    </p>
-                    <p className='text-muted mb-4'>
-                      {userInfo.address ? userInfo.address : '-'}
-                    </p>
-                    <div className='d-flex justify-content-center mb-2'>
-                      <button
-                        type='button'
-                        className='btn btn-outline-primary ms-1'>
-                        Edit Profile
-                      </button>
-                    </div>
+                    <p className='text-muted mb-1'>{userInfo.email}</p>
                   </div>
                 </div>
               </div>
-              <div className='col-lg-8'>
-                <div className='card mb-4'>
-                  <div className='card-body'>
-                    <div className='row'>
-                      <div className='col-sm-3'>
-                        <p className='mb-0'>First Name</p>
-                      </div>
-                      <div className='col-sm-9'>
-                        <p className='text-muted mb-0'>{userInfo.firstName}</p>
-                      </div>
-                    </div>
-                    <hr />
-
-                    <div className='row'>
-                      <div className='col-sm-3'>
-                        <p className='mb-0'>Last Name</p>
-                      </div>
-                      <div className='col-sm-9'>
-                        <p className='text-muted mb-0'>{userInfo.lastName}</p>
-                      </div>
-                    </div>
-                    <hr />
-                    <div className='row'>
-                      <div className='col-sm-3'>
-                        <p className='mb-0'>Email</p>
-                      </div>
-                      <div className='col-sm-9'>
-                        <p className='text-muted mb-0'>{userInfo.email}</p>
-                      </div>
-                    </div>
-                    <hr />
-                    <div className='row'>
-                      <div className='col-sm-3'>
-                        <p className='mb-0'>Aritcles posted</p>
-                      </div>
-                      <div className='col-sm-9'>
-                        <p className='text-muted mb-0'>
-                          {userInfo.posts?.length}
-                        </p>
-                      </div>
-                    </div>
-                    <hr />
-                    <div className='row'>
-                      <div className='col-sm-3'>
-                        <p className='mb-0'>Top Post</p>
-                      </div>
-                      <div className='col-sm-9'>
-                        <p className='text-muted mb-0'>
-                          {topPost ? (
-                            <Link to={`/blog/${topPost._id}`}>
-                              {topPost.title}
-                            </Link>
-                          ) : (
-                            <span>You have no posts yet :(</span>
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                    <hr />
-                    <div className='row'>
-                      <div className='col-sm-3'>
-                        <p className='mb-0'>Address</p>
-                      </div>
-                      <div className='col-sm-9'>
-                        <p className='text-muted mb-0'>
-                          {userInfo.address ? userInfo.address : '-'}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {<ProfileBox />}
             </div>
             <div className='row'>
               <h5 className='col-md-12 my-3' style={{ textAlign: 'center' }}>
