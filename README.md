@@ -97,3 +97,12 @@ Reactive Blog is a web blog application.
 - Good UI and UX (Fully responsive)
 - The application is deployed in Heroku and its Back-end is also deployed in Heroku on a separate dyno
 - Good authentication, the application uses a Server-side cookie to check the requests and a client-side cookie to keep userName and userId
+
+## Todos
+
+- Finish edit and delete user funtionality
+- Implement change password funtionality
+- Implement edit and delete post funtionality
+- Implement edit and delete comment funtionality
+- Implement e-mail confirmation funtionality
+- Implement e-mail change functionality
