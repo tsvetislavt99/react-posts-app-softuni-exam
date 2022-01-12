@@ -16,35 +16,41 @@ const EditProfile = ({ user, setIsBeingEdited, userInfo, topPost }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    console.log(formData);
-    let { firstName, lastName, jobTitle, address } =
-      Object.fromEntries(formData);
+    if (isValid.valid) {
+      let { firstName, lastName, jobTitle, address } =
+        Object.fromEntries(formData);
 
-    if (!jobTitle) {
-      jobTitle = '-';
+      if (!jobTitle) {
+        jobTitle = '-';
+      }
+
+      if (!address) {
+        address = '-';
+      }
+
+      userService
+        .editProfile({
+          firstName,
+          lastName,
+          jobTitle,
+          address,
+          userId: user.userId,
+        })
+        .then((res) => {
+          showNotification(
+            'Account details edited succeffully!',
+            types.success
+          );
+          setIsBeingEdited((oldIsBeingEdit) => !oldIsBeingEdit);
+        })
+        .catch((error) => {
+          setIsBeingEdited((oldIsBeingEdit) => !oldIsBeingEdit);
+
+          return showNotification(error.message, types.error);
+        });
+    } else {
+      return showNotification('Please check your input!', types.error);
     }
-
-    if (!address) {
-      address = '-';
-    }
-
-    userService
-      .editProfile({
-        firstName,
-        lastName,
-        jobTitle,
-        address,
-        userId: user.userId,
-      })
-      .then((res) => {
-        showNotification('Account details edited succeffully!', types.success);
-        setIsBeingEdited((oldIsBeingEdit) => !oldIsBeingEdit);
-      })
-      .catch((error) => {
-        setIsBeingEdited((oldIsBeingEdit) => !oldIsBeingEdit);
-
-        return showNotification(error.message, types.error);
-      });
   };
 
   const onFirstNameChangeHandler = (e) => {
