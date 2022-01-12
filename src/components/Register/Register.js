@@ -38,6 +38,7 @@ function Register() {
           return showNotification(error.message, types.error);
         });
     } else {
+      //TODO: Find out what I wanted to do her
     }
   };
 

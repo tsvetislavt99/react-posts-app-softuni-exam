@@ -1,0 +1,7 @@
+.edit-profile-input {
+  border: none;
+}
+
+.edit-profile-input:focus-visible {
+  outline: none;
+}
