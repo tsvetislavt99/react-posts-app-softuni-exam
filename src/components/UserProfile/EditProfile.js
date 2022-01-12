@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 const EditProfile = ({ user, setIsBeingEdited, userInfo, topPost }) => {
   const { showNotification } = useContext(NotificationContext);
   const [isValid, setIsValid] = useState({
+    valid: true,
     errors: {},
   });
 
@@ -48,24 +49,106 @@ const EditProfile = ({ user, setIsBeingEdited, userInfo, topPost }) => {
 
   const onFirstNameChangeHandler = (e) => {
     const nameRegExp = new RegExp(/^[a-z ,.'-]+$/i);
-    let errors = {};
-    console.log(e.target.value);
 
     if (nameRegExp.test(e.target.value)) {
-      errors['firstName'] = null;
       setIsValid((oldIsValid) => {
-        return { ...oldIsValid, ...{ errors: errors } };
+        const newErrors = oldIsValid.errors;
+        newErrors['firstName'] = null;
+        return { ...{ errors: newErrors }, valid: true };
       });
     } else if (e.target.value.length < 2 || e.target.value.length > 50) {
-      errors['firstName'] = 'Name should be between 2 and 50 characters!';
       setIsValid((oldIsValid) => {
-        return { ...oldIsValid, ...{ errors: errors }, valid: false };
+        const newErrors = oldIsValid.errors;
+        newErrors['firstName'] = 'Name should be between 2 and 50 characters!';
+        return { ...{ errors: newErrors }, valid: false };
       });
     } else {
-      errors['firstName'] =
-        'Name should not include numbers and special characters!';
       setIsValid((oldIsValid) => {
-        return { ...oldIsValid, ...{ errors: errors }, valid: false };
+        const newErrors = oldIsValid.errors;
+        newErrors['firstName'] =
+          'Name should not include numbers and special characters!';
+        return { ...{ errors: newErrors }, valid: false };
+      });
+    }
+  };
+
+  const onLastNameChangeHandler = (e) => {
+    const nameRegExp = new RegExp(/^[a-z ,.'-]+$/i);
+
+    if (
+      nameRegExp.test(e.target.value) &&
+      e.target.value.length > 1 &&
+      e.target.value.length < 50
+    ) {
+      setIsValid((oldIsValid) => {
+        const newErrors = oldIsValid.errors;
+        newErrors['lastName'] = null;
+        return { ...{ errors: newErrors }, valid: true };
+      });
+    } else if (e.target.value.length < 2 || e.target.value.length > 50) {
+      setIsValid((oldIsValid) => {
+        const newErrors = oldIsValid.errors;
+        newErrors['lastName'] = 'Name should be between 2 and 50 characters!';
+        return { ...{ errors: newErrors }, valid: false };
+      });
+    } else {
+      setIsValid((oldIsValid) => {
+        const newErrors = oldIsValid.errors;
+        newErrors['lastName'] =
+          'Name should not include numbers and special characters!';
+        return { ...{ errors: newErrors }, valid: false };
+      });
+    }
+  };
+
+  const onJobTitleChangeHandler = (e) => {
+    if (e.target.value.length === 0) {
+      setIsValid((oldIsValid) => {
+        const newErrors = oldIsValid.errors;
+        newErrors['jobTitle'] = null;
+        return { ...{ errors: newErrors }, valid: true };
+      });
+    } else if (
+      (e.target.value.length < 3 &&
+        (e.target.value !== '-' || e.target.value === '')) ||
+      e.target.value.length > 50
+    ) {
+      setIsValid((oldIsValid) => {
+        const newErrors = oldIsValid.errors;
+        newErrors['jobTitle'] = 'Invalid Job Title input!';
+        return { ...{ errors: newErrors }, valid: false };
+      });
+    } else {
+      setIsValid((oldIsValid) => {
+        const newErrors = oldIsValid.errors;
+        newErrors['jobTitle'] = null;
+        return { ...{ errors: newErrors }, valid: true };
+      });
+    }
+  };
+
+  const onAddressChangeHandler = (e) => {
+    if (e.target.value.length === 0) {
+      setIsValid((oldIsValid) => {
+        const newErrors = oldIsValid.errors;
+        newErrors['jobTitle'] = null;
+        return { ...{ errors: newErrors }, valid: true };
+      });
+    } else if (
+      (e.target.value.length < 3 &&
+        (e.target.value !== '-' || e.target.value === '')) ||
+      e.target.value.length > 50
+    ) {
+      setIsValid((oldIsValid) => {
+        const newErrors = oldIsValid.errors;
+        newErrors['address'] = 'Invalid Address input!';
+        return { ...{ errors: newErrors }, valid: false };
+      });
+    } else {
+      setIsValid((oldIsValid) => {
+        const newErrors = oldIsValid.errors;
+        newErrors['address'] = null;
+        return { ...{ errors: newErrors }, valid: true };
       });
     }
   };
@@ -104,12 +187,18 @@ const EditProfile = ({ user, setIsBeingEdited, userInfo, topPost }) => {
               </div>
               <div className='col-sm-9'>
                 <input
+                  onChange={onLastNameChangeHandler}
                   type='text'
                   id='lastName'
                   name='lastName'
                   className='mb-0 edit-profile-input'
                   defaultValue={userInfo.lastName}
                 />
+                {isValid.errors['lastName'] && (
+                  <p className='error-message' style={{ color: 'red' }}>
+                    {isValid.errors['lastName']}
+                  </p>
+                )}
               </div>
             </div>
             <hr />
@@ -119,12 +208,18 @@ const EditProfile = ({ user, setIsBeingEdited, userInfo, topPost }) => {
               </div>
               <div className='col-sm-9'>
                 <input
+                  onChange={onJobTitleChangeHandler}
                   type='text'
                   id='jobTitle'
                   name='jobTitle'
                   className='mb-0 edit-profile-input'
                   defaultValue={userInfo.jobTitle ? userInfo.jobTitle : '-'}
                 />
+                {isValid.errors['jobTitle'] && (
+                  <p className='error-message' style={{ color: 'red' }}>
+                    {isValid.errors['jobTitle']}
+                  </p>
+                )}
               </div>
             </div>
             <hr />
@@ -134,12 +229,18 @@ const EditProfile = ({ user, setIsBeingEdited, userInfo, topPost }) => {
               </div>
               <div className='col-sm-9'>
                 <input
+                  onChange={onAddressChangeHandler}
                   type='text'
                   id='address'
                   name='address'
                   className='mb-0 edit-profile-input'
                   defaultValue={userInfo.address ? userInfo.address : '-'}
                 />
+                {isValid.errors['address'] && (
+                  <p className='error-message' style={{ color: 'red' }}>
+                    {isValid.errors['address']}
+                  </p>
+                )}
               </div>
             </div>
             <hr />
