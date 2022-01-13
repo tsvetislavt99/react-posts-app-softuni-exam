@@ -1,17 +1,30 @@
+//CSS
 import './UserProfile.css';
 
-import { useState, useContext } from 'react';
+//Other
+import { useState, useContext, useEffect, useRef } from 'react';
 import userService from '../../services/userService';
 import { types, NotificationContext } from '../../contexts/NotificationContext';
 
+//Components
 import { Link } from 'react-router-dom';
+import Modal from '../Modal/Modal';
 
 const EditProfile = ({ user, setIsBeingEdited, userInfo, topPost }) => {
   const { showNotification } = useContext(NotificationContext);
+  const submitEl = useRef(null);
+  const [submit, setSubmit] = useState(false);
   const [isValid, setIsValid] = useState({
     valid: true,
     errors: {},
   });
+  const [modal, setModal] = useState(false);
+
+  useEffect(() => {
+    if (submit) {
+      submitEl.current.click();
+    }
+  }, [submit]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -51,6 +64,10 @@ const EditProfile = ({ user, setIsBeingEdited, userInfo, topPost }) => {
     } else {
       return showNotification('Please check your input!', types.error);
     }
+  };
+
+  const toggleModal = () => {
+    setModal(!modal);
   };
 
   const cancelHandler = () => {
@@ -291,11 +308,26 @@ const EditProfile = ({ user, setIsBeingEdited, userInfo, topPost }) => {
               </div>
               <div className='col-sm-3'>
                 <button
-                  type='submit'
+                  type='button'
+                  onClick={toggleModal}
                   style={{ padding: '8px 20px' }}
                   className='btn btn-outline-primary ms-1'>
                   Save Changes
                 </button>
+                <button
+                  ref={submitEl}
+                  type='submit'
+                  style={{ display: 'none' }}
+                  aria-hidden='true'></button>
+                <Modal
+                  show={modal}
+                  close={toggleModal}
+                  title='Are you sure you want to save these changes?'
+                  message='Save changes message'
+                  buttonText='Save Changes'
+                  type='success'
+                  callback={() => setSubmit((oldSubmit) => !oldSubmit)}
+                />
               </div>
             </div>
           </div>

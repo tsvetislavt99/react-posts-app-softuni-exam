@@ -23,6 +23,7 @@ const Modal = ({ show, close, title, message, buttonText, callback, type }) => {
                   className='btn btn-outline-primary'>
                   Cancel
                 </button>
+
                 <button
                   onClick={callback ? callback : null}
                   className={`btn btn-outline-${type}`}>

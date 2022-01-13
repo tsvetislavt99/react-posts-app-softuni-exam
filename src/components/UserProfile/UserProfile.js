@@ -16,7 +16,6 @@ const PostCard = lazy(() => import('../PostCard/PostCard'));
 
 function UserProfile() {
   const { user } = useAuthContext();
-
   const [isBeingEdited, setIsBeingEdited] = useState(false);
   const [myPosts, setMyPosts] = useState({
     isLoading: true,
@@ -50,7 +49,6 @@ function UserProfile() {
   }, [user.userId, isBeingEdited]);
 
   const toggleModal = () => {
-    console.log('click');
     setModal(!modal);
   };
 

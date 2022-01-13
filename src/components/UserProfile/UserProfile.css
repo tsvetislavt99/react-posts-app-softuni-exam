@@ -1,5 +1,6 @@
 .edit-profile-input {
   border: none;
+  width: 100%;
 }
 
 .edit-profile-input:focus-visible {
