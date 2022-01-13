@@ -22,7 +22,7 @@ function Header() {
   return (
     <header>
       <nav
-        className='navbar navbar-expand-lg navbar-light bg-white sticky'
+        className='navbar navbar-expand-lg navbar-light bg-white'
         data-offset='500'>
         <div className='container'>
           <Link to='/' className='navbar-brand'>
