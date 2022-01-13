@@ -53,6 +53,10 @@ const EditProfile = ({ user, setIsBeingEdited, userInfo, topPost }) => {
     }
   };
 
+  const cancelHandler = () => {
+    setIsBeingEdited((oldIsBeingEdit) => !oldIsBeingEdit);
+  };
+
   const onFirstNameChangeHandler = (e) => {
     const nameRegExp = new RegExp(/^[a-z ,.'-]+$/i);
 
@@ -276,6 +280,15 @@ const EditProfile = ({ user, setIsBeingEdited, userInfo, topPost }) => {
             <hr />
 
             <div className='row justify-content-md-center'>
+              <div className='col-sm-3 profile-control'>
+                <button
+                  style={{ padding: '8px 20px' }}
+                  type='button'
+                  onClick={cancelHandler}
+                  className='btn btn-outline-danger ms-1 '>
+                  Cancel
+                </button>
+              </div>
               <div className='col-sm-3'>
                 <button
                   type='submit'
