@@ -5,3 +5,33 @@
 .edit-profile-input:focus-visible {
   outline: none;
 }
+
+.change-avatar {
+  position: relative;
+  border: 0;
+  background: none;
+  border-radius: 50%;
+  display: inline;
+}
+
+.change-avatar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 8px;
+  width: 90%;
+  height: 50%;
+  background-color: hsl(0, 0%, 85%, 0.5);
+  opacity: 0;
+  border-bottom-left-radius: 110px;
+  border-bottom-right-radius: 110px;
+}
+
+.change-avatar:hover::after {
+  opacity: 1;
+}
+
+.change-avatar:focus-visible,
+.change-avatar:focus {
+  outline: none;
+}

@@ -1,3 +1,5 @@
+import './UserProfile.css';
+
 //Other
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
@@ -157,14 +159,15 @@ function UserProfile() {
             <div className='row'>
               <div className='col-lg-4'>
                 <div className='card mb-4'>
-                  {' '}
                   <div className='card-body text-center'>
-                    <img
-                      src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'
-                      alt='avatar'
-                      className='rounded-circle img-fluid'
-                      style={{ width: '150px' }}
-                    />
+                    <button className='change-avatar'>
+                      <img
+                        src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'
+                        alt='avatar'
+                        className='rounded-circle img-fluid avatar'
+                        style={{ width: '150px' }}
+                      />
+                    </button>
                     <h5 className='my-3'>
                       {userInfo.firstName} {userInfo.lastName}
                     </h5>
@@ -186,6 +189,53 @@ function UserProfile() {
             </div>
           </div>
         </section>
+        {
+          //To Delete from here
+        }
+        <button
+          type='button'
+          className='btn btn-primary'
+          data-toggle='modal'
+          data-target='#exampleModal'>
+          Launch demo modal
+        </button>
+
+        <div
+          className='modal fade'
+          id='exampleModal'
+          tabindex='-1'
+          role='dialog'
+          aria-labelledby='exampleModalLabel'
+          aria-hidden='true'>
+          <div className='modal-dialog' role='document'>
+            <div className='modal-content'>
+              <div className='modal-header'>
+                <h5 className='modal-title' id='exampleModalLabel'>
+                  Modal title
+                </h5>
+                <button
+                  type='button'
+                  className='close'
+                  data-dismiss='modal'
+                  aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>
+              <div className='modal-body'>...</div>
+              <div className='modal-footer'>
+                <button
+                  type='button'
+                  className='btn btn-secondary'
+                  data-dismiss='modal'>
+                  Close
+                </button>
+                <button type='button' className='btn btn-primary'>
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </Suspense>
     );
   }
