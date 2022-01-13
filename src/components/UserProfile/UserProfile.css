@@ -35,3 +35,11 @@
 .change-avatar:focus {
   outline: none;
 }
+
+@media only screen and (max-width: 600px) {
+  .profile-control {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 1rem;
+  }
+}

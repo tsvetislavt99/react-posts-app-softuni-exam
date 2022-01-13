@@ -10,6 +10,7 @@ import isAuth from '../../hoc/isAuth';
 
 //Components
 import Loading from '../Loading/Loading';
+const Modal = lazy(() => import('../Modal/Modal'));
 const EditProfile = lazy(() => import('./EditProfile'));
 const PostCard = lazy(() => import('../PostCard/PostCard'));
 
@@ -26,6 +27,7 @@ function UserProfile() {
   const [userInfo, setUserInfo] = useState({
     isLoading: true,
   });
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     postService.getMyPosts().then((posts) => {
@@ -46,6 +48,11 @@ function UserProfile() {
       setUserInfo(user);
     });
   }, [user.userId, isBeingEdited]);
+
+  const toggleModal = () => {
+    console.log('click');
+    setModal(!modal);
+  };
 
   const editHandler = () => {
     setIsBeingEdited((oldIsBeingEdit) => !oldIsBeingEdit);
@@ -124,13 +131,30 @@ function UserProfile() {
               <hr />
 
               <div className='row justify-content-md-center'>
-                <div className='col-sm-3'>
+                <div className='col-sm-3 profile-control'>
                   <button
                     type='button'
                     onClick={editHandler}
-                    className='btn btn-outline-primary ms-1'>
+                    className='btn btn-outline-primary ms-1 '>
                     Edit Profile
                   </button>
+                </div>
+                <div className='col-sm-3 profile-control'>
+                  <button
+                    style={{ padding: '8px 20px' }}
+                    type='button'
+                    onClick={toggleModal}
+                    className='btn btn-outline-danger ms-1 '>
+                    Delete Profile
+                  </button>
+                  <Modal
+                    show={modal}
+                    close={toggleModal}
+                    title='Are you sure you want to delete your profile?'
+                    message='Delete message'
+                    buttonText='Delete'
+                    type='danger'
+                  />
                 </div>
               </div>
             </div>
@@ -189,53 +213,6 @@ function UserProfile() {
             </div>
           </div>
         </section>
-        {
-          //To Delete from here
-        }
-        <button
-          type='button'
-          className='btn btn-primary'
-          data-toggle='modal'
-          data-target='#exampleModal'>
-          Launch demo modal
-        </button>
-
-        <div
-          className='modal fade'
-          id='exampleModal'
-          tabindex='-1'
-          role='dialog'
-          aria-labelledby='exampleModalLabel'
-          aria-hidden='true'>
-          <div className='modal-dialog' role='document'>
-            <div className='modal-content'>
-              <div className='modal-header'>
-                <h5 className='modal-title' id='exampleModalLabel'>
-                  Modal title
-                </h5>
-                <button
-                  type='button'
-                  className='close'
-                  data-dismiss='modal'
-                  aria-label='Close'>
-                  <span aria-hidden='true'>&times;</span>
-                </button>
-              </div>
-              <div className='modal-body'>...</div>
-              <div className='modal-footer'>
-                <button
-                  type='button'
-                  className='btn btn-secondary'
-                  data-dismiss='modal'>
-                  Close
-                </button>
-                <button type='button' className='btn btn-primary'>
-                  Save changes
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
       </Suspense>
     );
   }
