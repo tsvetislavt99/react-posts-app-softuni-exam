@@ -28,6 +28,24 @@ const editProfile = async ({
   }
 };
 
+const deleteProfile = async (userId) => {
+  const res = await fetch(`${BASE_URL}/users/delete/${userId}`, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: {
+      'content-type': 'application/json',
+    },
+  });
+
+  const resJson = await res.json();
+
+  if (res.ok) {
+    return resJson;
+  } else {
+    throw resJson;
+  }
+};
+
 const getUser = async (userId) => {
   return await fetch(`${BASE_URL}/users/${userId}`, {
     credentials: 'include',
@@ -37,6 +55,7 @@ const getUser = async (userId) => {
 const userService = {
   editProfile,
   getUser,
+  deleteProfile,
 };
 
 export default userService;

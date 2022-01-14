@@ -1,21 +1,25 @@
 import './UserProfile.css';
 
 //Other
-import { useState, useEffect, lazy, Suspense } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, lazy, Suspense, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import postService from '../../services/postService';
 import { useAuthContext } from '../../contexts/AuthContext';
 import userService from '../../services/userService';
 import isAuth from '../../hoc/isAuth';
+import { types, NotificationContext } from '../../contexts/NotificationContext';
 
 //Components
 import Loading from '../Loading/Loading';
+import authService from '../../services/authService';
 const Modal = lazy(() => import('../Modal/Modal'));
 const EditProfile = lazy(() => import('./EditProfile'));
 const PostCard = lazy(() => import('../PostCard/PostCard'));
 
 function UserProfile() {
-  const { user } = useAuthContext();
+  const { user, logout } = useAuthContext();
+  const navigate = useNavigate();
+  const { showNotification } = useContext(NotificationContext);
   const [isBeingEdited, setIsBeingEdited] = useState(false);
   const [myPosts, setMyPosts] = useState({
     isLoading: true,
@@ -54,6 +58,25 @@ function UserProfile() {
 
   const editHandler = () => {
     setIsBeingEdited((oldIsBeingEdit) => !oldIsBeingEdit);
+  };
+
+  console.log();
+  const deleteHandler = () => {
+    const id = user.userId;
+    userService
+      .deleteProfile(id)
+      .then(() => {
+        logout();
+        showNotification('Successfully deleted profile!', types.success);
+        navigate('/');
+      })
+      .catch((err) => {
+        logout();
+        authService.logout().then(() => {
+          showNotification('Successfully deleted profile!', types.success);
+          navigate('/');
+        });
+      });
   };
 
   const ProfileBox = () => {
@@ -152,6 +175,7 @@ function UserProfile() {
                     message='Delete message'
                     buttonText='Delete'
                     type='danger'
+                    callback={deleteHandler}
                   />
                 </div>
               </div>
