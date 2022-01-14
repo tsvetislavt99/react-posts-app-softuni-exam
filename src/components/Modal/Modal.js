@@ -1,6 +1,18 @@
+import { Children } from 'react';
 import './Modal.css';
 
-const Modal = ({ show, close, title, message, buttonText, callback, type }) => {
+const Modal = ({
+  show,
+  close,
+  title,
+  message,
+  buttonText,
+  callback,
+  type,
+  footerless,
+  bodyElement,
+  children,
+}) => {
   return (
     <>
       {show ? (
@@ -11,25 +23,28 @@ const Modal = ({ show, close, title, message, buttonText, callback, type }) => {
                 <h5 className='modal-title' id='exampleModalLabel'>
                   {title}
                 </h5>
-                <button type='button' className='close'>
+                <button type='button' onClick={close} className='close'>
                   <span aria-hidden='true'>&times;</span>
                 </button>
               </div>
               {message ? <div className='modal-body'>{message}</div> : null}
-              <div className='modal-footer'>
-                <button
-                  onClick={close}
-                  type='button'
-                  className='btn btn-outline-primary'>
-                  Cancel
-                </button>
+              {children ? <div className='modal-body'>{children}</div> : null}
+              {footerless ? null : (
+                <div className='modal-footer'>
+                  <button
+                    onClick={close}
+                    type='button'
+                    className='btn btn-outline-primary'>
+                    Cancel
+                  </button>
 
-                <button
-                  onClick={callback ? callback : null}
-                  className={`btn btn-outline-${type}`}>
-                  {buttonText}
-                </button>
-              </div>
+                  <button
+                    onClick={callback ? callback : null}
+                    className={`btn btn-outline-${type}`}>
+                    {buttonText}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -16,13 +16,15 @@
 }
 
 .change-avatar::after {
-  content: '';
+  content: 'Change avatar';
+  padding: 1rem;
   position: absolute;
   bottom: 0;
   left: 8px;
   width: 90%;
   height: 50%;
-  background-color: hsl(0, 0%, 85%, 0.5);
+  background-color: rgba(92, 92, 92, 0.8);
+  color: #fff;
   opacity: 0;
   border-bottom-left-radius: 110px;
   border-bottom-right-radius: 110px;
@@ -42,5 +44,45 @@
     display: flex;
     justify-content: center;
     padding-bottom: 1rem;
+  }
+}
+
+.row-grid-images {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+/* Create four equal column-grid-imagess that sits next to each other */
+.column-grid-images {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
+}
+
+.column-grid-images img {
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
+}
+
+/* Responsive layout - makes a two column-grid-images-layout instead of four column-grid-imagess */
+@media screen and (max-width: 800px) {
+  .column-grid-images {
+    -ms-flex: 50%;
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two column-grid-imagess stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column-grid-images {
+    -ms-flex: 25%;
+    flex: 25%;
+    max-width: 25%;
   }
 }

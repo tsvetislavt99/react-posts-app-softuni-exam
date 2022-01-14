@@ -12,13 +12,13 @@ import { types, NotificationContext } from '../../contexts/NotificationContext';
 //Components
 import Loading from '../Loading/Loading';
 import authService from '../../services/authService';
+import AvatarSelect from './AvatarSelect';
 const Modal = lazy(() => import('../Modal/Modal'));
 const EditProfile = lazy(() => import('./EditProfile'));
 const PostCard = lazy(() => import('../PostCard/PostCard'));
 
 function UserProfile() {
   const { user, logout } = useAuthContext();
-  const navigate = useNavigate();
   const { showNotification } = useContext(NotificationContext);
   const [isBeingEdited, setIsBeingEdited] = useState(false);
   const [myPosts, setMyPosts] = useState({
@@ -31,6 +31,9 @@ function UserProfile() {
     isLoading: true,
   });
   const [modal, setModal] = useState(false);
+  const [avatarModal, setAvatarModal] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     postService.getMyPosts().then((posts) => {
@@ -56,26 +59,27 @@ function UserProfile() {
     setModal(!modal);
   };
 
+  const toggleAvatarModal = () => {
+    setAvatarModal(!avatarModal);
+  };
+
   const editHandler = () => {
     setIsBeingEdited((oldIsBeingEdit) => !oldIsBeingEdit);
   };
 
-  console.log();
   const deleteHandler = () => {
     const id = user.userId;
     userService
       .deleteProfile(id)
       .then(() => {
         logout();
-        showNotification('Successfully deleted profile!', types.success);
-        navigate('/');
-      })
-      .catch((err) => {
-        logout();
         authService.logout().then(() => {
           showNotification('Successfully deleted profile!', types.success);
           navigate('/');
         });
+      })
+      .catch((error) => {
+        showNotification(error.message, types.error);
       });
   };
 
@@ -206,7 +210,9 @@ function UserProfile() {
               <div className='col-lg-4'>
                 <div className='card mb-4'>
                   <div className='card-body text-center'>
-                    <button className='change-avatar'>
+                    <button
+                      onClick={toggleAvatarModal}
+                      className='change-avatar'>
                       <img
                         src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'
                         alt='avatar'
@@ -214,6 +220,15 @@ function UserProfile() {
                         style={{ width: '150px' }}
                       />
                     </button>
+                    <Modal
+                      show={avatarModal}
+                      close={toggleAvatarModal}
+                      title='Test?'
+                      buttonText='Test'
+                      type='info'
+                      footerless={true}>
+                      <AvatarSelect />
+                    </Modal>
                     <h5 className='my-3'>
                       {userInfo.firstName} {userInfo.lastName}
                     </h5>
