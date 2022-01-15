@@ -1,46 +1,65 @@
 const AvatarSelect = () => {
   const avatars = [
-    'anon',
+    'default',
     'astronout',
     'batman',
     'captainamerica',
     'deadpool',
-    'default',
+    'anon',
     'einstein',
     'ironman',
     'jacksparrow',
     'loki',
+    'spiderman',
+    'trooper',
     'manbrownbeard',
     'manbrownbearda',
     'manglasses',
     'manglassesa',
-    'spiderman',
-    'trooper',
     'womanblackhair',
     'womanblackhaira',
-    'womanbloncehair',
   ];
 
   return (
     <div className='row-grid-images'>
       <div className='column-grid-images'>
         {avatars.slice(0, 4).map((img) => (
-          <img key={img} src={`/avatars/${img}.svg`} />
+          <img
+            alt='avatar'
+            className='avatar-select'
+            key={img}
+            src={`/avatars/${img}.svg`}
+          />
         ))}
       </div>
       <div className='column-grid-images'>
         {avatars.slice(4, 9).map((img) => (
-          <img key={img} src={`/avatars/${img}.svg`} />
+          <img
+            alt='avatar'
+            className='avatar-select'
+            key={img}
+            src={`/avatars/${img}.svg`}
+          />
         ))}
       </div>
       <div className='column-grid-images'>
         {avatars.slice(9, 14).map((img) => (
-          <img key={img} src={`/avatars/${img}.svg`} />
+          <img
+            alt='avatar'
+            className='avatar-select'
+            key={img}
+            src={`/avatars/${img}.svg`}
+          />
         ))}
       </div>
       <div className='column-grid-images'>
         {avatars.slice(14, 18).map((img) => (
-          <img key={img} src={`/avatars/${img}.svg`} />
+          <img
+            alt='avatar'
+            className='avatar-select'
+            key={img}
+            src={`/avatars/${img}.svg`}
+          />
         ))}
       </div>
     </div>

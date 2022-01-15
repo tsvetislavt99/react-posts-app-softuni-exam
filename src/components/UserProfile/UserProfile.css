@@ -39,6 +39,11 @@
   outline: none;
 }
 
+.img-edit:hover {
+  transform: scale(1.05);
+  transition: transform 500ms ease;
+}
+
 @media only screen and (max-width: 600px) {
   .profile-control {
     display: flex;
@@ -66,7 +71,11 @@
 .column-grid-images img {
   margin-top: 8px;
   vertical-align: middle;
-  width: 100%;
+  width: 90%;
+}
+
+.avatar-select {
+  cursor: pointer;
 }
 
 /* Responsive layout - makes a two column-grid-images-layout instead of four column-grid-imagess */

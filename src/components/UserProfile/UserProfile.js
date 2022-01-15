@@ -32,6 +32,7 @@ function UserProfile() {
   });
   const [modal, setModal] = useState(false);
   const [avatarModal, setAvatarModal] = useState(false);
+  const [updateAvatar, setUpdateAvatar] = useState(false);
 
   const navigate = useNavigate();
 
@@ -53,7 +54,7 @@ function UserProfile() {
     userService.getUser(user.userId).then((user) => {
       setUserInfo(user);
     });
-  }, [user.userId, isBeingEdited]);
+  }, [user.userId, isBeingEdited, updateAvatar]);
 
   const toggleModal = () => {
     setModal(!modal);
@@ -61,6 +62,13 @@ function UserProfile() {
 
   const toggleAvatarModal = () => {
     setAvatarModal(!avatarModal);
+  };
+
+  const getAvatarName = (e) => {
+    const avatarName = e.target.src.substring(e.target.src.indexOf('/', 7));
+    userService.editAvatar(avatarName, user.userId).then(() => {
+      setUpdateAvatar(!updateAvatar);
+    });
   };
 
   const editHandler = () => {
@@ -210,22 +218,25 @@ function UserProfile() {
               <div className='col-lg-4'>
                 <div className='card mb-4'>
                   <div className='card-body text-center'>
-                    <button
-                      onClick={toggleAvatarModal}
-                      className='change-avatar'>
-                      <img
-                        src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'
-                        alt='avatar'
-                        className='rounded-circle img-fluid avatar'
-                        style={{ width: '150px' }}
-                      />
-                    </button>
+                    <div className='img-edit'>
+                      <button
+                        onClick={toggleAvatarModal}
+                        className='change-avatar'>
+                        <img
+                          src={userInfo.avatar}
+                          alt='avatar'
+                          className='rounded-circle img-fluid avatar'
+                          style={{ width: '150px' }}
+                        />
+                      </button>
+                    </div>
                     <Modal
                       show={avatarModal}
                       close={toggleAvatarModal}
                       title='Test?'
                       buttonText='Test'
                       type='info'
+                      callback={getAvatarName}
                       footerless={true}>
                       <AvatarSelect />
                     </Modal>

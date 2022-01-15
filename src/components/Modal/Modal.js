@@ -10,13 +10,17 @@ const Modal = ({
   callback,
   type,
   footerless,
-  bodyElement,
   children,
 }) => {
+  const selectAndClose = (e) => {
+    callback(e);
+    close();
+  };
+
   return (
     <>
       {show ? (
-        <div className='background-modal' onClick={close} aria-hidden='true'>
+        <div className='background-modal' aria-hidden='true'>
           <div className='modal-dialog' role='document'>
             <div className='modal-content'>
               <div className='modal-header'>
@@ -28,7 +32,11 @@ const Modal = ({
                 </button>
               </div>
               {message ? <div className='modal-body'>{message}</div> : null}
-              {children ? <div className='modal-body'>{children}</div> : null}
+              {children ? (
+                <div className='modal-body' onClick={selectAndClose}>
+                  {children}
+                </div>
+              ) : null}
               {footerless ? null : (
                 <div className='modal-footer'>
                   <button
