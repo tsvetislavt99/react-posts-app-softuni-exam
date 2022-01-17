@@ -233,9 +233,7 @@ function UserProfile() {
                     <Modal
                       show={avatarModal}
                       close={toggleAvatarModal}
-                      title='Test?'
-                      buttonText='Test'
-                      type='info'
+                      title='Select an avatar'
                       callback={getAvatarName}
                       footerless={true}>
                       <AvatarSelect />

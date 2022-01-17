@@ -9,10 +9,13 @@ import { types, NotificationContext } from '../../contexts/NotificationContext';
 import isGuest from '../../hoc/isGuest';
 
 //Components
+import Modal from '../Modal/Modal';
+import TermsOfService from './TermsOfService';
 
 function Register() {
   const [isValid, setIsValid] = useState({ fields: {}, errors: {} });
   const { showNotification } = useContext(NotificationContext);
+  const [modal, setModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -38,7 +41,7 @@ function Register() {
           return showNotification(error.message, types.error);
         });
     } else {
-      //TODO: Find out what I wanted to do her
+      //TODO: Find out what I wanted to do here
     }
   };
 
@@ -184,6 +187,10 @@ function Register() {
     setIsValid((oldIsValid) => {
       return { ...oldIsValid, ...fields };
     });
+  };
+
+  const toggleModal = () => {
+    setModal(!modal);
   };
 
   return (
@@ -346,9 +353,20 @@ function Register() {
                         onChange={onChangeHandler}
                       />
                       <label className='form-check-label' htmlFor='terms'>
-                        I agree all statements in{' '}
-                        <a href='/about-us'>Terms of service</a>
+                        I agree all statements in&nbsp;
                       </label>
+                      <span onClick={toggleModal} className='terms-trigger'>
+                        Terms of service
+                      </span>
+                      <Modal
+                        show={modal}
+                        close={toggleModal}
+                        title='Terms of Service'
+                        buttonText='Test'
+                        type='info'
+                        footerless={true}>
+                        <TermsOfService />
+                      </Modal>
                       {isValid.errors['terms'] && (
                         <p
                           className='ml-3 error-message'

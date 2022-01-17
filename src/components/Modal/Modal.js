@@ -1,4 +1,3 @@
-import { Children } from 'react';
 import './Modal.css';
 
 const Modal = ({
@@ -33,7 +32,9 @@ const Modal = ({
               </div>
               {message ? <div className='modal-body'>{message}</div> : null}
               {children ? (
-                <div className='modal-body' onClick={selectAndClose}>
+                <div
+                  className='modal-body modal-body-children'
+                  onClick={selectAndClose}>
                   {children}
                 </div>
               ) : null}

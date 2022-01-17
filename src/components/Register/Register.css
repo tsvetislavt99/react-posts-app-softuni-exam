@@ -2,3 +2,13 @@
   margin-bottom: 25px;
   margin-top: 25px;
 }
+.terms-trigger {
+  color: #84d9f8;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.terms-trigger:hover {
+  color: #5641df;
+  text-decoration: underline;
+}
