@@ -11,14 +11,15 @@ import PostCard from '../PostCard/PostCard';
 function Catalog() {
   const [posts, setPosts] = useState([]);
   const [search, setSearch] = useState(false);
+  const [nothingFound, setNothingFoung] = useState(false);
 
   useEffect(() => {
-    if (posts.length === 0) {
+    if (posts.length === 0 && !nothingFound) {
       postService.getAllPosts().then((newPosts) => {
         setPosts((oldPosts) => [...oldPosts, ...newPosts]);
       });
     }
-  }, [posts.length, search]);
+  }, [nothingFound, posts.length, search]);
 
   const filterPosts = (e) => {
     e.preventDefault();
@@ -26,12 +27,15 @@ function Catalog() {
     const { query } = Object.fromEntries(formData);
     console.log(query);
     postService.getAllPosts(query).then((newPosts) => {
-      console.log(newPosts);
-      setPosts((oldPosts) => [...newPosts]);
+      if (newPosts.length !== 0) {
+        setPosts((oldPosts) => [...newPosts]);
+        setSearch((oldSearch) => !oldSearch);
+        setNothingFoung(false);
+      } else {
+        setNothingFoung(true);
+      }
       setSearch((oldSearch) => !oldSearch);
     });
-
-    setSearch((oldSearch) => !oldSearch);
   };
 
   console.log(posts);
@@ -61,12 +65,15 @@ function Catalog() {
             </form>
           </div>
         </div>
-
-        <div className='row my-5'>
-          {posts.map((post) => (
-            <PostCard key={post._id} post={post} />
-          ))}
-        </div>
+        {nothingFound ? (
+          <h1 className='nothing-found'>Nothing found :(</h1>
+        ) : (
+          <div className='row my-5'>
+            {posts.map((post) => (
+              <PostCard key={post._id} post={post} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

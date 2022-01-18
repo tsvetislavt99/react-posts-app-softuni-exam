@@ -34,14 +34,16 @@ const getAllPosts = async (query) => {
   if (query) {
     return fetch(`${BASE_URL}/posts/all`, {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify(query),
+      headers: {
+        'content-type': 'application/json',
+      },
+
+      body: JSON.stringify({ query }),
     }).then((res) => res.json());
   } else {
     return fetch(`${BASE_URL}/posts/all`, {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
       credentials: 'include',
     }).then((res) => res.json());
   }

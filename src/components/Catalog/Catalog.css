@@ -63,3 +63,8 @@
   border-top-right-radius: 0.2rem;
   border-bottom-right-radius: 0.2rem;
 }
+
+.nothing-found {
+  text-align: center;
+  margin-block: 10rem;
+}
