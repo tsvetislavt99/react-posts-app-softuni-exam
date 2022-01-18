@@ -1511,6 +1511,13 @@ a.text-dark:focus {
   font-size: 13px;
 }
 
+.form-search-blog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .form-search-blog .custom-select {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;

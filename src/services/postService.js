@@ -30,10 +30,21 @@ const getPostById = async (postId) => {
   }).then((res) => res.json());
 };
 
-const getAllPosts = async () => {
-  return fetch(`${BASE_URL}/posts/all`, { credentials: 'include' }).then(
-    (res) => res.json()
-  );
+const getAllPosts = async (query) => {
+  if (query) {
+    return fetch(`${BASE_URL}/posts/all`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(query),
+    }).then((res) => res.json());
+  } else {
+    return fetch(`${BASE_URL}/posts/all`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      credentials: 'include',
+    }).then((res) => res.json());
+  }
 };
 
 const createPost = async (postData) => {
