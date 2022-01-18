@@ -122,7 +122,7 @@ function PostDetails() {
                       <div className='avatar'>
                         <img src={post.author?.avatar} alt='' />
                       </div>
-                      <Link to='/404'>
+                      <Link to={`/public-profile/${post.author?._id}`}>
                         {post.author?.firstName} {post.author?.lastName}
                       </Link>
                     </div>

@@ -44,7 +44,10 @@ function App() {
               <Route path='/register/' element={<Register />} />
               <Route path='/login' element={<Login />} />
               <Route path='/logout' element={<Logout />} />
-              <Route path='/public-profile' element={<PublicUserProfile />} />
+              <Route
+                path='/public-profile/:userId'
+                element={<PublicUserProfile />}
+              />
               <Route path='/profile' element={<UserProfile />} />
               <Route path='/create' element={<CreatePost />} />
               <Route path='/loading' element={<Loading />} />

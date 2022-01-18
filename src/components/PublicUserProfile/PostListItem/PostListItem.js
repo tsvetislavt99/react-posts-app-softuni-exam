@@ -1,7 +1,7 @@
 //Other
 import { Link } from 'react-router-dom';
 
-function PostListItem() {
+function PostListItem({ post }) {
   return (
     <>
       <div className='row'>
@@ -10,7 +10,7 @@ function PostListItem() {
         </div>
         <div className='col-sm-9'>
           <p className='text-muted mb-0'>
-            <Link to='/'>Post Title here</Link>
+            <Link to={`/blog/${post._id}`}>{post.title}</Link>
           </p>
         </div>
       </div>
@@ -20,13 +20,13 @@ function PostListItem() {
           <p className='mb-0'>Rating</p>
         </div>
         <div className='col-sm-3'>
-          <p className='text-muted mb-0'>8</p>
+          <p className='text-muted mb-0'>{post.rating}</p>
         </div>
         <div className='col-sm-3'>
           <p className='mb-0'>Comments</p>
         </div>
         <div className='col-sm-3'>
-          <p className='text-muted mb-0'>8</p>
+          <p className='text-muted mb-0'>{post.comments.length}</p>
         </div>
       </div>
       <hr />

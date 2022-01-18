@@ -1,25 +1,30 @@
+//CSS
+import './PublicUserProfile.css';
+
 //Other
+import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import postService from '../../services/postService';
 
 //Components
 import PostListItem from './PostListItem/PostListItem';
+import Loading from '../Loading/Loading';
+import userService from '../../services/userService';
 
 function PublicUserProfile() {
-  const [topPosts, setTopPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { userId } = useParams();
+  const [userDetails, setUserDetails] = useState({
+    isLoading: true,
+  });
 
   useEffect(() => {
-    postService.getTopThree().then((posts) => {
-      setTopPosts((oldPosts) => [...oldPosts, ...posts]);
-      setIsLoading((isLoading) => !isLoading);
+    userService.getUser(userId).then((user) => {
+      console.log(user.posts);
+      setUserDetails({ ...user, isLoading: false });
     });
-  }, []);
+  }, [userId]);
 
-  console.log(topPosts);
-
-  if (isLoading) {
-    return <h1>Loading......</h1>;
+  if (userDetails.isLoading) {
+    return <Loading />;
   } else {
     return (
       <section style={{ backgroundColor: '#eee' }}>
@@ -29,16 +34,14 @@ function PublicUserProfile() {
               <div className='card mb-4'>
                 <div className='card-body text-center'>
                   <img
-                    src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'
+                    src={userDetails.avatar}
                     alt='avatar'
                     className='rounded-circle img-fluid'
                     style={{ width: '150px' }}
                   />
-                  <h5 className='my-3'>Joh22n Smith</h5>
-                  <p className='text-muted mb-1'>Full Stack Developer</p>
-                  <p className='text-muted mb-4'>
-                    Bay 22Area, San Francisco, CA
-                  </p>
+                  <h5 className='my-3'>{`${userDetails.firstName} ${userDetails.lastName}`}</h5>
+                  <p className='text-muted mb-1'>{`${userDetails.jobTitle}`}</p>
+                  <p className='text-muted mb-4'>{`${userDetails.address}`}</p>
                 </div>
               </div>
             </div>
@@ -51,10 +54,15 @@ function PublicUserProfile() {
                     </div>
                   </div>
                   <hr />
-                  <PostListItem />
-                  <PostListItem />
-                  <PostListItem />
-                  <PostListItem />
+                  {userDetails.posts.length !== 0 ? (
+                    userDetails.posts.map((post) => (
+                      <PostListItem key={post._id} post={post} />
+                    ))
+                  ) : (
+                    <h3 className='no-posts-user'>
+                      The user does not have posts yet :(
+                    </h3>
+                  )}
                 </div>
               </div>
             </div>

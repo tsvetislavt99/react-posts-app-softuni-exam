@@ -66,7 +66,7 @@ const deleteProfile = async (userId) => {
 };
 
 const getUser = async (userId) => {
-  return await fetch(`${BASE_URL}/users/${userId}`, {
+  return await fetch(`${BASE_URL}/users/with-posts/${userId}`, {
     credentials: 'include',
   }).then((res) => res.json());
 };
