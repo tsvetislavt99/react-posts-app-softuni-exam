@@ -24,13 +24,12 @@
   margin-bottom: 0.25rem;
 }
 
-.edit-delete-buttons,
 .like-dislike-buttons {
   justify-content: space-around;
 }
 
-.edit-delete-buttons button {
-  margin-left: 2.5rem;
+.edit-delete button {
+  padding: 2px 24px;
 }
 
 .likes {
@@ -54,5 +53,31 @@
 @media only screen and (max-width: 500px) {
   .blog-single-wrap .header .post-thumb {
     height: auto;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .meta-header {
+    margin-top: 10px;
+    height: 100px !important;
+  }
+
+  .post-author {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .post-author a {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .edit-delete {
+    margin-left: 1rem;
+  }
+
+  .edit-delete button {
+    padding: 8px 16px;
   }
 }

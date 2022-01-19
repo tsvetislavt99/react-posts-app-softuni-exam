@@ -16,7 +16,7 @@ function BlogItem({ post }) {
             <span className='mai-calendar'></span>{' '}
             {post.dateOfCreation.substring(0, 10)}
           </p>
-          <Link to='#'>
+          <Link to={`/public-profile/${post.author?._id}`}>
             <span className='mai-person'></span> {post.author.firstName}
           </Link>
           <span className='mai-chatbubbles'></span> {post.comments.length}

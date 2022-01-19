@@ -132,6 +132,20 @@ function PostDetails() {
                         {post.author?.firstName} {post.author?.lastName}
                       </Link>
                     </div>
+                    {user.userId === post.author?._id ? (
+                      <div className='d-flex edit-delete'>
+                        <button
+                          type='button'
+                          className='mr-2 btn btn-outline-primary ms-1 '>
+                          Edit
+                        </button>
+                        <button
+                          type='button'
+                          className='btn btn-outline-danger ms-1 '>
+                          Delete
+                        </button>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
                 <h1 className='post-title'>{post.title}</h1>
@@ -153,35 +167,21 @@ function PostDetails() {
                   <p>{parse(post.description)}</p>
                 </div>
               </div>
-              <div className='card'>
-                <div className='d-flex flex-row align-items-center p-3 edit-delete-buttons'>
-                  <button
-                    type='button'
-                    className='btn btn-outline-primary ms-1 '>
-                    Edit
-                  </button>
-                  <button
-                    type='button'
-                    className='btn btn-outline-danger ms-1 '>
-                    Delete
-                  </button>
-                </div>
-              </div>
               {user.userId ? (
-                <div className='d-flex flex-row align-items-center p-3 like-dislike-buttons'>
+                <div className='d-inline-flex flex-row align-items-center p-3 like-dislike-buttons'>
                   <div>
                     <span className='likes'>{likes}</span>
                     <button
                       onClick={onLikeHandler}
                       type='button'
-                      className='ml-4 mai-heart btn btn-outline-primary ms-1 '></button>
+                      className='ml-4 mr-4 mai-heart btn btn-outline-primary ms-1 '></button>
                   </div>
                   <div>
                     <span className='dislikes'>{dislikes}</span>
                     <button
                       onClick={onDislikeHandler}
                       type='button'
-                      className='ml-4 mai-thumbs-down btn btn-outline-danger ms-1 '></button>
+                      className='ml-4 mr-4 mai-thumbs-down btn btn-outline-danger ms-1 '></button>
                   </div>
                 </div>
               ) : (
@@ -196,7 +196,6 @@ function PostDetails() {
                   </div>
                 </div>
               )}
-
               <CommentSection postId={postId} comments={post.comments} />
             </div>
             <AsideSection postId={postId} categories={post.categories} />
@@ -208,28 +207,3 @@ function PostDetails() {
 }
 
 export default PostDetails;
-
-// eslint-disable-next-line no-lone-blocks
-{
-  // {user.userId ? (
-  //   <div className='d-flex flex-row user-feed'>
-  //     <span className='wish'>
-  //       <button
-  //         style={{ color: '#84d9f8' }}
-  //         onClick={onLikeHandler}
-  //         className='mai-heart mr-2 like-button'></button>
-  //     </span>
-  //     {rating}
-  //     <span className='ml-3'>
-  //       <button
-  //         style={{ color: '#ff4943' }}
-  //         onClick={onDislikeHandler}
-  //         className='mai-thumbs-down mr-2 like-button'></button>
-  //     </span>
-  //   </div>
-  // ) : (
-  //   <div className='d-flex flex-row user-feed'>
-  //     Post Rating: {rating}
-  //   </div>
-  // )}
-}
