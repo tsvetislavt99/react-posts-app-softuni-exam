@@ -65,7 +65,7 @@ function UserProfile() {
   };
 
   const getAvatarName = (e) => {
-    const avatarName = e.target.src.substring(e.target.src.indexOf('/', 7));
+    const avatarName = e.target.src.substring(e.target.src.indexOf('/', 9));
     userService.editAvatar(avatarName, user.userId).then(() => {
       setUpdateAvatar(!updateAvatar);
     });
