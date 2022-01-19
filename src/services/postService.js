@@ -64,6 +64,21 @@ const createPost = async (postData) => {
   });
 };
 
+const deletePost = async (postId) => {
+  const res = await fetch(`${BASE_URL}/posts/${postId}/delete`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
+
+  const resJson = await res.json();
+
+  if (res.ok) {
+    return resJson;
+  } else {
+    throw resJson;
+  }
+};
+
 const likePost = async (postId) => {
   const res = await fetch(`${BASE_URL}/posts/${postId}/upvote`, {
     credentials: 'include',
@@ -166,6 +181,7 @@ const postService = {
   getComments,
   likeComment,
   dislikeComment,
+  deletePost,
 };
 
 export default postService;

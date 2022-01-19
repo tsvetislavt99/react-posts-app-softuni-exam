@@ -2,7 +2,7 @@
 import './PostDetails.css';
 
 //Other
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import parse from 'html-react-parser';
 import postService from '../../services/postService';
@@ -11,6 +11,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 //Components
 import CommentSection from '../CommentSection/CommentSection';
 import AsideSection from './AsideSection/AsideSection';
+import Modal from '../Modal/Modal';
 
 function PostDetails() {
   const { user } = useContext(AuthContext);
@@ -20,6 +21,8 @@ function PostDetails() {
   const [post, setPost] = useState({
     isLoading: true,
   });
+  const [deleteModal, setDeleteModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     postService
@@ -39,6 +42,23 @@ function PostDetails() {
       });
     };
   }, [postId]);
+
+  const toggleDeleteModal = () => {
+    setDeleteModal(!deleteModal);
+  };
+
+  const deletePostHandler = () => {
+    postService
+      .deletePost(post._id)
+      .then((res) => {
+        //TODO: Add notification
+        navigate('/profile');
+      })
+      .catch((error) => {
+        //TODO: Add notification
+        console.log(error);
+      });
+  };
 
   const onLikeHandler = () => {
     postService
@@ -140,6 +160,7 @@ function PostDetails() {
                           Edit
                         </button>
                         <button
+                          onClick={toggleDeleteModal}
                           type='button'
                           className='btn btn-outline-danger ms-1 '>
                           Delete
@@ -201,6 +222,15 @@ function PostDetails() {
             <AsideSection postId={postId} categories={post.categories} />
           </div>
         </div>
+        <Modal
+          show={deleteModal}
+          close={toggleDeleteModal}
+          title={`Are you sure you want to delete ${post.title}?`}
+          message='Delete message'
+          buttonText='Delete'
+          type='danger'
+          callback={deletePostHandler}
+        />
       </div>
     );
   }
