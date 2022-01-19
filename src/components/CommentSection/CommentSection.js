@@ -45,14 +45,11 @@ function CommentSection({ comments, postId }) {
   };
 
   return (
-    <div style={{ padding: '0' }} className='container mt-5 mb-5'>
+    <div style={{ padding: '0' }} className='container mb-5'>
       <div className='row height d-flex justify-content-center align-items-center'>
         <div className='col-md-12'>
           <div className='card'>
-            <div className='p-3'>
-              <h6>Comments</h6>
-            </div>
-            <div className='mt-3 d-flex flex-row align-items-center p-3 form-color'>
+            <div className='d-flex flex-row align-items-center p-3 form-color'>
               {user.userId ? (
                 <form
                   onSubmit={onCommentSubmitHandler}
@@ -67,13 +64,19 @@ function CommentSection({ comments, postId }) {
                     type='text'
                     className={
                       isValid.errors['comment']
-                        ? 'form-control notValid'
-                        : 'form-control'
+                        ? 'form-control notValid mr-2'
+                        : 'form-control mr-2'
                     }
                     name='comment'
                     onChange={onCommentChangeHandler}
                     placeholder='Enter your comment...'
                   />
+                  <button
+                    style={{ padding: '10px 10px', borderRadius: '30px' }}
+                    type='button'
+                    className='btn btn-outline-primary ms-1 '>
+                    Submit
+                  </button>
                 </form>
               ) : (
                 ''

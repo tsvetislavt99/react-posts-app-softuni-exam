@@ -15,7 +15,8 @@ import AsideSection from './AsideSection/AsideSection';
 function PostDetails() {
   const { user } = useContext(AuthContext);
   const { postId } = useParams();
-  const [rating, setRating] = useState(0);
+  const [likes, setLikes] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
   const [post, setPost] = useState({
     isLoading: true,
   });
@@ -28,7 +29,8 @@ function PostDetails() {
         return receivedPost;
       })
       .then((res) => {
-        setRating(res.rating);
+        setLikes(res.upvotes.length);
+        setDislikes(res.downvotes.length);
       });
 
     return () => {
@@ -41,7 +43,10 @@ function PostDetails() {
   const onLikeHandler = () => {
     postService
       .likePost(post._id)
-      .then((res) => setRating((oldRating) => res.newRating))
+      .then((res) => {
+        setLikes((oldRating) => res.newRating);
+        setDislikes((oldRating) => res.newOpositeRating);
+      })
       //TODO: Add notification
       .catch((error) => console.log(error));
   };
@@ -50,7 +55,8 @@ function PostDetails() {
     postService
       .dislikePost(post._id)
       .then((res) => {
-        setRating((oldRating) => res.newRating);
+        setDislikes((oldRating) => res.newRating);
+        setLikes((oldRating) => res.newOpositeRating);
       })
       //TODO: Add notification
       .catch((error) => console.log(error));
@@ -126,27 +132,6 @@ function PostDetails() {
                         {post.author?.firstName} {post.author?.lastName}
                       </Link>
                     </div>
-                    {user.userId ? (
-                      <div className='d-flex flex-row user-feed'>
-                        <span className='wish'>
-                          <button
-                            style={{ color: '#84d9f8' }}
-                            onClick={onLikeHandler}
-                            className='mai-heart mr-2 like-button'></button>
-                        </span>
-                        {rating}
-                        <span className='ml-3'>
-                          <button
-                            style={{ color: '#ff4943' }}
-                            onClick={onDislikeHandler}
-                            className='mai-thumbs-down mr-2 like-button'></button>
-                        </span>
-                      </div>
-                    ) : (
-                      <div className='d-flex flex-row user-feed'>
-                        Post Rating: {rating}
-                      </div>
-                    )}
                   </div>
                 </div>
                 <h1 className='post-title'>{post.title}</h1>
@@ -168,6 +153,49 @@ function PostDetails() {
                   <p>{parse(post.description)}</p>
                 </div>
               </div>
+              <div className='card'>
+                <div className='d-flex flex-row align-items-center p-3 edit-delete-buttons'>
+                  <button
+                    type='button'
+                    className='btn btn-outline-primary ms-1 '>
+                    Edit
+                  </button>
+                  <button
+                    type='button'
+                    className='btn btn-outline-danger ms-1 '>
+                    Delete
+                  </button>
+                </div>
+              </div>
+              {user.userId ? (
+                <div className='d-flex flex-row align-items-center p-3 like-dislike-buttons'>
+                  <div>
+                    <span className='likes'>{likes}</span>
+                    <button
+                      onClick={onLikeHandler}
+                      type='button'
+                      className='ml-4 mai-heart btn btn-outline-primary ms-1 '></button>
+                  </div>
+                  <div>
+                    <span className='dislikes'>{dislikes}</span>
+                    <button
+                      onClick={onDislikeHandler}
+                      type='button'
+                      className='ml-4 mai-thumbs-down btn btn-outline-danger ms-1 '></button>
+                  </div>
+                </div>
+              ) : (
+                <div className='d-flex flex-row align-items-center p-3 like-dislike-buttons'>
+                  <div>
+                    <span className='likes'>Upvotes: </span>
+                    <span className=' ml-4 likes'>{likes}</span>
+                  </div>
+                  <div>
+                    <span className='dislikes'>Downvotes: </span>
+                    <span className=' ml-4 dislikes'>{dislikes}</span>
+                  </div>
+                </div>
+              )}
 
               <CommentSection postId={postId} comments={post.comments} />
             </div>
@@ -180,3 +208,28 @@ function PostDetails() {
 }
 
 export default PostDetails;
+
+// eslint-disable-next-line no-lone-blocks
+{
+  // {user.userId ? (
+  //   <div className='d-flex flex-row user-feed'>
+  //     <span className='wish'>
+  //       <button
+  //         style={{ color: '#84d9f8' }}
+  //         onClick={onLikeHandler}
+  //         className='mai-heart mr-2 like-button'></button>
+  //     </span>
+  //     {rating}
+  //     <span className='ml-3'>
+  //       <button
+  //         style={{ color: '#ff4943' }}
+  //         onClick={onDislikeHandler}
+  //         className='mai-thumbs-down mr-2 like-button'></button>
+  //     </span>
+  //   </div>
+  // ) : (
+  //   <div className='d-flex flex-row user-feed'>
+  //     Post Rating: {rating}
+  //   </div>
+  // )}
+}

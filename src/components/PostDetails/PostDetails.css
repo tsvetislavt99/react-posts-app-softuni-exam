@@ -24,6 +24,23 @@
   margin-bottom: 0.25rem;
 }
 
+.edit-delete-buttons,
+.like-dislike-buttons {
+  justify-content: space-around;
+}
+
+.edit-delete-buttons button {
+  margin-left: 2.5rem;
+}
+
+.likes {
+  color: var(--primary);
+}
+
+.dislikes {
+  color: var(--danger);
+}
+
 @keyframes skeleton-loading {
   0% {
     background-color: hsl(200, 20%, 70%);
@@ -31,5 +48,11 @@
 
   100% {
     background-color: hsl(200, 20%, 95%);
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .blog-single-wrap .header .post-thumb {
+    height: auto;
   }
 }
