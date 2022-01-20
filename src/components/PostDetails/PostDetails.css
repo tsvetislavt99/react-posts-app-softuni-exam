@@ -1,3 +1,8 @@
+.tox.tox-tinymce {
+  border-radius: 20px;
+  padding: 5px;
+}
+
 .skeleton {
   opacity: 0.7;
   animation: skeleton-loading 2s linear infinite alternate;
@@ -30,6 +35,16 @@
 
 .edit-delete button {
   padding: 2px 24px;
+}
+
+.post-title-edit-input {
+  width: 100%;
+  font-size: 2.5rem;
+  border: none;
+}
+
+.post-title-edit-input:focus-visible {
+  outline: none;
 }
 
 .likes {

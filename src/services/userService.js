@@ -1,8 +1,5 @@
 const BASE_URL = 'https://softuni-react-exam-backend.herokuapp.com/auth';
 
-///users/edit/:userId
-
-//TODO: Think about how avatar change will work
 const editProfile = async ({
   firstName,
   lastName,

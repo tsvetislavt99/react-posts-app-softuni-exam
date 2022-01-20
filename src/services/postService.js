@@ -64,6 +64,25 @@ const createPost = async (postData) => {
   });
 };
 
+const editPost = async (postTitle, postBody, postId) => {
+  const res = await fetch(`${BASE_URL}/posts/${postId}/edit`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({ postTitle, postBody }),
+  });
+
+  const resJson = await res.json();
+
+  if (res.ok) {
+    return resJson;
+  } else {
+    throw resJson;
+  }
+};
+
 const deletePost = async (postId) => {
   const res = await fetch(`${BASE_URL}/posts/${postId}/delete`, {
     method: 'DELETE',
@@ -182,6 +201,7 @@ const postService = {
   likeComment,
   dislikeComment,
   deletePost,
+  editPost,
 };
 
 export default postService;
