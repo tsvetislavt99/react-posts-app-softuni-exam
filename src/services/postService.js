@@ -71,7 +71,7 @@ const editPost = async (postTitle, postBody, postId) => {
     headers: {
       'content-type': 'application/json',
     },
-    body: JSON.stringify({ postTitle, postBody }),
+    body: JSON.stringify({ title: postTitle, description: postBody }),
   });
 
   const resJson = await res.json();
