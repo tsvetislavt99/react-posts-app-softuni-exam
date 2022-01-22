@@ -43,16 +43,26 @@ function PostDetails() {
         isLoading: true,
       });
     };
-  }, [postId]);
+  }, [postId, isBeingEdited]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setPost({
+      isLoading: true,
+    });
     const formData = new FormData(e.currentTarget);
     let { postTitle, postBody } = Object.fromEntries(formData);
-    console.log(postTitle, postBody);
-    setPost({ isLoading: true });
-
-    postService.editPost(postTitle, postBody, post._id);
+    postService
+      .editPost(postTitle, postBody, post._id)
+      .then((receivedPost) => {
+        setPost({ ...receivedPost, isLoading: false });
+        return receivedPost;
+      })
+      .then((res) => {
+        setLikes(res.upvotes.length);
+        setDislikes(res.downvotes.length);
+        setIsBeingEdited((old) => !old);
+      });
   };
 
   const toggleDeleteModal = () => {
