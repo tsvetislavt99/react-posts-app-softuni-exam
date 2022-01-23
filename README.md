@@ -34,6 +34,7 @@ Reactive Blog is a web blog application.
 - **Login / Register** - registration with first and last name, e-mail and password
 - **Blog** - list of all available blog posts
 - **Profile Page** - information about the current user
+- **Public Profile Page** - information about any a user
 - **Details Page** - a page giving information about a specific blog post
 - **Create Page** - page for creating new blog post
 
