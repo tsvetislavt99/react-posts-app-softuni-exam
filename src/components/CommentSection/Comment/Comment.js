@@ -40,6 +40,13 @@ function Comment({ commentData }) {
               </span>
             </div>
             <small>{commentData.dateOfCreation.substring(0, 10)}</small>
+            {commentData.author?._id === user.userId ? (
+              <small>
+                <button
+                  style={{ color: '#FE4942' }}
+                  className='mai-trash mr-2 like-button'></button>
+              </small>
+            ) : null}
           </div>
           <p className='text-justify comment-text mb-0'>
             {commentData.comment}

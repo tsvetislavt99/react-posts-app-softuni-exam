@@ -73,7 +73,7 @@ function CommentSection({ comments, postId }) {
                   />
                   <button
                     style={{ padding: '10px 10px', borderRadius: '30px' }}
-                    type='button'
+                    type='submit'
                     className='btn btn-outline-primary ms-1 '>
                     Submit
                   </button>
