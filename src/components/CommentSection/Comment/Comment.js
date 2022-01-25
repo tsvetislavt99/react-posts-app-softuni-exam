@@ -1,11 +1,14 @@
 //Other
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import postService from '../../../services/postService';
 import { AuthContext } from '../../../contexts/AuthContext';
 
+//TODO: Add modal for deletion
 function Comment({ commentData }) {
   const { user } = useContext(AuthContext);
   const [rating, setRating] = useState(commentData.rating);
+  const [isDeleted, setIsDeleted] = useState(false);
+
   const onLikeHandler = () => {
     postService
       .likeComment(commentData._id)
@@ -22,7 +25,17 @@ function Comment({ commentData }) {
       .catch((error) => console.log(error));
   };
 
-  return (
+  const onDeleteHandler = () => {
+    postService
+      .deleteComment(commentData._id)
+      .then((res) => {
+        //TODO: Add notification
+        setIsDeleted((oldIsDelete) => !oldIsDelete);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  return isDeleted ? null : (
     <div className='col-md-12  m-3'>
       <div style={{ display: 'flex' }} className='p-3'>
         <img
@@ -43,6 +56,7 @@ function Comment({ commentData }) {
             {commentData.author?._id === user.userId ? (
               <small>
                 <button
+                  onClick={onDeleteHandler}
                   style={{ color: '#FE4942' }}
                   className='mai-trash mr-2 like-button'></button>
               </small>

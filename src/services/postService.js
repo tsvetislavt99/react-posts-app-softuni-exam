@@ -186,6 +186,21 @@ const dislikeComment = async (commentId) => {
   }
 };
 
+const deleteComment = async (commentId) => {
+  const res = await fetch(`${BASE_URL}/posts/comments/${commentId}/delete`, {
+    credentials: 'include',
+    method: 'DELETE',
+  });
+
+  const resJson = await res.json();
+
+  if (res.ok) {
+    return resJson;
+  } else {
+    throw resJson;
+  }
+};
+
 const postService = {
   getMyPosts,
   getMyTopPost,
@@ -202,6 +217,7 @@ const postService = {
   dislikeComment,
   deletePost,
   editPost,
+  deleteComment,
 };
 
 export default postService;

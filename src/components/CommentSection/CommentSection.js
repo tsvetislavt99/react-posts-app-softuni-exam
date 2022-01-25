@@ -1,5 +1,5 @@
 //Other
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef } from 'react';
 import postService from '../../services/postService';
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -7,9 +7,10 @@ import { AuthContext } from '../../contexts/AuthContext';
 import Comment from './Comment/Comment';
 
 function CommentSection({ comments, postId }) {
+  const { user } = useContext(AuthContext);
   const [newComments, setNewComments] = useState(comments);
   const [isValid, setIsValid] = useState({ errors: {} });
-  const { user } = useContext(AuthContext);
+  const commentRef = useRef(null);
 
   const onCommentSubmitHandler = (e) => {
     e.preventDefault();
@@ -29,6 +30,7 @@ function CommentSection({ comments, postId }) {
             .getComments(postId)
             .then((fetchedComments) => setNewComments(fetchedComments))
             .catch((error) => console.log(error));
+          commentRef.current.value = '';
         })
         .catch((error) => console.log(error));
     }
@@ -68,6 +70,7 @@ function CommentSection({ comments, postId }) {
                         : 'form-control mr-2'
                     }
                     name='comment'
+                    ref={commentRef}
                     onChange={onCommentChangeHandler}
                     placeholder='Enter your comment...'
                   />
