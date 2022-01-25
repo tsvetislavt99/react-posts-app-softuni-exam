@@ -1,5 +1,8 @@
+//CSS
+import './Comment.css';
+
 //Other
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import postService from '../../../services/postService';
 import { AuthContext } from '../../../contexts/AuthContext';
 
@@ -54,17 +57,31 @@ function Comment({ commentData }) {
             </div>
             <small>{commentData.dateOfCreation.substring(0, 10)}</small>
             {commentData.author?._id === user.userId ? (
-              <small>
-                <button
-                  onClick={onDeleteHandler}
-                  style={{ color: '#FE4942' }}
-                  className='mai-trash mr-2 like-button'></button>
-              </small>
+              <>
+                <small>
+                  <button
+                    style={{ color: '#84D9F7' }}
+                    className='mai-pencil mr-2 like-button'></button>
+                </small>
+                <small>
+                  <button
+                    onClick={onDeleteHandler}
+                    style={{ color: '#FE4942' }}
+                    className='mai-trash mr-2 like-button'></button>
+                </small>
+              </>
             ) : null}
           </div>
           <p className='text-justify comment-text mb-0'>
             {commentData.comment}
           </p>
+          <input
+            style={{ width: '100%' }}
+            defaultValue={commentData.comment}
+            className='text-justify edit-comment-input comment-text mb-0'
+            autoFocus
+          />
+
           {user.userId ? (
             <div className='d-flex flex-row user-feed'>
               <span className='wish'>

@@ -1,0 +1,7 @@
+.edit-comment-input {
+  border: none;
+}
+
+.edit-comment-input:focus-visible {
+  outline: none;
+}
