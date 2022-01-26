@@ -101,7 +101,8 @@ Reactive Blog is a web blog application.
 
 ## Todos
 
+- Add notifciation on the //TODOs
+- Add modal on Delete comment
 - Implement change password funtionality
-- Implement edit and delete comment funtionality
 - Implement e-mail confirmation funtionality
 - Implement e-mail change functionality
