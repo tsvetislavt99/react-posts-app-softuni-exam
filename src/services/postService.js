@@ -201,6 +201,36 @@ const deleteComment = async (commentId) => {
   }
 };
 
+const editComment = async (commentId, newCommentText) => {
+  const comment = { newCommentText: newCommentText };
+  const res = await fetch(`${BASE_URL}/posts/comments/${commentId}/edit`, {
+    method: 'POST',
+    body: JSON.stringify(comment),
+    headers: { 'content-type': 'application/json' },
+    credentials: 'include',
+  });
+
+  const resJson = await res.json();
+
+  if (res.ok) {
+    return resJson;
+  } else {
+    throw resJson;
+  }
+};
+
+const getCommentById = async (commentId) => {
+  const res = await fetch(`${BASE_URL}/posts/comments/${commentId}/get`);
+
+  const resJson = await res.json();
+
+  if (res.ok) {
+    return resJson;
+  } else {
+    throw resJson;
+  }
+};
+
 const postService = {
   getMyPosts,
   getMyTopPost,
@@ -218,6 +248,8 @@ const postService = {
   deletePost,
   editPost,
   deleteComment,
+  editComment,
+  getCommentById,
 };
 
 export default postService;

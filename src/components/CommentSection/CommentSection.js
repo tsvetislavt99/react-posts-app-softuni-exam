@@ -93,7 +93,7 @@ function CommentSection({ comments, postId }) {
               new Date(c2.dateOfCreation) - new Date(c1.dateOfCreation)
           )
           .map((comment) => (
-            <Comment key={comment._id} commentData={comment} />
+            <Comment key={comment._id} comment={comment} />
           ))}
       </div>
     </div>

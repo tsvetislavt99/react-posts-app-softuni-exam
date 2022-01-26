@@ -199,7 +199,7 @@ function UserProfile() {
       return (
         <EditProfile
           user={user}
-          setIsBeingEdited={setIsBeingEdited}
+          setIsBeingEdited={editHandler}
           userInfo={userInfo}
           topPost={topPost}
         />

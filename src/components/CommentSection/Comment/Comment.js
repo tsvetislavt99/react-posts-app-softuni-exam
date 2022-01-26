@@ -1,16 +1,31 @@
-//CSS
-import './Comment.css';
-
 //Other
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import postService from '../../../services/postService';
 import { AuthContext } from '../../../contexts/AuthContext';
 
+//Components
+import EditComment from './EditComment';
+
 //TODO: Add modal for deletion
-function Comment({ commentData }) {
+function Comment({ comment }) {
   const { user } = useContext(AuthContext);
+  const [commentData, setCommentData] = useState(comment);
   const [rating, setRating] = useState(commentData.rating);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isBeingEdited, setIsBeingEdited] = useState(false);
+  const [edited, setEdited] = useState(false);
+
+  useEffect(() => {
+    if (edited) {
+      postService
+        .getCommentById(comment._id)
+        .then((res) => setCommentData(res))
+        .catch((error) => {
+          //TODO: Add notification
+          console.log(error);
+        });
+    }
+  }, [comment._id, edited, commentData]);
 
   const onLikeHandler = () => {
     postService
@@ -38,7 +53,22 @@ function Comment({ commentData }) {
       .catch((error) => console.log(error));
   };
 
-  return isDeleted ? null : (
+  const toggleIsBeingEdited = (alreadyEdited = false) => {
+    setIsBeingEdited((oldIsBeingEdited) => !oldIsBeingEdited);
+    if (alreadyEdited) {
+      setEdited(true);
+      setTimeout(() => {
+        setEdited(false);
+      }, 1000);
+    }
+  };
+
+  return isDeleted ? null : isBeingEdited ? (
+    <EditComment
+      toggleIsBeingEdited={toggleIsBeingEdited}
+      commentData={commentData}
+    />
+  ) : (
     <div className='col-md-12  m-3'>
       <div style={{ display: 'flex' }} className='p-3'>
         <img
@@ -60,10 +90,9 @@ function Comment({ commentData }) {
               <>
                 <small>
                   <button
+                    onClick={toggleIsBeingEdited}
                     style={{ color: '#84D9F7' }}
                     className='mai-pencil mr-2 like-button'></button>
-                </small>
-                <small>
                   <button
                     onClick={onDeleteHandler}
                     style={{ color: '#FE4942' }}
@@ -75,12 +104,6 @@ function Comment({ commentData }) {
           <p className='text-justify comment-text mb-0'>
             {commentData.comment}
           </p>
-          <input
-            style={{ width: '100%' }}
-            defaultValue={commentData.comment}
-            className='text-justify edit-comment-input comment-text mb-0'
-            autoFocus
-          />
 
           {user.userId ? (
             <div className='d-flex flex-row user-feed'>
