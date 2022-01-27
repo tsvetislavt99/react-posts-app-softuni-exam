@@ -20,7 +20,7 @@ const EditComment = ({ commentData, toggleIsBeingEdited }) => {
     const errors = {};
     const formData = new FormData(e.target);
     const commentText = formData.get('comment');
-    if (commentText.length < 1) {
+    if (commentText.length < 5) {
       errors['comment'] = 'Comment should not be empty';
       setIsValid((oldIsValid) => {
         return { ...oldIsValid, ...{ errors: errors } };
@@ -44,6 +44,21 @@ const EditComment = ({ commentData, toggleIsBeingEdited }) => {
     submitEl.current.click();
   };
 
+  const onCommentChangeHandler = (e) => {
+    let errors = {};
+    if (e.target.value.length > 5) {
+      errors['postImage'] = null;
+      setIsValid((oldIsValid) => {
+        return { ...oldIsValid, ...{ errors: errors } };
+      });
+    } else {
+      errors['comment'] = 'Comment should not be empty';
+      setIsValid((oldIsValid) => {
+        return { ...oldIsValid, ...{ errors: errors } };
+      });
+    }
+  };
+
   return (
     <div className='col-md-12  m-3'>
       <div style={{ display: 'flex' }} className='p-3'>
@@ -65,10 +80,17 @@ const EditComment = ({ commentData, toggleIsBeingEdited }) => {
             {commentData.author?._id === user.userId ? (
               <>
                 <small>
-                  <button
-                    onClick={toggleModal}
-                    style={{ color: '#34BA78' }}
-                    className='mai-save mr-2 like-button'></button>
+                  {isValid.errors['comment'] ? (
+                    <button
+                      style={{ color: '#696969' }}
+                      className='mai-save mr-2 like-button'
+                      disabled></button>
+                  ) : (
+                    <button
+                      onClick={toggleModal}
+                      style={{ color: '#34BA78' }}
+                      className='mai-save mr-2 like-button'></button>
+                  )}
                   <button
                     onClick={toggleIsBeingEdited}
                     style={{ color: '#FE4942' }}
@@ -79,12 +101,18 @@ const EditComment = ({ commentData, toggleIsBeingEdited }) => {
           </div>
           <form onSubmit={onCommentSubmitHandler} method='POST'>
             <input
+              onChange={onCommentChangeHandler}
               style={{ width: '100%' }}
               name='comment'
               defaultValue={commentData.comment}
               className='text-justify edit-comment-input comment-text mb-0'
               autoFocus
             />
+            {isValid.errors['comment'] && (
+              <p className='comment-warning'>
+                Comment should be at least 6 symbols!
+              </p>
+            )}
             <button ref={submitEl} type='submit' style={{ display: 'none' }} />
             <Modal
               show={modal}

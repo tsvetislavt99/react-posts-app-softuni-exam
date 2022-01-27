@@ -5,3 +5,8 @@
 .edit-comment-input:focus-visible {
   outline: none;
 }
+
+.comment-warning {
+  font-size: 10px;
+  color: #fe4942;
+}

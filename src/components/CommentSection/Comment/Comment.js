@@ -5,13 +5,14 @@ import { AuthContext } from '../../../contexts/AuthContext';
 
 //Components
 import EditComment from './EditComment';
+import Modal from '../../Modal/Modal';
 
-//TODO: Add modal for deletion
 function Comment({ comment }) {
   const { user } = useContext(AuthContext);
   const [commentData, setCommentData] = useState(comment);
   const [rating, setRating] = useState(commentData.rating);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [deletetionModal, setDeletionModal] = useState(false);
   const [isBeingEdited, setIsBeingEdited] = useState(false);
   const [edited, setEdited] = useState(false);
 
@@ -53,6 +54,10 @@ function Comment({ comment }) {
       .catch((error) => console.log(error));
   };
 
+  const toggleDeletionModal = () => {
+    setDeletionModal((oldDeletetionModal) => !oldDeletetionModal);
+  };
+
   const toggleIsBeingEdited = (alreadyEdited = false) => {
     setIsBeingEdited((oldIsBeingEdited) => !oldIsBeingEdited);
     if (alreadyEdited) {
@@ -70,6 +75,15 @@ function Comment({ comment }) {
     />
   ) : (
     <div className='col-md-12  m-3'>
+      <Modal
+        show={deletetionModal}
+        close={toggleDeletionModal}
+        title='Are you sure you want to delete your comment?'
+        message='Delete message'
+        buttonText='Delete'
+        type='danger'
+        callback={onDeleteHandler}
+      />
       <div style={{ display: 'flex' }} className='p-3'>
         <img
           alt='user_avatar'
@@ -94,7 +108,7 @@ function Comment({ comment }) {
                     style={{ color: '#84D9F7' }}
                     className='mai-pencil mr-2 like-button'></button>
                   <button
-                    onClick={onDeleteHandler}
+                    onClick={toggleDeletionModal}
                     style={{ color: '#FE4942' }}
                     className='mai-trash mr-2 like-button'></button>
                 </small>

@@ -17,7 +17,7 @@ function CommentSection({ comments, postId }) {
     const errors = {};
     const formData = new FormData(e.target);
     const commentText = formData.get('comment');
-    if (commentText.length < 1) {
+    if (commentText.length < 6) {
       errors['comment'] = 'Comment should not be empty';
       setIsValid((oldIsValid) => {
         return { ...oldIsValid, ...{ errors: errors } };
@@ -38,7 +38,7 @@ function CommentSection({ comments, postId }) {
 
   const onCommentChangeHandler = (e) => {
     let errors = {};
-    if (e.target.value.length > 0) {
+    if (e.target.value.length > 5) {
       errors['postImage'] = null;
       setIsValid((oldIsValid) => {
         return { ...oldIsValid, ...{ errors: errors } };
@@ -74,6 +74,7 @@ function CommentSection({ comments, postId }) {
                     onChange={onCommentChangeHandler}
                     placeholder='Enter your comment...'
                   />
+
                   <button
                     style={{ padding: '10px 10px', borderRadius: '30px' }}
                     type='submit'
@@ -86,6 +87,11 @@ function CommentSection({ comments, postId }) {
               )}
             </div>
           </div>
+          {isValid.errors['comment'] && (
+            <p className='mt-1 comment-warning'>
+              Comment should be at least 6 symbols!
+            </p>
+          )}
         </div>
         {newComments
           .sort(

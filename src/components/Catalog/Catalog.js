@@ -2,11 +2,12 @@
 import './Catalog.css';
 
 //Others
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import postService from '../../services/postService';
 
 //Components
-import PostCard from '../PostCard/PostCard';
+import Loading from '../Loading/Loading';
+const PostCard = lazy(() => import('../PostCard/PostCard'));
 
 function Catalog() {
   const [posts, setPosts] = useState([]);
@@ -25,7 +26,6 @@ function Catalog() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const { query } = Object.fromEntries(formData);
-    console.log(query);
     postService.getAllPosts(query).then((newPosts) => {
       if (newPosts.length !== 0) {
         setPosts((oldPosts) => [...newPosts]);
@@ -38,44 +38,44 @@ function Catalog() {
     });
   };
 
-  console.log(posts);
-
   return (
-    <div className='page-section'>
-      <div className='container wow fadeInLeft'>
-        <div className='row'>
-          <div className='col-sm-10'>
-            <form
-              method='GET'
-              onSubmit={filterPosts}
-              className='form-search-blog'>
-              <div className='input-group'>
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder='Enter keyword..'
-                  name='query'
-                />
-              </div>
-              <div className='col-sm-2 text-sm-right'>
-                <button type='submit' className='btn btn-primary'>
-                  Search
-                </button>
-              </div>
-            </form>
+    <Suspense fallback={<Loading />}>
+      <div className='page-section'>
+        <div className='container wow fadeInLeft'>
+          <div className='row'>
+            <div className='col-sm-10'>
+              <form
+                method='GET'
+                onSubmit={filterPosts}
+                className='form-search-blog'>
+                <div className='input-group'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    placeholder='Enter keyword..'
+                    name='query'
+                  />
+                </div>
+                <div className='col-sm-2 text-sm-right'>
+                  <button type='submit' className='btn btn-primary'>
+                    Search
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
+          {nothingFound ? (
+            <h1 className='nothing-found'>Nothing found :(</h1>
+          ) : (
+            <div className='row my-5'>
+              {posts.map((post) => (
+                <PostCard key={post._id} post={post} />
+              ))}
+            </div>
+          )}
         </div>
-        {nothingFound ? (
-          <h1 className='nothing-found'>Nothing found :(</h1>
-        ) : (
-          <div className='row my-5'>
-            {posts.map((post) => (
-              <PostCard key={post._id} post={post} />
-            ))}
-          </div>
-        )}
       </div>
-    </div>
+    </Suspense>
   );
 }
 
