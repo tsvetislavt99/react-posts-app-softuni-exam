@@ -4,6 +4,7 @@ import './Contact.css';
 //Other
 import GoogleMapComponent from '../GoogleMap/GoogleMapComponent';
 
+//TODO: Think about an ideato send a mail with the form :)
 function Contact() {
   return (
     <div className='page-section contact-us'>
@@ -24,14 +25,14 @@ function Contact() {
             </div>
             <p className='mb-3 font-weight-medium text-lg'>Phone</p>
             <p className='mb-0'>
-              <a href='#' className='text-secondary'>
+              <p href='#' className='text-secondary'>
                 +1 232 3235 324
-              </a>
+              </p>
             </p>
             <p className='mb-0'>
-              <a href='#' className='text-secondary'>
+              <p href='#' className='text-secondary'>
                 +00 1122 3344 5566
-              </a>
+              </p>
             </p>
           </div>
           <div className='col-lg-4 py-3'>
@@ -40,14 +41,14 @@ function Contact() {
             </div>
             <p className='mb-3 font-weight-medium text-lg'>Email Address</p>
             <p className='mb-0'>
-              <a href='#' className='text-secondary'>
+              <p href='#' className='text-secondary'>
                 support@react-blog.com
-              </a>
+              </p>
             </p>
             <p className='mb-0'>
-              <a href='#' className='text-secondary'>
+              <p href='#' className='text-secondary'>
                 hello@react-blog.com
-              </a>
+              </p>
             </p>
           </div>
         </div>
@@ -62,13 +63,13 @@ function Contact() {
               </h2>
               <div className='row form-group'>
                 <div className='col-md-6 mb-3 mb-md-0'>
-                  <label className='text-black' htmlFor='fname'>
+                  <label className='ml-3 text-black' htmlFor='fname'>
                     First Name
                   </label>
                   <input type='text' id='fname' className='form-control' />
                 </div>
                 <div className='col-md-6'>
-                  <label className='text-black' htmlFor='lname'>
+                  <label className='ml-3 text-black' htmlFor='lname'>
                     Last Name
                   </label>
                   <input type='text' id='lname' className='form-control' />
@@ -77,7 +78,7 @@ function Contact() {
 
               <div className='row form-group'>
                 <div className='col-md-12'>
-                  <label className='text-black' htmlFor='email'>
+                  <label className='ml-3 text-black' htmlFor='email'>
                     Email
                   </label>
                   <input type='email' id='email' className='form-control' />
@@ -86,7 +87,7 @@ function Contact() {
 
               <div className='row form-group'>
                 <div className='col-md-12'>
-                  <label className='text-black' htmlFor='subject'>
+                  <label className='ml-3 text-black' htmlFor='subject'>
                     Subject
                   </label>
                   <input type='text' id='subject' className='form-control' />
@@ -95,7 +96,7 @@ function Contact() {
 
               <div className='row form-group'>
                 <div className='col-md-12'>
-                  <label className='text-black' htmlFor='message'>
+                  <label className='ml-3 text-black' htmlFor='message'>
                     Message
                   </label>
                   <textarea
