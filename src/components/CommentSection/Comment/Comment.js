@@ -2,6 +2,10 @@
 import { useState, useContext, useEffect } from 'react';
 import postService from '../../../services/postService';
 import { AuthContext } from '../../../contexts/AuthContext';
+import {
+  NotificationContext,
+  types,
+} from '../../../contexts/NotificationContext';
 
 //Components
 import EditComment from './EditComment';
@@ -9,6 +13,7 @@ import Modal from '../../Modal/Modal';
 
 function Comment({ comment }) {
   const { user } = useContext(AuthContext);
+  const { showNotification } = useContext(NotificationContext);
   const [commentData, setCommentData] = useState(comment);
   const [rating, setRating] = useState(commentData.rating);
   const [isDeleted, setIsDeleted] = useState(false);
@@ -32,7 +37,6 @@ function Comment({ comment }) {
     postService
       .likeComment(commentData._id)
       .then((res) => setRating(res.newRating))
-      //TODO: Add notification
       .catch((error) => console.log(error));
   };
 
@@ -40,7 +44,6 @@ function Comment({ comment }) {
     postService
       .dislikeComment(commentData._id)
       .then((res) => setRating(res.newRating))
-      //TODO: Add notification
       .catch((error) => console.log(error));
   };
 
@@ -48,7 +51,7 @@ function Comment({ comment }) {
     postService
       .deleteComment(commentData._id)
       .then((res) => {
-        //TODO: Add notification
+        showNotification('Comment successfully deleted!', types.success);
         setIsDeleted((oldIsDelete) => !oldIsDelete);
       })
       .catch((error) => console.log(error));

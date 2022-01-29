@@ -7,6 +7,7 @@ import { useEffect, useState, useContext } from 'react';
 import parse from 'html-react-parser';
 import postService from '../../services/postService';
 import { AuthContext } from '../../contexts/AuthContext';
+import { NotificationContext, types } from '../../contexts/NotificationContext';
 
 //Components
 import CommentSection from '../CommentSection/CommentSection';
@@ -20,6 +21,7 @@ function PostDetails() {
   const [post, setPost] = useState({
     isLoading: true,
   });
+  const { showNotification } = useContext(NotificationContext);
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [isBeingEdited, setIsBeingEdited] = useState(false);
@@ -55,6 +57,7 @@ function PostDetails() {
     postService
       .editPost(postTitle, postBody, post._id)
       .then((receivedPost) => {
+        showNotification('Post successully edited!', types.success);
         setPost({ ...receivedPost, isLoading: false });
         return receivedPost;
       })
@@ -73,11 +76,10 @@ function PostDetails() {
     postService
       .deletePost(post._id)
       .then((res) => {
-        //TODO: Add notification
+        showNotification('Post successfully deleted!', types.success);
         navigate('/profile');
       })
       .catch((error) => {
-        //TODO: Add notification
         console.log(error);
       });
   };
@@ -86,14 +88,15 @@ function PostDetails() {
     setIsBeingEdited((oldIsBeingEdit) => !oldIsBeingEdit);
   };
 
+  //TODO: Make buttons inactive if user already voted
   const onLikeHandler = () => {
     postService
       .likePost(post._id)
       .then((res) => {
+        showNotification('Vote counted successfully!', types.success);
         setLikes((oldRating) => res.newRating);
         setDislikes((oldRating) => res.newOpositeRating);
       })
-      //TODO: Add notification
       .catch((error) => console.log(error));
   };
 
@@ -101,10 +104,10 @@ function PostDetails() {
     postService
       .dislikePost(post._id)
       .then((res) => {
+        showNotification('Vote counted successfully!', types.success);
         setDislikes((oldRating) => res.newRating);
         setLikes((oldRating) => res.newOpositeRating);
       })
-      //TODO: Add notification
       .catch((error) => console.log(error));
   };
 

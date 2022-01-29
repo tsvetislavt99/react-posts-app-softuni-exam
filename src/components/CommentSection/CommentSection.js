@@ -2,12 +2,14 @@
 import { useContext, useState, useRef } from 'react';
 import postService from '../../services/postService';
 import { AuthContext } from '../../contexts/AuthContext';
+import { NotificationContext, types } from '../../contexts/NotificationContext';
 
 //Components
 import Comment from './Comment/Comment';
 
 function CommentSection({ comments, postId }) {
   const { user } = useContext(AuthContext);
+  const { showNotification } = useContext(NotificationContext);
   const [newComments, setNewComments] = useState(comments);
   const [isValid, setIsValid] = useState({ errors: {} });
   const commentRef = useRef(null);
@@ -28,8 +30,13 @@ function CommentSection({ comments, postId }) {
         .then((res) => {
           postService
             .getComments(postId)
-            .then((fetchedComments) => setNewComments(fetchedComments))
-            .catch((error) => console.log(error));
+            .then((fetchedComments) => {
+              setNewComments(fetchedComments);
+              showNotification(`Successfully posted comment!`, types.success);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
           commentRef.current.value = '';
         })
         .catch((error) => console.log(error));

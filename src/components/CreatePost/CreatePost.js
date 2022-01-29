@@ -169,13 +169,6 @@ function CreatePost() {
                           placeholder='Why do we love functional components?'
                           onChange={onTitleChangeHandler}
                         />
-                        {isValid.errors['postTitle'] && (
-                          <p
-                            className='ml-3 error-message'
-                            style={{ color: 'red' }}>
-                            {isValid.errors['postTitle']}
-                          </p>
-                        )}
                       </div>
                     </div>
                     <div className='d-flex flex-row align-items-center mb-4'>
